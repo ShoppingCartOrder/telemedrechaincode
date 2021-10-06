@@ -1,0 +1,144 @@
+<!-- [END]Jquery Autocomplete -->
+<div class="container-fluid">
+    <div class="content-wrap">
+        <main id="content" class="content" role="main">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="well">
+                        <section class="widget" style="background-color:#FFF; margin-top:2rem">
+
+
+                            <form style="padding:15px" class="form-horizontal" action="<?php echo $this->url(array('action' => 'savebirthdetails'), 'nurseImmunizationRequests', true); ?>" method="POST">
+                                <div class="row">
+                                    <input type = "hidden" id ="patient_id" name ="patient_id" value = "<?php echo $this->patientId; ?>">
+                                    <input type = "hidden" id ="registration_no" name ="registration_no" value = "<?php echo $this->registrationNo; ?>">
+                                    <input type = "hidden" id ="id" name ="id" value = "<?php echo $this->imuzBirthDetails['id']; ?>">
+                                    <input type = "hidden" id ="reqid" name ="reqid" value = "<?php echo $this->reqid; ?>">
+                                    <input type = "hidden" id ="prescribe_id" name ="prescribe_id" value = "<?php echo $this->prescribeId; ?>">
+<!--                                    <input type = "hidden" id ="doctor_id" name ="doctor_id" value = "<?php echo $this->doctor_id; ?>">-->
+
+                                 
+                                        <legend><strong>Immunization</strong> form</legend>
+                                        <div class="form-group row" style ="text-align: center;">
+
+                                            <div class="col-md-11">
+
+                                                <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                                <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+                                                    <div class="notification-error">
+                                                        <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                            <?php echo $msg; ?>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
+                                                <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                                <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+                                                    <div class="notification-suc">
+                                                        <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                            <?php echo $msg; ?>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+
+                                            <div style="background-color:lightblue;">
+
+                                                <div class="form-group">
+                                                    <label  for="Consultation"><b>Delivery :</b></label>
+                                                    
+                                                    <input class="form-control datepicker" type="date"  id="delivery_date" name = "delivery_date"   data-value="[1,6,2014]" value = "<?php echo $this->imuzBirthDetails['delivery_date'];?>">
+                                                </div>
+                                                
+
+                                                <div class="form-group">
+                                                    <label  for="Consultation"><b>Neonatal Status:</b></label>
+                                                    <input type = "text"  id="neonatal_status:" name="neonatal_status"  required class="form-control input-lg" value = "<?php echo $this->imuzBirthDetails['neonatal_status'];?>">
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label  for="Consultation"><b>Length :</b></label>
+                                                    <input type = "text"  id="length" name="length"  required class="form-control input-lg" value = "<?php echo $this->imuzBirthDetails['length'];?>">
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label  for="Consultation"><b>Birth Weight:</b></label>
+                                                    <input type = "text"  id="birth_weight:" name="birth_weight"  required class="form-control input-lg" value = "<?php echo $this->imuzBirthDetails['birth_weight'];?>" >
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label  for="Consultation"><b>Head Circumference :</b></label>
+                                                    <input type = "text"  id="head_circumference:" name="head_circumference"  required class="form-control input-lg" value = "<?php echo $this->imuzBirthDetails['head_circumference'];?>">
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label  for="Consultation"><b>Blood Group :</b></label>
+                                                    <input type = "text"  id="blood_group" name="blood_group"  required class="form-control input-lg" value = "<?php echo $this->imuzBirthDetails['blood_group'];?>">
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label  for="Consultation"><b>Remarks :</b></label>
+                                                    <input type = "text"  id="remarks" name="remarks"  required class="form-control input-lg" value = "<?php echo $this->imuzBirthDetails['remarks'];?>">
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12"></div>
+                                        
+                                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                </div>
+                                <button type="button" class="btn btn-danger" id = 'button2' onClick = "cancelBack('laboratory/index');">Cancel</button>
+                                <span id = "sve_btn">
+                                    <button type="submit" style="text-align:right" class="btn btn-primary" id = 'save_button'>
+                                    <?php echo (isset($this->imuzBirthDetails['id'])?'Update':'Save');?>
+                                    </button>
+                                </span>
+                                <?php if(isset($this->imuzBirthDetails['id'])){ ?>
+                                <a href ="<?php echo NURSE_BASE_URL;?>immunization-requests/immunization-details-addedit/reqid/<?php echo $this->reqid; ?>/patient_id/<?php echo $this->patientId; ?>/rid/<?php echo $this->registrationNo; ?>/prescribe_id/<?php echo $this->prescribeId; ?>/id/<?php echo $this->imuzBirthDetails['id']; ?>">Immunization details</a>
+                                <?php } ?>
+                            </form>
+                            <div id = "f-l-name"></div>
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        line-height:1.5!important;
+    }
+    th, td {
+        padding: 15px;
+
+    }
+    table#t01 {
+        width: 100%;    
+        background-color: #f1f1c1;
+    }
+</style>

@@ -1,0 +1,228 @@
+<link rel="stylesheet" href="<?= $this->baseUrl(); ?>/css/colorbox.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="<?= $this->baseUrl(); ?>/js/colorbox/jquery.colorbox.js"></script>
+<script src="<?= $this->baseUrl(); ?>/js/vendor.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".popup").colorbox();
+
+    });
+</script>
+
+
+
+
+<div class="module">
+    <h2><span>User Information</span></h2>
+
+    <div class="module-body">
+        <div class="float-right"><input type="button" onClick ="window.location.href = '<?= $this->url(array('action' => 'index', 'page' => '1'), 'adminUser', true) ?>'"value="Back" class="submit-gray"></div>
+
+
+        <div style="float:left; width:100%; margin-top:10px;">
+
+            <input type="button" onClick = "window.location.href = '<?= $this->url(array('action' => 'getuserdetail', 'userid' => $this->userid, 'tabval' => '1'), 'adminUser', true) ?>'" value="Info" class="submit-green" <?php if ($this->tabval == 1) { ?> style="background:#666666;"  <?php } ?> >&nbsp;&nbsp;
+            
+        </div>
+
+
+
+
+        <?php
+        switch ($this->tabval) {
+            case '1':
+                ?>
+		
+   	
+   <div id="user_details" style="float:left; width:100%; margin-top:20px; border:1px solid #cccccc; padding:10px;">
+   
+   <div style="float:right; margin-top:20px; margin-right:20px;">
+   			<?php if($this->formdata['name'] != '') { ?>
+				
+				<div id="userimage" style="float:right;"><img width="120" height="120" alt="New article" src="<?php echo ADMIN_IMAGE_URL?>Crystal_Clear_user.gif" ></div>
+			
+			<?php } else { ?>
+				
+				<div id="userimage" style="float:right; "><img width="120" height="120" alt="New article" src="<?=vendorImage_main?>/<?= $this->formdata['users_pic']; ?>" ></div>
+			
+			<?php } ?>
+			</div>
+   
+            <p>
+              <strong>Name: </strong><?= $this->formdata['name'];?>     
+            </p>
+           <p>
+              <strong>Self Status: </strong><? if($this->formdata['self_status'] == 1)
+                                             echo "Groom";
+                                            else 
+                                             echo "Bride";?>     
+            </p>
+            <p>
+              <strong>Contact No: </strong><?= $this->formdata['phone'];?>     
+            </p>
+            <p>
+              <strong>Email: </strong><?= $this->formdata['email'];?>     
+            </p>
+		
+           <p>
+              <strong>Address: </strong><?= $this->formdata['address'];?>     
+            </p>
+   			 
+			 <p>
+              <strong>Location: </strong><?= $this->formdata['locality'];?>     
+            </p>
+           <p>
+              <strong>Wedding Date: </strong><?= $this->changeDateFormat($this->formdata['wedding_date'],DATEFORMAT,"");?>
+			
+           </p>
+           
+           <p>
+              <strong>Fiance Name: </strong><?= $this->formdata['fiance_name'];?>
+			
+           </p>
+           
+           <p>
+              <strong>Fiance Email: </strong><?= $this->formdata['fiance_email'];?>
+			
+           </p>
+           <p>
+              <strong>Type: </strong><? if($this->formdata['usertype'] == 1)
+                                             echo "User";
+                                            else 
+                                             echo "Vendor";   ?>     
+            </p>
+            
+            <p>
+              <strong>Wedding Website: </strong><? echo $this->formdata['wedding_website'];?>     
+            </p>
+            
+            <p>
+              <strong>Wedding Planning: </strong><? echo $this->formdata['wedding_planning'];?>     
+            </p>
+            
+            <p>
+              <strong>Wedding Website Shared:  </strong><? echo "100";?>     
+            </p>
+            
+            <p>
+              <strong>Photo Gallery Shared: </strong><? echo "10";?>     
+            </p>
+            
+            <p>
+              <strong>EInvites: </strong><? echo "10";?>     
+            </p>
+             
+            
+			
+       <div style="float:right;">
+              <fieldset>
+                <input type="button" onClick="window.location.href='<?= $this->url(array('action' => 'addedit', 'id' => $this->formdata['id']), 'adminUser', true) ?>'" value="Edit"class="submit-green"> 
+                <input type="button" onClick ="window.location.href='<?= $this->url(array('action' => 'delete', 'id'=> $this->formdata['id']), 'adminUser', true) ?>'"value="Delete" class="submit-gray">
+            </fieldset>
+        </div>               
+                    <?php
+                    break;
+
+                case '2':
+                    ?>
+
+                    <div style="float:left; width:100%; height:auto; margin-top:20px; border:1px solid #cccccc; padding:10px;">
+                        <div style="float:left; width:100%;"><div style="float:left;">Portfolio of </div><div style="font-weight:bold; float:left; margin-left:5px;">'<?= $this->formData['name']; ?>'</div></div>
+
+                        <div style="float:left; width:100%;">
+                            <?php if (count($this->usergallary) == 0) { ?>
+                                <b>No Video For This User, upload now</b>
+                            <?php } else {
+
+                                for ($i = 0; $i < count($this->usergallary); $i++) {
+                                    ?>
+
+
+                                    <div style="float:left; width:auto; padding:10px; margin:20px 0 0 0;">
+                                        <a class="popup" href="<?= $this->url(array('action' => 'getimagepopup', 'image' => $this->usergallary[$i]['image']), 'adminUser', true) ?>"><img src="<?= userImage_main ?>/<?= $this->vendorgallary[$i]['image']; ?>" height="55" width="55" class="thumbs" /></a>
+                                        <div style="width:100%; text-align:center;"><a href="<?= $this->url(array('action' => 'deleteportfolio', 'imageid' => $this->usergallary[$i]['id'], 'userid' => $this->usergallary[$i]['userid']), 'adminUser', true) ?>">Delete</a></div>
+                                    </div>
+
+
+                                <?php }
+                            } ?>
+
+
+                        </div>
+
+                        <form name ="pp_importfile" enctype="multipart/form-data" action="<?= $this->url(array('action' => 'updateportfolio'), 'adminUser', true) ?>" method="post">
+
+                            <div id='pp_FileGroup' style="float:left; margin-top:20px; width:100%;">
+                                <p id="pp_TextBoxDiv1">
+                                    <label>Upload Image</label>
+                                    <input class="input-short" type="file" name="pp_import_file_1[]" multiple='multiple'/>
+                            </div>
+                            <input type="hidden" id="pp_fileupload_count" name="pp_fileupload_count" value="" />
+                            <input type="hidden" id="pp_image_count" name="pp_image_count" value="<?= count($this->usergallary); ?>">
+                            <input type="hidden" id="pp_vendorid" name="pp_userid" value="<?= $this->userid; ?>">
+
+                            <fieldset style="margin-top:50px; float:left;">
+                                <input type="submit" name="pp_import_file" value="Update" class="submit-green">   
+                                <input type="button" onClick ="window.location.href = '<?= $this->url(array('action' => 'viewinfo', 'id' => $this->userid), 'adminUser', true) ?>'"value="Cancel" class="submit-gray">
+                            </fieldset>
+
+                        </form>
+
+                    </div>
+                    <div style="float:left; width:100%; height:auto; margin-top:20px; border:1px solid #cccccc; padding:10px;">
+                        <div style="float:left; width:100%;"><div style="float:left;">Portfolio of </div><div style="font-weight:bold; float:left; margin-left:5px;">'<?= $this->vendorvideo[0]['name']; ?>'</div></div>
+                        <div style="float:left; width:auto; padding:10px; margin:20px 0 0 0;">
+
+        <?php if ($this->uservideo[0]['video_link'] == 'NA') { ?>
+
+                                <b>No Video For This User, upload now</b>
+
+                            <?php } else { ?>
+
+                                <?php
+                                $video_count = explode(', ', $this->uservideo[0]['video_link']);
+                                for ($i = 0; $i < count($video_count); $i++) {
+                                    //print_r($video_count[$i]);
+                                    $videoid = explode('v=', $video_count[$i]);
+                                    ?>
+
+                                    <div style="float:left; width:auto; padding:10px; ">
+                                        <iframe width="320" height="271" src="http://www.youtube.com/embed/<?= $videoid[1]; ?>?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+                                        <div style="width:100%; text-align:center;"><a href="<?= $this->url(array('action' => 'deletevideo', 'link' => $i, 'userid' => $this->userid), 'adminUser', true) ?>">Delete</a></div>
+                                    </div>
+
+
+            <?php }
+        } ?>
+
+                        </div>
+
+
+                        <div style="float:left; margin:20px 0 0 10px; width:100%;">
+                            <form name ="pp_video" action="<?= $this->url(array('action' => 'updatevideo', 'userid' => $this->userid), 'adminUser', true) ?>" method="POST">
+                                <p>
+                                    <label>Insert YouTube link (You can insert multiple link by comma seperated)</label>
+                                    <input class="input-short" type="text" name="video_link" id="video_link" value=""/>
+                                    <input type="submit" name="updatevideo" value="Update" class="submit-green">   
+                                </p>
+                            </form>
+
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <?php
+                    break;
+
+                
+            }
+            ?>
+
+
+        </div>
+    </div>

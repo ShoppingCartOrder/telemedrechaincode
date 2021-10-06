@@ -1,0 +1,187 @@
+<!--<link href="<?php echo WEBSITE_URL; ?>css/doctor-list/application.min.css" rel="stylesheet">-->
+<link href="<?php echo WEBSITE_URL; ?>css/doctor-list/animate.css" rel="stylesheet">
+<!--<link href="<?php echo WEBSITE_URL; ?>css/doctor-list/application_new.css" rel="stylesheet">-->
+
+<div class="container-fluid">
+    <div class="content-wrap">
+        <main id="content" class="content" role="main">
+            <div class="row" style ="display:block!important;">
+                <form method = "post" name = "search-city-frm" id = "search-city-frm" action = "">
+                <input id="specialitySearch" style="width: 50%!important; font-size: 14px; padding: 8px; border: 1px solid #222;"
+                       type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search doctor, clinics, hospitals, etc " title="Type in a category">
+                <button class="search-btn" style="background-color: #008CBA;border: none;color: white;padding: 7px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" type="button" onclick="gosearch('search')">BOOK NOW</button>
+                    
+            </form>
+            </div>
+        </main>
+    </div>
+
+
+</div>
+<div class="container-fluid">
+    <div class="content-wrap">
+        <main id="content" class="content" role="main">
+            <div class="col-lg-9">
+                <div class="well">			
+                    
+                        <?php
+                        //print_r($this->searchData);
+                        if(!empty($this->searchData)){ 
+                            //print_r($this->searchData);
+                            foreach($this->searchData as $key=>$searchVal){
+                            ?>
+                    <section class="widget">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <img src="<?php echo WEBSITE_URL; ?>/images/doctor.jpg" alt="" >
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="#"><h5><?php echo $searchVal['name'];?></h5></a>
+                                <p><?php echo $searchVal['qualification'];?></p>
+                                <p><?php echo $searchVal['experience'];?></p>
+<!--                                <p style="background-color:#ddd; width:15%">Allopath</p>-->
+                                <p><?php echo $searchVal['dprt_name'];?></p>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div>
+                                    <span class="icon">
+                                        <i class="fa fa-thumbs-o-up"></i>	
+                                        <span style="color:green;font-weight:bold">
+                                            <?php 
+                                                echo ($searchVal['average_rating']/TOTAL_RATING)*100;?>%
+                                            
+                                            </span>
+                                        <br>
+                                    </span>
+                                </div>
+                                <span class="icon">
+                                    <i class="fa fa-comment"></i>	
+                                    <?php echo $searchVal['total_published_feedback'];?> Patients Experienced
+                                </span><br>
+
+                                <span class="icon">
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i>	
+
+                                </span><?php echo $searchVal['address'];?><br>			
+                                <span class="icon">
+                                    <i class="fa fa-money"></i>	
+
+                                </span>	
+                                ₹ <?php echo $searchVal['fee'];?>	<br>				
+                                <span class="icon">
+                                    <i class="fa fa-clock"></i>
+                                </span>
+                                <span class="" style="color:green; font-weight:bold">
+                                    Today Available	</span>
+                                <hr>
+
+                            </div>
+
+                            <hr>
+                            <div class="col-sm-4">
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="<?php echo WWW_ROOT;?>doctor-details/index/id/<?php echo $searchVal['id'];?>">View Profile</a>
+                                <button type="submit" class="btn btn-primary" value="submit">Contact Hospital</button>
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="submit" class="btn btn-primary" value="submit"><a href="<?php echo WWW_ROOT;?>patients/book-appointment/doctorid/<?php echo $searchVal['id'];?>" style="color:#fff">Book Appointment</a></button>
+                            </div>
+                        </div>
+                        </section>
+                        <?php 
+                        
+                            }
+                            }else{ ?>
+                       <section class="widget">
+                           <div class="row">
+                               
+                               Result not found.
+                           </div>
+                           
+                       </section>  
+                            <?php } ?>    
+<div class="row">
+                    <div class="clearfix">
+                        <div class="pagger" style="margin-top:17px;">
+                           
+                            <ul class="list-reset clearfix">
+
+
+                                
+    <?php
+    $totalcount = $this->searchCount;
+    $totalpage = $this->num_of_pages;
+    $page = $this->page;
+    echo $this->Paging($page, $totalpage);
+    ?>
+
+
+
+                            </ul>&nbsp;
+    
+                        </div>
+                    </div>
+    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+</div>
+
+<script>
+function filtersearch(params) {
+    
+    var searchView = $('#search_view').val();
+    var category = $('#category').val();
+    var pageLimit = $('#limit1').val();
+    //var sort = "<?php echo $this->sort; ?>";
+    var categoryStrIndex = $('#categoryStrIndex').val();
+    var mainCategory = $('#maincategory').val();
+
+    var sortUrl = '';
+    var sltedFldName = '';
+    var arrSltedFldName = '';
+
+    
+
+    if (category != '' && category != 'undefined') {
+
+        //var qryString = 'category='+category.replace('&','~~')+'&';
+        var qryString = '';
+
+        if (params == 'rating') {
+            //qryString += 'rating=1&';
+            qryString += 'sort=rating&';
+        }
+
+        if (params != '' && params != undefined) {
+            if (params.indexOf("page=") > -1) {
+                qryString += params + '&' + sortUrl;
+            }
+        }
+
+        var txtFldvalall = '';
+
+        if (pageLimit == undefined) {
+            pageLimit = "<?php echo SEARCH_DEFAULT_COUNT; ?>";
+        }
+
+        //qryString += 'rows='+pageLimit;
+        qryString = qryString.substring(0, qryString.length - 1);
+
+        $('body').append('<div id="overlay"><div><img src="' + jsPath + 'images/search-loader.gif" alt="Loading…" /></div></div>');
+        
+        if (qryString != '') {
+            qryString = '?' + qryString;
+        }
+
+        window.location = jsPath + 'search/doctor-list/speciality/' + "<?php echo $this->speciality;?>" + qryString;
+
+    }
+    return false;
+}
+</script>

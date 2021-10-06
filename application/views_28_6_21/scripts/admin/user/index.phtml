@@ -1,0 +1,133 @@
+<?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+
+       <?php if ($flashMessenger->setNamespace('success')->hasMessages()){?>
+           <span class="notification-suc n-success">
+           <?php foreach ($flashMessenger->getMessages() as $msg){ ?>
+               <?php echo $msg; ?>
+           <?php } ?>
+           </span>
+       <?php } ?>
+
+       <?php if ($flashMessenger->setNamespace('error')->hasMessages()){ ?>
+           <div class="notification-err o-error">
+           <?php foreach ($flashMessenger->getMessages() as $msg){ ?>
+               <?php echo $msg; ?>
+           <?php } ?>
+           </div>
+ <?php } ?>
+<div style="float:right">
+    <a href="/admin/user/addedit" class="button">
+        <span>Add New User <img height="9" width="12" src="<?php echo ADMIN_IMAGE_URL; ?>Sign-Forward-icon.png" alt="New article"></span>
+    </a> 
+</div>
+<div style="clear:both;"></div>
+
+<h2><span></span></h2>
+<!-- Example table -->
+
+    <div class="module-table-body">
+        <div id="gridWidth" class="left">
+                <table id="userList" width="100%" border="0" cellpadding="0" cellspacing="0"></table>
+                
+        </div>
+        
+        <div style="clear: both"></div>
+    </div> <!-- End .module-table-body -->
+<div id="pager2"></div>
+
+     
+
+<script language="javascript">
+
+    
+            $.jgrid.no_legacy_api = true;
+            $.jgrid.useJSON = true;
+            var grid = jQuery("#userList");
+            var pages = []; // not as {};
+            var emptyMsgDiv = $('<div class="no-record-msz"><?php echo RESULT_NOT_FOUND; ?></div>');
+            jQuery("#userList").jqGrid(
+            {
+            url: adminPath + 'user',
+            datatype: "json",
+            colNames: [ '<?php echo 'Name'; ?>',
+                    '<?php echo 'email'; ?>',                    
+                    '<?php echo 'Date'; ?>',
+                    '<?php echo 'Action'; ?>'
+            ],
+            colModel: [
+            {name: 'name', index: 'name', width: 150, search: true,sort:true},
+            {name: 'email', index: 'email', width: 150, search: true,sort:true },
+            {name: 'created_date', index: 'created_date', width: 150, search: false,sort:true},
+            {name: 'action', width: 30, sortable: false, search: false, formatter: 'actionFormatter'},
+            ],
+            rowNum:<?php echo NO_OF_RECORDS_PER_PAGE; ?>,
+            mtype: 'post',
+            width: jQuery('#gridWidth').width(),
+            height: '100%',
+            rowList:[<?php echo ROWLIST; ?>],
+            pager: '#pager2',
+            sortname: 'id',
+            sortorder: "asc",
+            caption:"User List",
+            autosearch: true,
+            toppager: false,
+            viewrecords: true,
+            altRows:true,
+            altclass:'grid-Alternate-Row',
+            rownumbers: true,
+            recordtext: "View {0} - {1} of {2}",
+            emptyrecords: false,
+            /*loadtext: "Loading",*/
+            width: 1200,
+            multiselect: false, // <------like here or your choice.
+           /* hoverrows: false,*/
+           editurl: adminPath + 'user/delete',
+            loadComplete: function() {
+                var count = grid.getGridParam();
+                var ts = grid[0];
+                if (ts.p.reccount === 0) {
+                    grid.hide();
+                    emptyMsgDiv.show();
+                } else {
+                //$("#gridoperation").show();
+                        grid.show();
+                        emptyMsgDiv.hide();
+                }
+            }/*,
+            beforeSelectRow: function(rowid) {
+            if ($('jqg_userList_' + rowid).attr("checked") == 'checked')
+                    return true;
+                    else {
+                    $('#' + rowid).removeClass('ui-state-highlight');
+                            return false;
+                    }
+            }*/
+    });
+            // place div with empty message insde of div
+            emptyMsgDiv.insertAfter(grid.parent());
+            emptyMsgDiv.hide();
+            jQuery("#userList").jqGrid('navGrid', '#pager2', {edit: false, add: false, del: true, search: false});
+            
+            jQuery('#userList').jqGrid('filterToolbar', {"stringResult": true,searchOnEnter : false});
+            myGrid = jQuery("#userList");
+           
+            var cm = myGrid[0].p.colModel;
+            $.each(myGrid[0].grid.headers, function(index, value) {
+            var cmi = cm[index], colName = cmi.name;
+                    if (!cmi.sortable && colName !== 'rn' && colName !== 'cb' && colName !== 'subgrid') {
+            $('div.ui-jqgrid-sortable', value.el).css({cursor: "default"});
+            }
+            });   
+            
+            
+            $.extend($.fn.fmatter, {
+                actionFormatter: function(cellvalue, options, rowObject) {
+                    var retVal = "<a onclick='return editUserDetails("+ options.rowId + ");' href='javascript:void(0);'><span class='ui-icon ui-icon-pencil'></span></a>";
+                    return retVal;
+                }
+            });
+            
+            function editUserDetails(roleId){
+                window.location.href = adminPath + 'user/addedit/id/' + roleId;
+            }
+</script>

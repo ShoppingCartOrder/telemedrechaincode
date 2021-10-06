@@ -1,0 +1,173 @@
+<link rel="stylesheet" href="<?php echo WEBSITE_URL;?>css/jqgrid/jquery-ui.min.css">
+<link rel="stylesheet" href="<?php echo WEBSITE_URL;?>css/jqgrid/ui.jqgrid.min.css">
+<link rel="stylesheet" href="<?php echo WEBSITE_URL;?>css/jqgrid/ui.jqgrid.css"/>
+<link rel="stylesheet" href="<?php echo WEBSITE_URL;?>css/jqgrid/qunit-2.6.2.css">
+
+<!--
+<script src="<?php echo WEBSITE_URL;?>js/jqgrid/jquery-3.3.1.min.js"></script>
+<script src="<?php echo WEBSITE_URL;?>js/jqgrid/jquery-ui.min.js"></script>-->
+
+<script src="<?php echo WEBSITE_URL;?>js/jqgrid/jquery.jqgrid.min.js"></script>
+<div class="container-fluid">
+    <div class="content-wrap">		
+        <main id="content" class="content" role="main">
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="well">
+                        <section class="widget">
+                           
+
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="well">
+                        <div id="gridWidth" class="left">
+                            <table id="jqGrid" width="50%" border="0" cellpadding="0" cellspacing="0"></table>
+                            <div id="jqGridPager"></div> <!-- new location pager --><!-- <div id="pager2"></div> old location pager -->
+                        </div>			
+                    </div>
+                </div>
+            </div>
+    </div>			   
+</main>
+</div>
+
+
+
+
+
+<script language="javascript">
+    $(document).ready(function () {
+        grid_function();
+    });
+    function grid_function() {
+        $('#gridWidth').html('<div id="gridWidth" class="left"><table id="jqGrid" width="100%" border="0" cellpadding="0" cellspacing="0"></table><div id="pager2"></div></div>');
+        
+        $.jgrid.no_legacy_api = true;
+        $.jgrid.useJSON = true;
+        var grid = jQuery("#jqGrid");
+        var pages = []; // not as {};
+        var emptyMsgDiv = $('<div class="no-record-msz"><?php echo RESULT_NOT_FOUND; ?></div>');
+        jQuery("#jqGrid").jqGrid({
+            url: adminPath + 'nurse/index',
+            datatype: "json",
+            colNames: [
+                'Nurse Id',
+                'Name',
+                'Contact No', 'Email', 'Created Date','',''
+            ],
+            colModel: [
+                {name: 'id', index: 'id',align:'center', width: 70, search: false, sortable: true, editable: false, editrules: {required: true}, edittype: 'text'},
+                {name: 'name', index: 'name', align:'center',width: 80, search: true, sortable: true, editable: false, editrules: {required: true}, edittype: 'text'},
+                {name: 'contact_no', index: 'contact_no', align:'center',width: 100, search: true, sortable: true},
+                {name: 'email', index: 'email',align:'center', width: 100, search: true, sortable: true},
+                {name: 'created_at', index: 'created_at',align:'center', width: 100, search: false, sortable: true},              
+                //{name: 'created_at', index: 'created_at', width: 50, search: false, sortable: false},
+                //{name: 'actions', index: 'actions', width: 70, search: false, title: false, sortable: false, formatter:'actionFormatter', formatoptions: {keys: true, editbutton:true,delbutton:true }}
+                { name: 'edit',align:'center', width: 18, sortable: false, search: false, formatter:'actionFormatter', formatoptions: {keys: true, editbutton:true,delbutton:false} },
+                { name: 'del', align:'center',width: 18, sortable: false, search: false,formatter:'actions', formatoptions: {keys: true, editbutton:false,delbutton:true} },
+                //{ name: 'details', width: 18, sortable: false, search: false, formatter: 'actionFormatter'}
+            ],
+            onSelectRow: function (rowid, status, e) {
+                if (e != undefined) {
+                    var selectedValue = $('#myGrid').getCell(rowid, 'col1');
+                    if (selectedValue) {
+                        $('#myGrid').jqGrid('setColProp', 'col1', {editable: true});
+                    }
+                }
+            },
+            rowNum:<?php echo NO_OF_RECORDS_PER_PAGE; ?>,
+            mtype: 'post',
+            width: jQuery('#gridWidth').width(),
+            height: 'auto',
+            rowList: [<?php echo ROWLIST; ?>],
+            pager: '#pager2',
+            sortname: 'id',
+            sortorder: "DESC",
+            caption: "Doctor List",
+            autosearch: true,
+            toppager: false,
+            viewrecords: true,
+            altRows: true,
+            altclass: 'grid-Alternate-Row',
+            rownumbers: true,
+            recordtext: "View {0} - {1} of {2}",
+            emptyrecords: false,
+            /*loadtext: "Loading",*/
+            width: 800,
+            multiselect: false, // <------like here or your choice.
+            hoverrows: false,
+            editurl: adminPath + 'nurse/deletenurse',
+            loadComplete: function () {
+                var count = grid.getGridParam();
+                var ts = grid[0];
+                if (ts.p.reccount === 0) {
+                    grid.hide();
+                    emptyMsgDiv.show();
+                } else {
+                    grid.show();
+                    emptyMsgDiv.hide();
+                }
+            }
+        });
+        // place div with empty message insde of div
+        emptyMsgDiv.insertAfter(grid.parent());
+        emptyMsgDiv.hide();
+        jQuery("#jqGrid").jqGrid('navGrid', '#pager2', {edit: true, add: false, del: false, search: false}, {closeAfterEdit: true, closeOnEscape: true}, {closeAfterAdd: true, closeOnEscape: true});
+        jQuery('#jqGrid').jqGrid('filterToolbar', {"stringResult": true,searchOnEnter: true});
+        myGrid = jQuery("#jqGrid");
+
+        var cm = myGrid[0].p.colModel;
+        $.each(myGrid[0].grid.headers, function (index, value) {
+            var cmi = cm[index], colName = cmi.name;
+            if (!cmi.sortable && colName !== 'rn' && colName !== 'cb' && colName !== 'subgrid') {
+                $('div.ui-jqgrid-sortable', value.el).css({cursor: "default"});
+            }
+        });
+    }
+
+
+
+
+    function nurseEdit(id) {
+        window.location.href = adminPath + 'nurse/addedit/id/' + id;
+    }
+
+
+
+ 
+
+    $.extend($.fn.fmatter, {
+        actionFormatter: function (cellvalue, options, rowObject) {
+            var retVal = "<a onclick='return nurseEdit(" + options.rowId + ");' href='javascript:void(0);'><span class='ui-icon ui-icon-pencil'></span></a>";
+            return retVal;
+        }
+    });
+
+</script>
+<style>
+    .ui-jqgrid .ui-search-input select {
+        width: 100% !important;
+        border:1px;
+    }
+
+    .ui-jqgrid .ui-jqgrid-view select {
+        font-size: 11px;
+        width: 116px;
+    }  
+
+
+    .ui-jqgrid .ui-jqgrid-view input[type="text"] {
+        font-size: 11px;
+        height: 22px;
+        padding: 0;
+        width: 119px;
+    }
+</style>

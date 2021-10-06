@@ -1,0 +1,111 @@
+<!-- [END]Jquery Autocomplete -->
+<div class="container-fluid">
+    <div class="content-wrap">
+        <main id="content" class="content" role="main">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="well">
+                        <section class="widget" style="background-color:#FFF; margin-top:2rem">
+
+
+                            <form style="padding:15px" class="form-horizontal" action="<?php echo $this->url(array('action' => 'savelabtestresult'), 'hospitalLaboratory', true); ?>" method="POST">
+                                <div class="row">
+                                    <input type = "hidden" id ="patient_id" name ="patient_id" value = "<?php echo $this->labRequestData['patient_id']; ?>">
+                                    <input type = "hidden" id ="registration_no" name ="registration_no" value = "<?php echo $this->labRequestData['registration_no']; ?>">
+                                    <input type = "hidden" id ="id" name ="id" value = "<?php echo $this->formdata['id']; ?>">
+                                    <input type = "hidden" id ="reqid" name ="reqid" value = "<?php echo $this->labRequestData['id']; ?>">
+<!--                                    <input type = "hidden" id ="doctor_id" name ="doctor_id" value = "<?php echo $this->doctor_id; ?>">-->
+
+                                    <fieldset>
+                                        <legend><strong>Lab Result</strong> form</legend>
+                                        <div class="form-group row" style ="text-align: center;">
+
+                                            <div class="col-md-11">
+                                                <span class="notification-error"></span>
+                                                <span class="notification-suc"></span>
+                                                <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                                <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+                                                    <div class="notification-error">
+                                                        <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                            <?php echo $msg; ?>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
+                                                <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                                <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+                                                    <div class="notification-suc">
+                                                        <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                            <?php echo $msg; ?>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
+
+
+                                            </div>
+                                        </div>
+                                        </fieldset>
+                                      
+
+
+                                        <div class="col-sm-12">
+                                            
+                                         
+<table id="t01">
+  <tr>
+    <th>Test-Name</th>
+    <th>Measure Unit</th>
+    <th>Normal Value</th>
+    <th>Result</th>
+  </tr>
+  <?php if(!empty($this->labTestDetails)){ 
+      foreach($this->labTestDetails as $key=>$labTestDetail){
+      ?>
+  <tr>
+    <td><?php echo $labTestDetail['test_name'];?></td>
+    <td><?php echo $labTestDetail['measure_unit'];?></td>
+    <td><?php echo $labTestDetail['normal_value'];?></td>
+    <td>
+        <textarea id="result_<?php echo $labTestDetail['id'];?>" name="result[<?php echo $labTestDetail['id'];?>]" rows="1" cols="10"><?php if(isset($this->labTestResults[$labTestDetail['id']])){ echo $this->labTestResults[$labTestDetail['id']];}?></textarea>
+    </td>
+  </tr>
+  <?php }}?>
+ 
+
+</table>
+                                        </div>
+                                    
+                                   
+
+                                      
+
+
+                                </div>
+                                <button type="button" class="btn btn-danger" id = 'button2' onClick = "cancelBack('laboratory/index');">Cancel</button>
+                                                <span id = "sve_btn">
+                                                    <button type="submit" style="text-align:right" class="btn btn-primary" id = 'save_button'>Save</button>
+                                                </span>
+                            </form>
+                            <div id = "f-l-name"></div>
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+table#t01 {
+  width: 100%;    
+  background-color: #f1f1c1;
+}
+</style>

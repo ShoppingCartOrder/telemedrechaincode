@@ -1,0 +1,109 @@
+<style>
+.error { border:1px solid #d03166 !important; }
+</style>
+
+<script type="text/javascript">
+
+function checkfields(){ 
+    var name = $("#name").val();    
+    var email = $("#email").val();
+    var mobile = $("#mobile").val();    
+    var err = 0;
+	
+    if(name == ''){
+        $("#name").addClass("error input-short");
+        $("#name").focus();
+        err++;
+    } else {
+        $("#name").removeClass( "error" );
+    }
+    if(email == ''){
+        $("#email").addClass( "error input-short" );
+	$("#email").focus();
+	err++;
+    } else {
+        $("#email").removeClass( "error" );
+    }
+    
+    if(mobile == ''){
+        $("#mobile").addClass( "error input-short" );
+	$("#mobile").focus();
+	err++;
+    }else if ((mobile != '') && (isNaN(mobile))){
+        
+        $("#mobile").addClass( "error input-short" );
+	$("#mobile").focus();
+	err++;
+        
+    } else  if (mobile != '' && mobile.length < 10){
+        $("#mobile").addClass( "error input-short" );
+	$("#mobile").focus();
+	err++;
+    }else {
+        $("#mobile").removeClass( "error" );
+    }
+    
+    if(err > 0){
+        document.importfile.submit();
+        return false;
+    } else {
+        document.importfile.submit();
+    }
+}
+
+
+
+
+</script>
+
+<div class="module">
+    <h2><span>Add New User</span></h2>
+    <div class="module-body">
+        <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+
+       <?php if ($flashMessenger->setNamespace('success')->hasMessages()){?>
+           <span class="notification-suc n-success">
+           <?php foreach ($flashMessenger->getMessages() as $msg){ ?>
+               <?php echo $msg; ?>
+           <?php } ?>
+           </span>
+       <?php } ?>
+
+       <?php if ($flashMessenger->setNamespace('error')->hasMessages()){ ?>
+           <div class="notification-err o-error">
+           <?php foreach ($flashMessenger->getMessages() as $msg){ ?>
+               <?php echo $msg; ?>
+           <?php } ?>
+           </div>
+ <?php } ?>
+        <div class="float-right"><input type="button" onClick ="window.location.href = '<?php echo $this->url(array('action' => 'index', 'page' => '1'), 'adminUser', true) ?>'"value="Back" class="submit-gray"></div>
+        <form name ="importfile" enctype="multipart/form-data" action="<?php echo $this->url(array('action' => 'send-welcome-msg'), 'adminUser', true) ?>" method="POST">
+            <input type="hidden" id="id" name="id" value="<?php echo $this->formdata['id']; ?>" />
+            
+            
+             <p>
+                <label>Name<b>*</b></label>
+                <input id ="name" name ="name" type="text" value="<?php echo $this->formdata['name']; ?>" class="input-short">
+            </p>
+            
+            
+            <p>
+                <label>Email<b>*</b></label>
+                <input id="email" name="email" type="text" value="<?php echo $this->formdata['email']; ?>" class="input-short">
+            </p>
+            
+           
+            <p>
+                <label>Mobile</label>
+                <input id ="mobile" name="mobile" type="text" value="<?php echo $this->formdata['mobile']; ?>" class="input-short">
+
+            </p>
+           
+            <fieldset>
+                <input type="button" value="Submit" id="adduser" name="adduser" class="submit-green" onClick ="return checkfields();"> 
+                <input type="button" onClick ="window.location.href = '<?php echo $this->url(array('action' => 'index', 'page' => '1'), 'adminUser', true) ?>'"value="Cancel" class="submit-gray">
+            </fieldset>
+
+        </form>
+    </div> <!-- End .module-body -->
+</div>

@@ -1,0 +1,234 @@
+<div id="header">
+    <!-- Header. Status part -->
+    <div id="header-status">
+        <div class="container_12">
+            <div class="grid_8">&nbsp;</div>
+            <?php
+            //echo $this->bidhan;
+            $obj = new Application_Model_DbTable_City();
+            $cityData = $obj->fetchAllCity();
+            ?>    
+            <div class="grid_4">
+               
+                <div class="user-area">
+                    <a href="<?php echo HOSTPATH . 'admin/dashboard/viewprofile' ?>"><div class="user-pro">
+                            <?php
+                            $count = strlen($this->adminUsers);
+                            if ($count > 5) {
+                                echo substr(strip_tags(ucwords($this->adminUsers)), 0, 4) . '..';
+                            } else {
+                                echo ucwords($this->adminUsers);
+                            }
+                            ?></div></a>
+                    <input type = "hidden" value = "<?php echo $this->adminId;?>" name = "adminId" id = "adminId">
+                    <div class="user-logout"><a id="logout" href="<?php echo HOSTPATH . 'admin/index/logout' ?>">Logout</a></div> 
+                  
+                    
+                    
+                </div>
+<div class="main1">
+				<section>
+					
+					
+					
+					<button id="showRight">Chat</button>
+				</section>
+          </div>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div> <!-- End #header-status -->
+
+    <!-- Header. Main part -->
+    <div id="header-main">
+        <div class="container_12">
+            <div class="grid_12">
+                <div id="logo"> 
+                    <ul id="nav">
+                        <?php 
+                        $controller_name = strtolower(Zend_Controller_Front::getInstance()->getRequest()->getControllerName()); 
+                        $session = new Zend_Session_Namespace('my');
+                            //print_r($session->aclObj);
+                        ?>
+                        <li class="home-icon"><a href="<?php echo HOSTPATH . 'admin/dashboard' ?>"><?php //if ($session->aclObj->isAllowed('Dashboard')) {   ?><img src="<?php echo HOSTPATH; ?>/images/adminImages/icon-home.png" /></a><?php //}   ?></li>
+                        <li cname="vendor" class="sousMenu"><a href="<?php echo HOSTPATH . 'admin/vendor' ?>">Data</a>
+                            <ul>
+                                
+                                <li class="sousMenuWidth"><?php //if (is_object($session->aclObj) && $session->aclObj->isAllowed('Vendor')) {   ?><a href="<?php echo HOSTPATH . 'admin/vendor' ?>">Vendor</a><?php //}   ?></li>                                
+                                <li class="sousMenuWidth"> <?php //if (is_object($session->aclObj) && $session->aclObj->isAllowed('Category')) {   ?><a href="<?php echo HOSTPATH . 'admin/category' ?>">Categories</a><?php //}   ?></li>
+                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/tags/index' ?>">Tag</a></li>
+
+                                <li class="sousMenuWidth"><?php //if (is_object($session->aclObj) && $session->aclObj->isAllowed('City')) {   ?><a href="<?php echo HOSTPATH . 'admin/city' ?>">City</a><?php //}   ?></li>
+                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/zones' ?>">Zone</a></li>           
+                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/location' ?>">Location </a></li>
+                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/metrolocation' ?>">Metro Locations<?php //echo $this->frmMsg['METROLOCATION'];   ?> </a></li>
+                                <?php /* ?><li class="sousMenuWidth"><?php if ($controller_name == "location") { ?><a href="<?php echo HOSTPATH . 'admin/location' ?>">Location </a><?php } ?></li><?php */ ?>
+                            </ul>
+                        </li> 
+
+
+
+
+
+                        <?php if ($this->userSession->ACL->isAllowed($this->userSession->roleId,2,EDIT_PRIVILEGE)) { ?>
+                        <li class="sousMenu" cname="user" <?php if ($controller_name == "user") { ?>  style="background:#99CCFF;"  <?php } ?>>
+                            <a href="<?php echo HOSTPATH . 'admin/user' ?>" 
+                                <?php if ($controller_name == "user") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>
+                                User
+                            </a>
+                            <ul>
+                                
+                                
+                                <li class="sousMenuWidth">
+                                    <a href="<?php echo HOSTPATH . 'admin/user/welcome-msg-list'; ?>">User welcome message </a>
+                                </li>
+                                <li class="sousMenuWidth">
+                                    <a href="<?php echo HOSTPATH . 'admin/user/all-sent-email-mobile-list/message-section/1'; ?>">User email message </a>
+                                </li>
+                                <li class="sousMenuWidth">
+                                    <a href="<?php echo HOSTPATH . 'admin/user/all-sent-email-mobile-list/message-section/2'; ?>">User mobile message </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <?php } ?>
+
+                        <li cname="vendor" class="sousMenu"><a href="#">Event/Review</a>
+                            <ul>
+                                
+                                <?php if($this->userSession->ACL->isAllowed($this->userSession->roleId, 6, EDIT_PRIVILEGE)) { ?>                                
+                                    <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/event' ?>">Event </a></li>
+                                    <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/event/eventbanner' ?>">Event Banner</a></li>
+                                    <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/event/all-event-remainder-list' ?>">All Event Remainder</a></li>
+                                <?php } ?>
+                                
+                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/review' ?>">Review</a></li>
+                            </ul>
+                        </li> 
+
+                        <?php //if (is_object($session->aclObj) && $session->aclObj->isAllowed('Report')) { ?><li cname="report" <?php if ($controller_name == "report") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH . 'admin/report/user' ?>" <?php if ($controller_name == "report") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>Report/Stat</a></li><?php //} ?>
+
+
+                        <li cname="vendor" class="sousMenu"><a href="#">Action Management</a>
+                            <ul>
+<!--                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/action' ?>">Action Management</a></li>-->
+                                <li class="sousMenuWidth"><?php //if (is_object($session->aclObj) && $session->aclObj->isAllowed('Advertisement')) {   ?><a href="<?php echo HOSTPATH . 'admin/advertisement/search' ?>">Advertisement</a><?php //}   ?></li>
+                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/sendenquiry'; ?>">Send Enquiry</a></li>
+                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/sendenquiry/send-enquiry-rule-list'; ?>">Activate Vivahaayojan's Send Enquiry</a></li>
+                            </ul>
+                        </li> 
+
+
+
+
+                        <?php /* ?> <?php if (is_object($session->aclObj) && $session->aclObj->isAllowed('User')) { ?><li cname="user" <?php if ($controller_name == "user") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH . 'admin/user' ?>" <?php if ($controller_name == "user") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>Seo</a></li><?php } ?><?php */ ?>
+                        <li cname="seo" class="sousMenu"><a href="#">SEO</a>
+                            <ul>
+                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/seo' ?>">Tag meta data </a></li>                                
+                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/seo/vendors' ?>">Vendor meta data </a></li>                                
+                            </ul>
+                        </li> 
+                        <li cname="seo" class="sousMenu"><a href="#">Uploads</a>
+                            <ul>
+                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/index/uploadcategoryexcel' ?>">Vendor tag/services excel sheet </a></li>                                
+                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/category/uploadcategoryexcel' ?>">Tag category excel sheet </a></li>
+                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/meta/updateinvalidmobileno' ?>">Update Mobile No </a></li>
+                                <li class="sousMenuWidth"><a href="<?php echo HOSTPATH . 'admin/meta/updatepseudono' ?>">Update Pseudo No </a></li>
+                            </ul>
+                        </li> 
+
+
+                        <li cname="sitemap" <?php if ($controller_name == "sitemap") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH . 'admin/sitemap' ?>" <?php if ($controller_name == "sitemap") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>Sitemap XML</a></li>
+
+
+                        <li cname="sitemap" <?php if ($controller_name == "excell") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH . 'admin/vendor/uploadvendorsexcel' ?>" <?php if ($controller_name == "excell") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>Vendor Excell</a></li>
+
+                        <li cname="sitemap" <?php if ($controller_name == "acl") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH . 'admin/acl/' ?>" <?php if ($controller_name == "acl") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>ACL</a></li>
+
+<!--                        <li cname="planning" <?php if ($controller_name == "planning") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH . 'admin/planning/' ?>" <?php if ($controller_name == "planning") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>Planning</a></li>-->
+                        
+                        
+                        
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <?php /* ?><?php if(is_object($session->aclObj) && $session->aclObj->isAllowed('Vendor')) {?><li cname="vendor" <?php if($controller_name == "vendor") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH.'admin/vendor' ?>" <?php if($controller_name == "vendor") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>Vendor</a></li><?php }?>
+
+                          <?php if(is_object($session->aclObj) && $session->aclObj->isAllowed('Report')) {?><li cname="report" <?php if($controller_name == "report") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH.'admin/report/user' ?>" <?php if($controller_name == "report") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>Report</a></li><?php }?>
+
+                          <?php if(is_object($session->aclObj) && $session->aclObj->isAllowed('Category')) {?><li cname="category" <?php if($controller_name == "category") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH.'admin/category' ?>" <?php if($controller_name == "category") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>Category</a></li><?php }?>
+
+                          <li cname="location" <?php if($controller_name == "location") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH.'admin/location' ?>" <?php if($controller_name == "location") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>Location</a></li>
+
+
+
+                          <?php if(is_object($session->aclObj) && $session->aclObj->isAllowed('City')) {?><li cname="city" <?php if($controller_name == "city") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH.'admin/city' ?>" <?php if($controller_name == "city") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>City</a></li><?php }?>
+
+                          <?php if(is_object($session->aclObj) && $session->aclObj->isAllowed('Review')) {?><li cname="review" <?php if($controller_name == "review") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH.'admin/review' ?>" <?php if($controller_name == "review") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>Review</a></li><?php }?>
+
+                          <li cname="meta" <?php if($controller_name == "meta") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH.'admin/meta/showmeta' ?>" <?php if($controller_name == "meta") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>Meta Tags</a></li>
+
+                          <?php if(is_object($session->aclObj) && $session->aclObj->isAllowed('Advertisement')) {?><li cname="review" <?php if($controller_name == "advertisement") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH.'admin/advertisement/search' ?>" <?php if($controller_name == "advertisement") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>Advertisement</a></li><?php }?>
+                          <li cname="review" <?php if($controller_name == "tags") { ?> style="background:#99CCFF;"  <?php } ?>><a href="<?php echo HOSTPATH.'admin/tags/index' ?>" <?php if($controller_name == "tags") { ?> style="background:#99CCFF; color:#000000;"  <?php } ?>>Tags</a></li><?php */ ?>
+
+
+                    </ul>
+                </div><!-- End. #Logo -->
+            </div><!-- End. .grid_12-->
+            <div style="clear: both;"></div>
+        </div><!-- End. .container_12 -->
+    </div> <!-- End #header-main -->
+    <div style="clear: both;"></div></div>
+
+
+<script>
+    $(document).ready(function() {
+        cityId = <?= $session->city; ?>;
+        $("#cityfilter option[value='" + cityId + "']").attr("selected", "selected");
+    });
+</script>

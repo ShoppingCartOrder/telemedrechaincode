@@ -1,0 +1,93 @@
+<?php $currenturl = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];  ?>
+<input type="hidden" id="currenturl" name="currenturl" value='<?= $currenturl; ?>'>
+
+
+<!-- <div class="color-box-hd">
+<div class="hd-box">
+  <div style="width:300px; height:10px;"><div style="float:left;" id="loginusernametitle"></div><div style="float:left; margin-left:5px;" id="loginusername"></div></div> -->
+  
+   <div class="fl-lt full">
+  <div class="color-box-hd"><div class="hd-box"><div style="width:300px;"><div style="float:left;" id="loginusernametitle">Join Us</div><div style="float:left; margin-left:5px;" id="loginusername"></div></div></div></div>
+ 
+ 
+ 
+  <!-- </div></div> -->
+ 	<div id="signup_message" class="fl-lt pop-wrap">
+    		<div class="features-box1 fl-lt">
+         	<div class="green-hd" style="padding-top:0">Welcome to Vivahaayojan</div>
+             <div class="feature-icons fl-lt">
+             	<img src="<?=WEBSITE_URL?>images/feature-icons.jpg" alt="Features Icons" />
+             </div>
+             <ul id="features">
+            	<li><h5 style="padding-top:15px;">Search from Thousands of Wedding Vendors</h5></li>
+                <li><h5>Save on Weddings! Best Deals Await You</h5></li>
+                <li><h5>Plan &amp; Manage with Wedding Planning Tools</h5></li>
+                <li><h5>Design your Own Personal Wedding Website</h5></li>
+                <li class="last"><h5 class="feat-pad2">Know the Latest Buzz On Weddings</h5></li>
+            </ul>
+         </div>
+     		<div class="fl-lt table-pad-left">
+         <div class="login-btns fl-lt">
+ 			<a href="javascript:void(0);" onclick='fblogin();'><span class="fl-lt sprite-log fb-log">Sign in with Facebook</span></a><a href="<?= $this->url(array('controller' => 'user', 'action' => 'examplegoogle'), 'default', true)?>"><span class="fl-lt sprite-log google-log">Sign in with Google</span></a>
+
+         </div>
+
+
+ 
+
+        <div class="form-box-pop fl-lt">
+
+         	
+
+         <div class="fl-lt or">or</div><br />
+
+
+
+			<div id="signup_error" ></div>
+
+
+
+         <div class="fl-lt field-box-pop">
+
+         	<input type="text" id="signupusername" name="signupusername" placeholder="Name" class="input-txt box2" />
+
+         </div>
+
+         <div class="fl-lt field-box-pop">
+
+         	<input id="signupemail" name="signupemail" type="text" placeholder="Email Address"  class="input-txt box2" />
+
+         </div>
+
+         <div class="fl-lt field-box-pop">
+
+         	<input id="signuprepass" name="signuprepass" type="password" placeholder="Password" class="input-txt box2" />
+
+         </div>
+
+         <div class="fl-lt field-box-pop">
+
+         	<input id="marriage_date" name="marriage_date" type="text" placeholder="Wedding Date" class="input-txt box-date" />
+
+         </div>
+  
+         <div class="fl-lt field-box-pop"><input type="button" name="join" id="join" onclick="joinus()" class="btn-pink" value="Join Now" /></div>
+ 		 
+		  <div class="fl-lt field-box-pop">
+
+         	<input id="termcondition" name="termcondition" type="checkbox" checked="checked" class="fl-lt" style="width:30px;" /><span class="fl-lt terms-txt">  By clicking <b>Join Now</b> you agree to our <a href="#">Terms of Use</a></span> 
+          </div>
+ 		 
+             <div class="fl-lt bottom-box full">
+
+   Already a member? <a href="#" onclick='$.colorbox({href:"<?= $this->url(array('controller' => 'user', 'action' => 'login'), 'default', true) ?>"}); return false;' class="pink-link">Login Now</a>
+
+   </div>
+     
+
+   </div><!-- form-box-pop ends --> 
+
+   </div>
+   </div>   
+
+<script type="text/javascript" src="<?=WEBSITE_URL?>js/calender/functions.js"></script>

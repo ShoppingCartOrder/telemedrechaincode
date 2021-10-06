@@ -1,0 +1,92 @@
+ <!-- common libraries. required for every page-->
+<?php 
+     $action = $this->actionName;//home
+     $controller  = $this->controllerName;//list
+    
+?>
+
+
+
+<script src="<?php echo WEBSITE_URL; ?>js/patient/query.min.js"></script>
+<script src="<?php echo WEBSITE_URL; ?>js/patient/responsiveslides.min.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/switchery.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/moment.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/tempusdominus-bootstrap-4-original.js"></script>
+<script src="<?php echo WEBSITE_URL; ?>js/jqgrid/jquery-ui.min.js"></script> 
+
+<script src="<?php echo WEBSITE_URL; ?>js/common.js"></script>
+<script>
+ $(document).ready(function() {
+    
+    $('.navbar-nav').click(function() {
+        $(".dropdown-menu-right").css("position", "absolute");
+        $( ".dropdown-menu-right" ).toggle();
+    })
+ });
+ 
+ function changeDoctor(dprtId)
+    {
+        var value = 'dprtId=' + dprtId;
+        var select = $("#doctorDD");
+        select.empty();
+        $.ajax({
+            //this is the php file that processes the data
+            url: hospitalPath + 'doctor/getdoctor',
+            //GET method is used
+            type: 'POST',
+            //pass the data			
+            data: value,
+            //success
+            success: function(responseText) {
+                $('#doctor').empty();
+                $('#doctor').append($('<option>').text('Select Doctor').attr('value', ''));
+                var obj = jQuery.parseJSON(responseText);
+                $.each(obj, function(i, items) {
+                    console.log(items['id']);
+                    $('#doctor').append($('<option>').text(items['name']).attr('value', items['id']));
+                });
+
+            }
+
+        });
+
+    }
+
+function displayLoader(elementId, showHide, classStyle) {
+       // alert(9);
+        if (classStyle == undefined) {
+            classStyle = '';
+        }
+        //alert(classStyle);
+        var clsName = '';
+        clsName = '"spinner ' + classStyle + '"';
+        //alert(clsName);
+        var loaderLabel = '<div class = ' + clsName + ' id = "showLoader"><img src="'+jsPath+'images/loader.gif"></div>';
+
+        if (elementId != '' && elementId != 'undefined' && showHide != '') {
+             if (showHide == 'show') {
+                    $(loaderLabel).insertBefore('#' + elementId);
+                    $('#' + elementId).hide();
+
+                }
+                if (showHide == 'hide') {
+                    $('#showLoader').remove();
+                    $('#' + elementId).show();
+                }
+        }
+}
+</script>
+<style>
+    .notification-error{
+    font-size: 14px;
+    text-align: center;
+    color:red;
+}
+
+.notification-suc{
+    font-size: 14px;
+    text-align: center;
+    color:#0bbfad;
+}
+</style>
+

@@ -1,0 +1,94 @@
+<div class="container-fluid">
+        <div class="content-wrap">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+    <main id="content" class="content" role="main">
+        <!-- Page content -->
+       <!-- <ol class="breadcrumb">
+            <li class="breadcrumb-item">Dashboard</li>
+            <li class="breadcrumb-item active">Patient profile</li>
+        </ol>-->
+
+        <div class="row">
+            <div class="col-md-form">
+                <section class="widget">
+                    
+                    <div class="widget-body">
+                        <form class="form-horizontal" action="<?php echo  $this->url(array('action' => 'savevideochattime'), 'doctorAppointment', true); ?>" method="POST">
+                            <input type = "hidden" id ="patient_id" name ="patient_id" value = "<?php echo $this->formdata['patient_id'];?>">
+                            <input type = "hidden" id ="appnt_id" name ="appnt_id" value = "<?php echo $this->formdata['id'];?>">
+                            <input type = "hidden" id ="appointment_type" name ="appointment_type" value = "2">
+          <input type = "hidden" id ="action_name" name ="action_name" value = "clinic-consultation-addedit">
+          <input type = "hidden" id ="pf" name ="pf" value = "<?php echo $this->pf;?>">
+          
+                            <fieldset>
+                                <legend><strong>Confirm Video Chat Time</strong> form</legend>
+                                <div class="form-group row" style ="text-align: center;">
+                                    
+                                    <div class="col-md-11">
+                                        
+                                        <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+            <div class="notification-error">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+        <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+            <div class="notification-suc">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+                                     
+                                        
+                                    </div>
+                                </div>
+                               
+                               
+
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Name</label>
+                                    <div class="col-md-7">
+                                        <input type="text" id="p_name" class="form-control" placeholder="Patient Name" name = 'p_name' value="<?php echo $this->formdata['name'];?>" disabled="disabled">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label text-md-right" for="tooltip-enabled">Video Chat Date/Time</label>
+                                    <div class="col-md-7 input-group date" id="datetimepicker4" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" name = "video_chat_datetime" value="<?php echo $this->formdata['appoinment_datetime'];?>">
+                                        <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </fieldset>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="offset-md-4 col-md-7 col-12">
+                                        <span id = "sve_btn"><button type="submit" class="btn btn-primary" id = 'button'>Save</button></span>
+                                        <button type="button" class="btn btn-inverse" id = "search" onClick = "javascript:cancel('appointment/index');">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div id = "f-l-name"></div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+       </main>
+</div>
+    </div>
+<script language="javascript">
+
+function cancel(){
+    window.location = doctorPath + 'appointment/index';
+}
+</script>
+

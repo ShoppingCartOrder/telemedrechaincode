@@ -1,0 +1,229 @@
+<div class="container-fluid">
+        <div class="content-wrap">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+    <main id="content" class="content" role="main">
+        <!-- Page content -->
+       <!-- <ol class="breadcrumb">
+            <li class="breadcrumb-item">Dashboard</li>
+            <li class="breadcrumb-item active">Patient profile</li>
+        </ol>-->
+
+        <div class="row">
+            <div class="col-lg-6">
+                <section class="widget">
+                    
+                    <div class="widget-body">
+                        <form class="form-horizontal" action="<?php echo  $this->url(array('action' => 'saveappoinment'), 'patientAppointment', true); ?>" method="POST">
+                            <input type = "hidden" id ="patient_id" name ="patient_id" value = "<?php echo $this->formdata['patient_id'];?>">
+                            <input type = "hidden" id ="appnt_id" name ="appnt_id" value = "<?php echo $this->formdata['id'];?>">
+                            <input type = "hidden" id ="appointment_type" name ="appointment_type" value = "1">
+          <input type = "hidden" id ="action_name" name ="action_name" value = "video-consultation-addedit">
+          
+                            <fieldset>
+                                <legend><strong>Video Appointment</strong> form</legend>
+                                <div class="form-group row" style ="text-align: center;">
+                                    
+                                    <div class="col-md-11">
+                                        
+                                        <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+            <div class="notification-error">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+        <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+            <div class="notification-suc">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+                                     
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Department</label>
+                                    <div class="col-md-7">
+                                       <select data-placeholder="Department Name" data-width="auto" tabindex="-1" class="select2 form-control select2-hidden-accessible" id="departmentDD" aria-hidden="true" name = "department" onChange = "javascript:changeDoctor(this.value);">
+                                            <option value="">Please select</option>
+                                            <?php  if(!empty($this->dertData)){
+                                                //$this->formdata['doctor_id'];
+                                                $selected = '';
+                                                foreach($this->dertData as $val){ 
+                                                    if((isset($this->formdata['department_id'])) && ($this->formdata['department_id'] == $val['id'])){
+                                                        $selected = "selected = selected";
+                                                    }else{
+                                                       $selected = ''; 
+                                                    }
+                                                    ?>
+                                            
+                                            <option value="<?php echo $val['id'];?>" <?php echo $selected;?>><?php echo $val['name'];?></option>
+
+                                            <?php } } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="hint-field" class="col-md-4 control-label text-md-right">
+                                        Choose Healthcare Provider
+                                        <!--<span class="help-block">Some help text</span>-->
+                                    </label>
+                                    <div class="col-md-7">
+                                       <select name = "doctor" data-placeholder="Doctor Name" data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control select2-hidden-accessible" id="doctorDD" aria-hidden="true">
+                                            <option value="">Please select</option>
+                                            <?php if(!empty($this->doctorData)){
+                                                $selected = '';
+                                                foreach($this->doctorData as $val){ 
+                                                    if($this->formdata['healthcare_provider_id'] == $val['id']){
+                                                        $selected = "selected = selected";
+                                                    }else{
+                                                       $selected = ''; 
+                                                    }
+                                                    
+                                                    ?>
+                                            
+                                                    <option value="<?php echo $val['id'];?>"<?php echo $selected;?>><?php echo $val['name'];?></option>
+
+                                            <?php } }?>
+                                      
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label text-md-right" for="tooltip-enabled">Appoinment Date/Time</label>
+                                    <div class="col-md-7 input-group date" id="datetimepicker4" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" name = "date_time" value="<?php echo $this->formdata['appoinment_datetime'];?>">
+                                        <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label text-md-right" for="default-textarea">Reason for appointment</label>
+                                    <div class="col-md-7">
+                                        <textarea rows="4" class="form-control" id="note" name = "note"><?php echo $this->formdata['reason_for_appointment'];?></textarea>
+                                    </div>
+                                </div>
+                                
+                            </fieldset>
+                            
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="offset-md-4 col-md-7 col-12">
+                                        <?php if(empty($this->formdata['id'])){?>
+                                        <span id = "sve_btn">
+                                            <button type="submit" class="btn btn-primary" id = 'button'>Save</button>
+                                        </span>
+                                        <?php } ?>
+                                        <button type="button" class="btn btn-inverse" id = "search" onClick = "javascript:cancel('appointment/index');">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </form>
+                        <div id = "f-l-name"></div>
+                    </div>
+                </section>
+            </div>
+            
+            <div class="col-lg-6">
+                <section class="widget">
+
+                    <div class="widget-body">
+
+                        <div class="info-description" style="font-size: 15px;"><i>
+                                <img src="<?php echo WEBSITE_Image; ?>/img/book-video-consultation.png" alt="">
+                            </i> <a target="_blank" href="<?php echo VIDEO_CHAT_URL;  ?>TestVideo">Test Video Call Consultation</a></div>
+                        <div class="info-description" style="font-size: 15px;"><i class="fa fa-video-camera" aria-hidden="true"></i> Video Consultation (15 mins)</div>
+                        <div class="ui small header info-header">
+                            <i aria-hidden="true" class="clock outline icon">
+
+                            </i>
+                            <div><i class="fa fa-clock-o" aria-hidden="true"></i>
+                                Consultation Timings  (GMT = UTC+00)
+                            </div>
+                        </div>
+                        <div class="info-description">
+                            <table style="margin-top: 15px;" class="ui striped table">
+                                <tbody class=""><tr class="">
+                                        <td style="font-size: 13px;" class="four wide">MON</td>
+                                        <td style="font-size: 13px;" class="">
+                                            <div class="ui grid"><div class="column">
+                                                    <div class="row">9:00 AM - 5:00 PM</div>
+                                                    <div class="row">9:00 AM - 5:00 PM</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="">
+                                        <td style="font-size: 13px;" class="four wide">TUE</td>
+                                        <td style="font-size: 13px;" class="">
+                                            <div class="ui grid">
+                                                <div class="column">
+                                                    <div class="row">9:00 AM - 5:00 PM</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="">
+                                        <td style="font-size: 13px;" class="four wide">WED</td>
+                                        <td style="font-size: 13px;" class="">
+                                            <div class="ui grid"><div class="column">
+                                                    <div class="row">9:00 AM - 5:00 PM</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="">
+                                        <td style="font-size: 13px;" class="four wide">THU</td>
+                                        <td style="font-size: 13px;" class="">
+                                            <div class="ui grid">
+                                                <div class="column">
+                                                    <div class="row">9:00 AM - 5:00 PM</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="">
+                                        <td style="font-size: 13px;" class="four wide">FRI</td>
+                                        <td style="font-size: 13px;" class="">
+                                            <div class="ui grid">
+                                                <div class="column">
+                                                    <div class="row">9:00 AM - 5:00 PM</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="">
+                                        <td style="font-size: 13px;" class="four wide">SAT</td>
+                                        <td style="font-size: 13px;" class="">...</td>
+                                    </tr>
+                                    <tr class=""><td style="font-size: 13px;" class="four wide">SUN</td>
+                                        <td style="font-size: 13px;" class="">...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="timing-help-text" style="font-size: 12px; color: rgb(120, 120, 120);">
+                            <span style="color: red;">*</span>Consultation timings are as per Virtual Practice's time zone</div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+       </main>
+</div>
+    </div>
+
+<script language="javascript">
+
+
+</script>
+

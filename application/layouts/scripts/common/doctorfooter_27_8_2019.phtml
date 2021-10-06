@@ -1,0 +1,59 @@
+ <!-- common libraries. required for every page-->
+<?php 
+     $action = $this->actionName;//home
+     $controller  = $this->controllerName;//list
+     if(($controller != 'Doctor_Patient' && $action != 'index')||($controller != 'Doctor_Appointment' && $action != 'index')){
+?>
+    
+    <!-- common libraries. required for every page-->
+        <script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/jquery_004.js"></script>
+        <script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/jquery_003.js"></script>
+        <script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/popper.js"></script>
+        <script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/bootstrap.js"></script>
+        <script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/util.js"></script>
+        <script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/jquery.js"></script>
+        <script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/widgster.js"></script>
+        <script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/pace.js" data-pace-options="{ &quot;target&quot;: &quot;.content-wrap&quot;, &quot;ghostTime&quot;: 1000 }"></script>
+        <script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/hammer.js"></script>
+        <script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/jquery_002.js"></script>
+
+
+        <!-- common app js -->
+        <!--<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/settings.js"></script>
+        <script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/app.js"></script>-->
+
+        <!-- Page scripts -->
+   
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/bootstrap-select.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/jquery_005.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/wysihtml5-0.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/bootstrap3-wysihtml5.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/select2.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/switchery.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/moment.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/tempusdominus-bootstrap-4-original.js"></script>
+<!--<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/bootstrap-colorpicker.js"></script>-->
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/inputmask.js"></script>
+<!--<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/fileinput.js"></script>-->
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/holder.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/dropzone.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/markdown.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/bootstrap-markdown.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/bootstrap-slider.js"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL;?>js/new/form-elements.js"></script>
+<?php }else{ ?>
+
+<script src="<?php echo WEBSITE_URL; ?>js/jqgrid/jquery-ui.min.js"></script>
+    
+<?php } ?>
+<script>
+ $(document).ready(function() {
+    
+    $('.navbar-nav').click(function() {
+        $(".dropdown-menu-right").css("position", "relative");
+        $( ".dropdown-menu-right" ).toggle();
+    })
+ });
+
+</script>
+

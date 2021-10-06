@@ -1,0 +1,314 @@
+<?php error_reporting(0); ?>
+<div id="wrapper-inside">
+    <div class="fl-lt full menu-bg">
+        <ul id="nav-one" class="dropmenu">
+            <li> <a class="current" href="<?= $this->url(array('controller' => 'dashboard', 'action' => 'index'), 'default', true) ?>">Dashboard</a> </li>
+            <li> <a href="<?= $this->url(array('controller' => 'site', 'action' => 'index'), 'default', true) ?>">My Website</a></li>
+            <li> <a href="<?= $this->url(array('controller' => 'checklist', 'action' => 'index'), 'default', true) ?>">Planning Tools</a></li>
+            <li><a href="<?= $this->url(array('controller' => 'profile', 'action' => 'index', 'useremail' => $_SESSION['vy_user']['email']), 'default', true) ?>">Profile</a></li>
+        </ul>
+        <!-- Main-nav end -->
+    </div>
+    <!-- menu Ends -->
+    <div id="content-in">
+        <div id="breadcrumbs-cont"> <a href="<?php echo $this->url(array('controller' => 'dashboard', 'action' => 'index'), 'default', true) ?>">Dashboard</a> &rsaquo; Planning Tools</div>
+        <!-- breadcrumbs-cont Ends -->
+        <div class="fl-lt full pad-bott">
+		
+		<?php if (($this->myWeddingDate['0']['wedding_date'] != '0000 - 00 - 00') || ($this->getnewupamountBudget['0']['vender_budget'] != NULL) || ($this->totalSavedVendors != NULL) || ($this->totalSavedVendors != NULL) )  { ?>
+                <div class="dash-lt fl-lt">
+                    <div class="fl-lt">
+
+
+                        <?php if ($this->checkbox_countChecklist['0']['check_item'] != '0') { ?>
+                            <!-- Checklist -->
+                            <div class="dash-box fl-lt">
+                                <div class="dash-box-top fl-lt">
+                                    <div class="sprite-wed checklist-icon">Checklist Icon</div><h6 class="fl-lt">My Checklist</h6>
+                                </div>
+                                <div class="dash-box-bot fl-lt">
+
+                                    <ul class="fl-lt dash-data">
+                                        <li><span class="col-lt">Total Tasks :</span><span class="col-rt"><?= $this->checkbox_countChecklist['0']['check_item']; ?></span></li>
+                                        <li><span class="col-lt">Completed Tasks :</span><span class="col-rt"><?= $this->checkbox_count_valueChecklist['0']['check_item']; ?></span></li>
+                                        <li><span class="col-lt">Overdue Tasks :</span><span class="col-rt"> <?= $this->overduetask['0']['duedateitem']; ?></span></li>
+                                        <li><span class="col-lt">Pending Tasks :</span><span class="col-rt"> <?= $upcomming = ($this->checkbox_countChecklist['0']['check_item'] - $this->checkbox_count_valueChecklist['0']['check_item']); ?></span></li>
+                                        <li><span class="col-lt">Tasks Due for Next Week :</span><span class="col-rt"><?php
+                                                if ($this->dueTasksInNextWeek['0']['nextWeekTask'] != 0) {
+                                                    echo $this->dueTasksInNextWeek['0']['nextWeekTask'];
+                                                } else {
+                                                    echo 'No Task';
+                                                }
+                                                ?></span></li>
+                                    </ul>
+                                    <a href="<?= $this->url(array('controller' => 'checklist', 'action' => 'index'), 'default', true) ?>" class="btn-pink-sm fl-lt marg-top2">Update Checklist</a>                
+                                </div>
+                            </div>
+                            <!-- Checklist ends -->
+                        <? } else { ?>
+
+        <div class="dash-box fl-lt">
+            <div class="dash-box-top fl-lt">
+            	<div class="sprite-wed checklist-icon">Checklist Icon</div><h6 class="fl-lt">My Checklist</h6>
+            </div>
+            <div class="dash-box-bot fl-lt">
+            	<p class="fl-lt">Organize all your To-Do's and manage each wedding task, step by step!</p>
+            <div id="weddingdateerror"></div>
+            	<div class="fl-lt"> 
+            <input type="text" id="bride_wedding_date" name="bride_wedding_date" placeholder="19 January 2013" value="" class="input-txt box1"  />
+            	</div>  
+            <input type="button" name="add_checklist" id="add_checklist" onclick="return getuserweddingdate()" class="btn-pink marg-top3" value="Create a Checklist" />
+            </div>
+        </div>
+                            
+                            
+                        <? } ?>
+
+
+                        <?php if (isset($this->getnewupamountBudget['0']['vender_budget']) != '') {
+                            ?>
+
+                            <!-- Budget Manager -->
+                            <div class="dash-box fl-lt">
+                                <div class="dash-box-top fl-lt">
+                                    <div class="sprite-wed budget-icon">Budget Manager Icon</div><h6 class="fl-lt">My Budget Manager</h6>
+                                </div>
+                                <div class="dash-box-bot fl-lt">
+                                    <ul class="fl-lt dash-data">
+                                        <li><span class="col-lt">My Budget:</span><span class="col-rt">Rs.<?= $this->getnewupamountBudget['0']['vender_budget']; ?></span></li>
+                                        <?php for ($m = 0; $m < count($this->totalamounts); $m++) { ?>
+                                            <li><span class="col-lt">Estimated Cost :</span><span class="col-rt">Rs. <?= $myBudgetsAllocated = $this->totalamounts[$m]['suggested']; ?></span></li>
+                                            <?php
+                                            $myBudgetsActual = $this->totalamounts[$m]['actual'];
+                                            if ($myBudgetsAllocated >= $myBudgetsActual) {
+                                                ?>
+                                                <li><span class="col-lt">Actual Cost :</span><span class="col-rt">Rs.<?php echo "$myBudgetsActual"; ?></span></li>    
+
+                                            <?php } else { ?>
+
+                                                <li><span class="col-lt">Actual Cost :</span><span class="col-rt" style="color:#FF0000;">Rs.<?php echo $extra = ($myBudgetsActual); ?></span></li>    
+
+                                            <? } ?>
+
+                                            <li><span class="col-lt">Amount Paid Till Date :</span><span class="col-rt">Rs.  <?= $total_paid = $this->totalamounts[$m]['paid']; ?></span></li>
+                                            <?php if ($myBudgetsActual >= $total_paid) {
+                                                ?>
+
+
+
+                                                <li><span class="col-lt">Balance Due to be Paid :</span><span class="col-rt">Rs.<?= number_format($myBudgetsActual - $total_paid, 2); ?></span></li>
+
+
+
+                                            <?php } else { ?>
+                                                <li><span class="col-lt">Balance Due to be Paid :</span><span class="col-rt" style="color:#FF0000;">Rs.<?php echo number_format($total_paid - $myBudgetsActual, 2); ?></span></li>
+                                            <?php } ?>
+
+
+                                        <?php } ?>
+                                    </ul>
+                                    <a href="<?= $this->url(array('controller' => 'budget', 'action' => 'index'), 'default', true) ?>" class="btn-pink-sm fl-lt marg-top2">Update Budget</a>
+                                </div>
+                            </div>
+                            <!-- Budget Manager ends -->
+
+                        <? } else { ?>
+						<div class="dash-box fl-lt">
+        	<div class="dash-box-top fl-lt">
+            	<div class="sprite-wed budget-icon">Budget Manager Icon</div><h6 class="fl-lt">Budget Manager</h6>
+            </div>
+            <div class="dash-box-bot fl-lt">
+            	<p class="fl-lt">Keep a track of every rupee spent! What, Where &amp; How?</p>
+                  <div id="yourerror" style="color:#ab0000;"></div>
+            	<div class="fl-lt"><div class="num">Rs.</div> 
+                   <input id="yourbudget" maxlength="12" name="yourbudget" type="text" placeholder="Enter Your Budget" class="input-txt box1"/>
+                </div>  
+                <a onclick="return enterbudget()" class="btn-pink fl-lt marg-top3">Create Budget</a>        
+            </div>
+        </div>
+                             
+                        <?php } ?>
+
+
+
+                    </div>
+
+
+                    <div class="fl-lt">
+
+                        <?php if ($this->totalSavedVendors != NULL) {
+                            ?>
+
+
+                            <div class="dash-box fl-lt">
+                                <div class="dash-box-top fl-lt">
+                                    <div class="sprite-wed vendors-icon">My Vendors Icon</div><h6 class="fl-lt">My Vendors</h6>
+                                </div>
+                                <div class="dash-box-bot fl-lt">
+                                    <ul class="fl-lt dash-data">
+                                        <li><span class="col-lt">Vendors Reviewed :</span><span class="col-rt"><?= count($this->totalReviewedVendors); ?></span></li>
+                                        <li><span class="col-lt">Vendors Saved :</span><span class="col-rt"> <?= count($this->totalSavedVendors); ?></span></li>
+                                    </ul>
+                                    <a href="<?= $this->url(array('controller' => 'vendors', 'action' => 'index'), 'default', true) ?>" class="btn-pink-sm fl-lt marg-top2">Add Vendors</a> <a href="<?= $this->url(array('controller' => 'Reviews', 'action' => 'index'), 'default', true) ?>" class="btn-pink-sm fl-lt marg-top2" style="margin-left:20px;">Review Vendors</a>
+                                </div>
+                            </div>
+
+                        <? } else { ?>
+  
+         <div class="dash-box fl-lt">
+        	<div class="dash-box-top fl-lt">
+            	<div class="sprite-wed vendors-icon">My Vendors Icon</div><h6 class="fl-lt">My Vendors</h6>
+            </div>
+            <div class="dash-box-bot fl-lt">
+            	<p class="fl-lt">Save all your favorite vendors at one place for future use! </p> 
+                <a href="<?= $this->url(array('controller' => 'vendors', 'action' => 'index'), 'default', true) ?>" class="btn-pink fl-lt">Add Vendors</a>        
+            </div>
+        </div>
+                            
+             
+                        <?php } ?>
+
+
+                        <?php if ($this->totalGuestCount != NULL) { ?>
+
+
+                            <div class="dash-box fl-lt">
+                                <div class="dash-box-top fl-lt">
+                                    <div class="sprite-wed guest-icon">Guests &amp; Events Icon</div><h6 class="fl-lt">Guests &amp; Events</h6>
+                                </div>
+                                <div class="dash-box-bot fl-lt">
+                                    <ul class="fl-lt dash-data">
+                                        <li><span class="col-lt">Total No. of Events :</span><span class="col-rt"><?= $this->totaleventCount; ?></span></li>
+                                        <li><span class="col-lt">Total Guest Count :</span><span class="col-rt"><?= count($this->totalGuestCount); ?></span></li>
+                                    </ul>
+                                    <a href="<?= $this->url(array('controller' => 'events', 'action' => 'index'), 'default', true) ?>" class="btn-pink-sm fl-lt marg-top2">Add Events</a> <a href="<?= $this->url(array('controller' => 'guests', 'action' => 'index'), 'default', true) ?>" class="btn-pink-sm fl-lt marg-top2" style="margin-left:20px;">Add Guests</a>
+                                </div>
+                            </div>
+ 
+                        <? } else { ?>
+                              
+<div class="dash-box fl-lt">
+        	<div class="dash-box-top fl-lt">
+            	<div class="sprite-wed guest-icon">Guests &amp; Events Icon</div><h6 class="fl-lt">Guests &amp; Events</h6>
+            </div>
+            <div class="dash-box-bot fl-lt">
+            	<p class="fl-lt">An exhaustive list of all your functions & guests, so that u dont forget anything!</p> 
+                <a href="<?= $this->url(array('controller' => 'guests', 'action' => 'index'), 'default', true) ?>" class="btn-pink fl-lt">Make a Guest List</a>        
+            </div>
+        </div>
+            <?php } ?>
+
+
+
+
+                    </div>
+
+                </div> 
+
+
+<div class="dash-rt fl-lt">
+
+ <?php if ($this->getWeddingWebsite != NULL) { ?>               
+	 
+     <div class="wed-summary fl-lt">
+                        <h6 class="fl-lt">My Wedding Summary</h6>
+                        <div class="days-left fl-lt">
+                            <span class="green-big2 fl-lt"><?php
+                                    if ($this->getAccountInformation['0']['wedding_date'] != 0000 - 00 - 00) {
+                                        $date1 = date("Y-m-d");
+                                        $date2 = $this->getAccountInformation['0']['wedding_date'];
+                                        $diff = abs(strtotime($date1) - strtotime($date2));
+ 										$years =  '';
+                                        $months =  '';
+                                         echo $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
+                                    } else { ?> <h6 class="fl-lt" style="width:216px; margin-top:20px;"><a class="getpopup small-link2" href="<?= $this->url(array('controller' => 'checklist', 'action' => 'weddingdate'), 'default', true) ?>">Enter Your Wedding Date!</a> </h6>  <? } ?>
+</span><h6 class="fl-lt" style="width:126px; margin:13px 0 0 12px">
+<?php 
+$currentDate = abs(strtotime(date("Y-m-d")));
+$myweddingdate = abs(strtotime($this->getAccountInformation['0']['wedding_date']));  
+if($myweddingdate > $currentDate && $this->getAccountInformation['0']['wedding_date'] != 0000 - 00 - 00){ echo "Days Left!"; }
+elseif($myweddingdate == $currentDate && $this->getAccountInformation['0']['wedding_date'] != 0000 - 00 - 00){  echo "Wedding Today!"; }
+elseif($myweddingdate  < $currentDate && $this->getAccountInformation['0']['wedding_date'] != 0000 - 00 - 00){  echo " Days After  Wedding"; } 
+?> 
+ </h6>                         </div>
+                        <ul class="fl-lt dash-data">
+                            <li><span class="col-lt">Wedding Date :</span><span class="col-rt">
+
+                                   
+                                   <?php if($this->getAccountInformation['0']['wedding_date'] != 0000 - 00 - 00) { ?>
+									 <a href="<?= $this->url(array('controller' => 'checklist', 'action' => 'updatewedding'), 'default', true) ?>" class="getpopup small-link2">
+ 				<?  echo  date('d-M-Y', strtotime($this->getAccountInformation['0']['wedding_date']));} ?>
+</a>
+
+                                  </span></li>
+                            <li><span class="col-lt">Site URL :</span><span class="col-rt"><a target="_blank" class="pink-link strong-txt" href="<?= $this->url(array('controller' => 'site', 'action' => 'live', 's' => base64_encode($_SESSION['vy_user']['id']),'u'=> $this->getWeddingWebsite['url']), 'default', true) ?>"><?php echo $this->getWeddingWebsite['url']; ?></a></span></li>
+                            <li><span class="col-lt">Website Views :</span><span class="col-rt">No views yet</span></li>
+                             
+                        </ul>
+                        
+                    </div>
+      
+ <?php  } else  { ?> 
+	 
+ 	 
+	 <div class="wed-summary fl-lt">
+    	<h6 class="fl-lt full">Wedding Website</h6>
+        <div class="fl-lt pos-rel marg-top2 full">
+        	<div class="fl-lt wed-box-txt">Keep a track of every rupee spent! What, Where & How?</div>
+            <div class="clear-div"></div>
+            <a href="<?= $this->url(array('controller' => 'site', 'action' => 'index'), 'default', true) ?>" class="btn-pink fl-lt marg-top2">Get Started Now</a>
+            <img src="<?php echo wedding_Image; ?>/wedsite-pic.png" class="wed-pic" />
+        </div>
+    </div>
+	 
+ 	 
+ <? }  ?>
+    
+ 
+ 
+ 
+ <?php if ($this->getEinvitetemplate != NULL) { ?>  
+	<div class="wed-summary fl-lt">
+    	<h6 class="fl-lt full">E-Invites</h6>
+        <div class="fl-lt pos-rel marg-top2 full">
+        	
+            <div class="clear-div"></div>
+            <img src="<?= invites; ?>/<?php echo $this->getEinvitetemplate['theme_id']; ?>/e-invite-temp.jpg" width="295px;" class="fl-lt" />
+         </div>
+         <div></div>
+        
+        <div class="fl-lt full marg-top"><h6 style="display:inline">Invitations Sent </h6>: 
+		<?php if ($this->totalGuestCount != NULL) { 
+		 echo count($this->totalGuestInvited); 
+		 echo "&nbsp";
+		 echo "out of";
+		 echo "&nbsp";   
+		 echo count($this->totalGuestCount); 
+		 } ?></div> 
+    </div>
+  <?php  } else  { ?>  
+  <div class="wed-summary fl-lt">
+    	<h6 class="fl-lt full">E-Invites</h6>
+        <div class="fl-lt pos-rel marg-top2 full">
+        	<div class="fl-lt full">Keep a track of every rupee spent! What, Where & How?</div>
+            <div class="clear-div"></div>
+            <a href="<?= $this->url(array('controller' => 'invites', 'action' => 'index'), 'default', true) ?>" class="btn-pink fl-lt marg-top2">Create an E-Invite</a>
+        </div>
+    </div>
+  <?php } ?>
+    
+    
+    
+    
+    
+</div>
+
+
+
+   
+
+            <?php } ?>
+          </div>
+    </div>
+    <!-- content-in Ends -->
+</div>

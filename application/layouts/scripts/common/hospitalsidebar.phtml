@@ -1,0 +1,166 @@
+<div class="sidenav" style="margin-top:60px">
+
+    <div class="container">
+        <form class="form-inline mm-2 mm-gg-0" style="margin-top:1rem;margin-bottom:2rem">
+
+            <div class="form-group">
+                <input class="form-control mr-sm-2" type="search" style="margin-left:10px" placeholder="Search" aria-label="Search">  
+                <button type="submit" style="float-right;padding: 19px; 10px;margin-left: -12px;background: #ddd;font-size: 17px;border: none;cursor: pointer;">
+                    <span class="glyphicon glyphicon-search" style="color:#fff;font-weight:400"></span></button>
+            </div>
+
+        </form>
+        <div id="accordion">
+          
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                        <span class="icon">
+                            <i class="fas fa-users" aria-hidden="true"></i>
+
+                        </span>
+                        Patients
+                    </a>
+                </div>
+                <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        <a href="<?php echo HOSPITAL_BASE_URL; ?>patient/index" id="ember1515" class="category-sub-item nav-link active ember-view">          
+                            <span class="octicon octicon-chevron-right"></span>&gt; Patient Listing
+                        </a> 
+<!--                        <a href="out-patients.php" id="ember1537" class="category-sub-item nav-link ember-view">         
+                            <span class="octicon octicon-chevron-right"></span>&gt; OPD
+                        </a> 
+                        <a href="out-patients.php" id="ember1537" class="category-sub-item nav-link ember-view">         
+                            <span class="octicon octicon-chevron-right"></span>&gt; IPD
+                        </a> -->
+                        <a href="<?php echo HOSPITAL_BASE_URL; ?>patient/patient-profile-edit" id="ember1561" class="category-sub-item nav-link ember-view">            
+                            <span class="octicon octicon-plus"></span>+ Patient Registration
+                        </a>  
+<!--                        <a href="report-patient.php" id="ember1602" class="category-sub-item nav-link ember-view">             
+                            <span class="octicon octicon-chevron-right"></span>&gt; Reports
+                        </a>   -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#appointments">
+                        <span class="icon">
+                            <i class="fas fa-users" aria-hidden="true"></i>
+
+                        </span>
+                        Appointments
+                    </a>
+                </div>
+                <div id="appointments" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        <a href="<?php echo HOSPITAL_BASE_URL; ?>appointment/index" id="ember1515" class="category-sub-item nav-link active ember-view">          
+                            <span class="octicon octicon-chevron-right"></span>&gt; Appointments Listing
+                        </a> 
+
+                        <a href="<?php echo HOSPITAL_BASE_URL; ?>patient/patient-profile-edit" id="ember1561" class="category-sub-item nav-link ember-view">            
+                            <span class="octicon octicon-plus"></span>+ Add Appointments<div><br>(New Patient)</div> 
+                        </a>  
+                        <a href="<?php echo HOSPITAL_BASE_URL; ?>patient/index" id="ember1561" class="category-sub-item nav-link ember-view">            
+                            <span class="octicon octicon-plus"></span>+ Add Appointments <div><br>(Existing Patient)</div>
+                        </a>  
+
+                    </div>
+                </div>
+            </div>
+           
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseSeven">
+                        <span class="mega-octicon octicon-calendar"></span>
+                        <i class="fas fa-money-bill" aria-hidden="true"></i>Billing
+                    </a>  	
+                </div>
+                <div id="collapseSeven" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      <!--   <a href="invoices.php" id="ember3566" class="category-sub-item nav-link active ember-view">              
+                           <span class="octicon octicon-chevron-right">
+                            </span>&gt; Invoices 
+                        </a>
+                        <a href="new-invoice.php" id="ember3568" class="category-sub-item nav-link ember-view">                
+                            <span class="octicon octicon-chevron-right">
+                            </span>+ New Invoice
+                        </a>    
+                        <a href="prices.php" id="ember3570" class="category-sub-item nav-link ember-view">                
+                            <span class="octicon octicon-search">
+                            </span>&gt; Prices
+                        </a>    
+                        <a href="price-profile.php" id="ember3572" class="category-sub-item nav-link ember-view">               
+                            <span class="octicon octicon-calendar">
+                            </span>&gt; Price Profiles
+                        </a> 
+                        <a href="cashier.php" id="ember3574" class="category-sub-item nav-link ember-view">               
+                            <span class="octicon octicon-plus">
+                            </span>&gt; Cashier
+                        </a>-->
+                      <a href="<?php echo HOSPITAL_BASE_URL; ?>patient/patientcharges" id="ember1515" class="category-sub-item nav-link active ember-view">          
+                            <span class="octicon octicon-chevron-right"></span>&gt; Patient Charges
+                        </a> 
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#ward">
+                        <span class="mega-octicon octicon-calendar"></span>
+                        <i class="fas fa-users" aria-hidden="true"></i>Ward & Bed Management
+                    </a>  	
+                </div>
+                <div id="ward" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                     <!-- 
+                      <a href="<?php echo HOSPITAL_BASE_URL; ?>ward/index" id="ember1515" class="category-sub-item nav-link active ember-view">          
+                            <span class="octicon octicon-chevron-right"></span>&gt; Ward
+                        </a> -->
+                      <a href="<?php echo HOSPITAL_BASE_URL; ?>ward/allocation" id="ember1515" class="category-sub-item nav-link active ember-view">          
+                            <span class="octicon octicon-chevron-right"></span>&gt; B&W Allocation
+                        </a> 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#ot">
+                        <span class="mega-octicon octicon-calendar"></span>
+                        <i class="fas fa-users" aria-hidden="true"></i>Operation Theater
+                    </a>  	
+                </div>
+                <div id="ot" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      
+                      <a href="<?php echo HOSPITAL_BASE_URL; ?>ot/index" id="ember1515" class="category-sub-item nav-link active ember-view">          
+                            <span class="octicon octicon-chevron-right"></span>&gt; OT
+                        </a> 
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#tpa">
+                        <span class="mega-octicon octicon-calendar"></span>
+                        <i class="fas fa-users" aria-hidden="true"></i>TPA
+                    </a>  	
+                </div>
+                <div id="tpa" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      
+                      <a href="<?php echo HOSPITAL_BASE_URL; ?>tpa/index" id="ember1515" class="category-sub-item nav-link active ember-view">          
+                            <span class="octicon octicon-chevron-right"></span>&gt; TPA
+                        </a> 
+                       
+                    </div>
+                </div>
+            </div>
+            
+           
+        </div>
+    </div>
+</div>

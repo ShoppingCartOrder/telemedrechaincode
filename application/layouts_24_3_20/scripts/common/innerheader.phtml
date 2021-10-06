@@ -1,0 +1,30 @@
+<?php $action = $this->actionName; ?> 
+<div class="header">
+     
+			<div class="wrap">
+<!--			<a href="index.php">
+                            <span class="icon">
+                                <i class="fa fa-th-list"></i>
+                            </span></a>-->
+							<div class="top-header-left">
+							<p><ul><a href="http://letsknowit.in" style="margin-top:-22px;margin-right:-10px;background-color:#E84848;color:#E84848">
+							<i class="fa fa-home" style="font-size:25px;color:#fff" aria-hidden="true"></i>
+							</a></ul></p>
+						</div>
+<div id ="web-logo" onclick="home('<?php echo WWW_ROOT;?>');"><h3 style="margin-left:45px;margin-right:20px">Medrechaincode</h3></div>
+                                <?php if($action == 'login'){ ?>
+                                
+				<a href="<?php echo WWW_ROOT; ?>patients/register"  style="background-color:#E84848;color:#fff">Sign Up</a>
+                                
+                                <?php }elseif ($action == 'register') { ?>
+                                    <a href="<?php echo PATIENT_BASE_URL; ?>" style="background-color:#E84848;color:#fff">Sign In</a>
+                                    
+                                <?php }?>
+				</div>
+		</div>
+
+<script>
+function home(url){
+    window.location = url;
+}
+</script>

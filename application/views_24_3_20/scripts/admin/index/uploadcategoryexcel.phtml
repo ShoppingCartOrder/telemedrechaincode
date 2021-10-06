@@ -1,0 +1,33 @@
+     <script type="text/javascript">
+         
+			$(document).ready(function() { 
+ 
+                            
+		}); 
+</script>
+                
+<div class="module">
+    <h2><span>Category Bulk Data Upload Form</span></h2>
+
+    <div class="module-body">
+        <form name ="importfile" enctype="multipart/form-data" action="<?= $this->url(array('action' => 'uploadcategoryexcel'), 'adminIndex', true) ?>" method="POST">
+
+          <p>
+                <label>Select File </label>
+                <input class ="input-short" type="file" name="data_import_file" id="car_info_file"/></td>
+          </p>
+          <p>
+         <fieldset>
+                <input type="submit" name="import_file" value="Import Data" class="submit-green"> 
+                
+                <input type="button" onClick ="window.location.href='<?= $this->url(array('action' => 'index', 'page'=>'1'), 'adminCategory', true) ?>'"value="Cancel" class="submit-gray">
+                
+                <a href = "<?php echo WWW_ROOT; ?>bulkdata/Wedding-Lehnga-And-Sarees_Vendors.csv" >Download Sample file</a>
+            </fieldset>
+        </p>
+        </form>
+    </div> <!-- End .module-body -->
+
+</div>
+            
+          

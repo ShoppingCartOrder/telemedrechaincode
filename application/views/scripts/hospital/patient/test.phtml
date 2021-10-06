@@ -1,0 +1,68 @@
+
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
+  
+
+        <br />
+        <br />
+        <div class="container">
+            <h1 align="center">AutoComplete Textbox with Multiple Field using jQuery in PHP</h1>
+            <br />
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label>Enter Multiple Country Name</label>
+                        <div class="input-group">
+                            <input type="text" id="search_data" placeholder="" autocomplete="off" class="form-control input-lg" />
+                            <ul id="ui-id-1-1" tabindex="0" class="ui-menu ui-widget ui-widget-content ui-autocomplete ui-front" style="min-width: 418px; top: -457px; left: 30px; width: 1021.4px; padding: 10px; display: block;"><li class="ui-menu-item">
+                                    <div id="ui-id-52" tabindex="-1" class="ui-menu-item-wrapper">Immunity Test</div></li>
+                                <li class="ui-menu-item"><div id="ui-id-53" tabindex="-1" class="ui-menu-item-wrapper">Blood Sugar Test</div></li>
+                                <li class="ui-menu-item"><div id="ui-id-54" tabindex="-1" class="ui-menu-item-wrapper">CBC Test</div></li>
+                                <li class="ui-menu-item"><div id="ui-id-55" tabindex="-1" class="ui-menu-item-wrapper">Dengue Test</div></li>
+                                </ul>
+
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-primary btn-lg" id="search">Get Value</button>
+                            </div>
+                        </div>
+                        <br />
+                        <span id="country_name"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+        </div>
+   
+<script>
+  $(document).ready(function(){
+      
+    $('#search_data').tokenfield({
+        autocomplete :{
+            source: function(request, response)
+            {
+                jQuery.get(hospitalPath+ "laboratory/search-lab-name", {
+                    query : request.term
+                }, function(data){
+                    data = JSON.parse(data);
+                    response(data);
+                });
+            },
+            delay: 100
+        }
+    });
+
+    $('#search').click(function(){
+        $('#country_name').text($('#search_data').val());
+    });
+
+  });
+</script>
+

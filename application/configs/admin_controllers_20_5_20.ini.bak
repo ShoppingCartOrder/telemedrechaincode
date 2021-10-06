@@ -1,0 +1,8 @@
+[admin_controllers]
+adminIndex                  =           "Admin_Index"
+adminDashboard                  =           "Admin_Dashboard"
+adminUser                  =           "Admin_User"
+adminAppointment                  =           "Admin_Appointment"
+adminDoctor                  =           "Admin_Doctor"
+adminDepartment                  =           "Admin_Department"
+adminPatient                  =           "Admin_Patient"

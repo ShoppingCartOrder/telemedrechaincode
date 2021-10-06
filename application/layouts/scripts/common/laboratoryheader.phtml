@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-light bb-light" style=" background-color: #E84848;height:3.8rem">
+ 
+  <h4 style="font-weight:500;color:#fff"><b>Laboratory</b></h4>
+  <button style="float:right;background-color:#FFF;border-radius:5%;margin-left:45rem;border:1px solid green;color:green">
+<!--      <a href = "<?php echo WWW_ROOT; ?>hospital/patient/patient-profile-edit">+New Patient</a>-->
+  </button>
+  <?php 
+                    
+                   // print_r($this->doctorUsers);
+                    if (!empty($this->laboratoryUsers)) { ?>
+                    <div class="navbar-header mobile-hidden" style="width:50%;">
+                        <!-- search form! link it to your search server -->
+                       
+                        <ul class="nav navbar-nav float-right">
+                            <li class="dropdown nav-item">
+                                <a
+                                        href="#"
+                                        role="button"
+                                        class="dropdown-toggle dropdown-toggle-notifications nav-link"
+                                        id="notifications-dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                >
+                                    <span class="thumb-sm avatar float-left">
+                                        <img class="rounded-circle" src="/images/user.png" alt="...">
+                                    </span>
+                                    &nbsp;
+                                    <strong><?php echo $this->patientUsers;?></strong>&nbsp;
+                                    <span class="circle bg-warning fw-bold text-white">
+                                        &nbsp;
+                                    </span>
+                                    <b class="caret"></b>
+                                </a>
+                                
+                            </li>
+                            <li class="dropdown nav-item">
+                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                    <i class="la la-cog"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a class="dropdown-item" href="<?php echo LABORATORY_BASE_URL . 'user/' ?>"><i class="glyphicon glyphicon-user"></i> &nbsp; My Account</a></li>
+                                    <li class="dropdown-divider"></li>
+                                    
+                                    <li><a class="dropdown-item" href="<?php echo LABORATORY_BASE_URL . 'index/logout' ?>"><i class="la la-sign-out"></i> &nbsp; Log Out</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <?php } ?>
+</nav>
+<div class="sidenav">
+	<nav class="navbar navbar-expand-lg navbar-light bb-light" style="background-color: #E84848;height:3.8rem;border-bottom: 1px solid #fff; color:#fff">
+		<a class="navbar-brand" href="#">
+		<img src="images/logo.png" style="border-radius:50%"; width="50" height="50" alt="">
+	    </a><h5 style="font-weight:600">MEDRECHAINCODE</h5>
+	</nav>
+	</div>

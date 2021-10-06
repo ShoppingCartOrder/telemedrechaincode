@@ -1,0 +1,166 @@
+<div class="container-fluid">
+        <div class="content-wrap">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+    <main id="content" class="content" role="main">
+        <!-- Page content -->
+       <!-- <ol class="breadcrumb">
+            <li class="breadcrumb-item">Dashboard</li>
+            <li class="breadcrumb-item active">Patient profile</li>
+        </ol>-->
+
+        <div class="row">
+            <div class="col-md-form">
+                <section class="widget">
+                    
+                    <div class="widget-body">
+                        <form class="form-horizontal" action="<?php echo  $this->url(array('action' => 'saveappoinment'), 'doctorAppointment', true); ?>" method="POST">
+                            <input type = "hidden" id ="patient_id" name ="patient_id" value = "<?php echo $this->formdata['patient_id'];?>">
+                            <input type = "hidden" id ="appnt_id" name ="appnt_id" value = "<?php echo $this->formdata['id'];?>">
+                            <input type = "hidden" id ="appointment_type" name ="appointment_type" value = "2">
+          <input type = "hidden" id ="action_name" name ="action_name" value = "clinic-consultation-addedit">
+          
+                            <fieldset>
+                                <legend><strong>Clinic Appointment</strong> form</legend>
+                                <div class="form-group row" style ="text-align: center;">
+                                    
+                                    <div class="col-md-11">
+                                        
+                                        <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+            <div class="notification-error">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+        <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+            <div class="notification-suc">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+                                     
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Department</label>
+                                    <div class="col-md-7">
+                                       <select data-placeholder="Department Name" data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control select2-hidden-accessible" id="default-select" aria-hidden="true" name = "department">
+                                            <option value="">Please select</option>
+                                            <?php  if(!empty($this->dertData)){
+                                                //$this->formdata['doctor_id'];
+                                                $selected = '';
+                                                foreach($this->dertData as $val){ 
+                                                    if($this->formdata['department_id'] == $val['id']){
+                                                        $selected = "selected = selected";
+                                                    }else{
+                                                       $selected = ''; 
+                                                    }
+                                                    ?>
+                                            
+                                            <option value="<?php echo $val['id'];?>" <?php echo $selected;?>><?php echo $val['name'];?></option>
+
+                                            <?php } } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="hint-field" class="col-md-4 control-label text-md-right">
+                                        Choose Healthcare Provider
+                                        <!--<span class="help-block">Some help text</span>-->
+                                    </label>
+                                    <div class="col-md-7">
+                                       <select name = "doctor" data-placeholder="Doctor Name" data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control select2-hidden-accessible" id="default-select" aria-hidden="true">
+                                            <option value="">Please select</option>
+                                            <?php if(!empty($this->doctorData)){
+                                                $selected = '';
+                                                foreach($this->doctorData as $val){ 
+                                                    if($this->formdata['healthcare_provider_id'] == $val['id']){
+                                                        $selected = "selected = selected";
+                                                    }else{
+                                                       $selected = ''; 
+                                                    }
+                                                    
+                                                    ?>
+                                            
+                                                    <option value="<?php echo $val['id'];?>"<?php echo $selected;?>><?php echo $val['name'];?></option>
+
+                                            <?php } }?>
+                                      
+                                        </select>
+                                    </div>
+                                </div>
+                               
+
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Name</label>
+                                    <div class="col-md-7">
+                                        <input type="text" id="p_name" class="form-control" placeholder="Patient Name" name = 'p_name' value="<?php echo $this->formdata['name'];?>">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="hint-field" class="col-md-4 control-label text-md-right">
+                                        Email
+                                        <!--<span class="help-block">Some help text</span>-->
+                                    </label>
+                                    <div class="col-md-7">
+                                         <?php 
+                                        $disabled = '';
+                                        if(isset($this->formdata['id'])){
+                                           $disabled = 'disabled="disabled"'; 
+                                        }?>
+                                        <input type="text" id="hint-field" class="form-control" name = 'p_email' value="<?php echo $this->formdata['email'];?>" <?php echo $disabled;?>>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label text-md-right" for="tooltip-enabled">Contact No</label>
+                                    <div class="col-md-7">
+                                        <input type="text" id="tooltip-enabled" class="form-control" data-placement="top" data-original-title="Some explanation text here" placeholder="Mobile No" name = 'p_mno' value="<?php echo $this->formdata['contact_no'];?>">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label text-md-right" for="tooltip-enabled">Address</label>
+                                    <div class="col-md-7">
+                                        <input type="text" value = "<?php echo $this->formdata['address'];?>" id="tooltip-enabled" class="form-control" data-placement="top" data-original-title="Some explanation text here" placeholder="Address" name = 'p_add' required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label text-md-right" for="default-textarea">Problem</label>
+                                    <div class="col-md-7">
+                                        <textarea rows="4" class="form-control" id="note" name = "note"><?php echo $this->formdata['reason_for_appointment'];?></textarea>
+                                    </div>
+                                </div>
+                                
+                            </fieldset>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="offset-md-4 col-md-7 col-12">
+                                        <span id = "sve_btn"><button type="submit" class="btn btn-primary" id = 'button'>Save</button></span>
+                                        <button type="button" class="btn btn-inverse" id = "search" onClick = "javascript:cancel('appointment/index');">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div id = "f-l-name"></div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+       </main>
+</div>
+    </div>
+<script language="javascript">
+
+function cancel(){
+    window.location = doctorPath + 'appointment/index';
+}
+</script>
+

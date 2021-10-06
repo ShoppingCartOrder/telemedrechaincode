@@ -1,0 +1,138 @@
+<div class="container-fluid">
+    <div class="content-wrap">
+        <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+        <main id="content" class="content" role="main">
+            <!-- Page content -->
+            <!-- <ol class="breadcrumb">
+                 <li class="breadcrumb-item">Dashboard</li>
+                 <li class="breadcrumb-item active">Patient profile</li>
+             </ol>-->
+
+            <div class="row">
+                <div class="col-md-form">
+                    <section class="widget" style="background-color:#FFF; margin-top:2rem">
+
+                        <div class="widget-body">
+                            <form style="padding:15px" class="form-horizontal" action="<?php echo $this->url(array('action' => 'saveinvetigation'), 'doctorInvestigation', true); ?>" method="POST">
+                                <input type = "hidden" id ="patient_id" name ="patient_id" value = "<?php echo $this->patient_id; ?>">
+                                <input type = "hidden" id ="registration_no" name ="registration_no" value = "<?php echo $this->rid; ?>">
+                                <input type = "hidden" id ="appointment_id" name ="appointment_id" value = "<?php echo $this->appntId; ?>">
+                                <input type = "hidden" id ="prescribe_id" name ="prescribe_id" value = "<?php echo $this->prescribe_id; ?>">
+                                <input type = "hidden" id ="id" name ="id" value = "<?php echo $this->id; ?>">
+
+
+                                <fieldset>
+                                    <legend><strong>Investigation</strong> form</legend>
+                                    <div class="form-group row" style ="text-align: center;">
+
+                                        <div class="col-md-11">
+
+                                            <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                            <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+                                                <div class="notification-error">
+                                                    <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                        <?php echo $msg; ?>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
+                                            <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                            <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+                                                <div class="notification-suc">
+                                                    <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                        <?php echo $msg; ?>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label  for="Diagnosis">Final Diagnosis:</label>
+                                            <textarea id="final_diagnosis" name="final_diagnosis" rows="8" cols="75" required=""><?php echo $this->investigationDetails['final_diagnosis']; ?></textarea>
+                                        </div>                                
+                                        <div class="form-group">
+                                            <label  for="Present">Present History:</label>
+                                            <textarea id="present_history" name="present_history" rows="8" cols="75" required="" ><?php echo $this->investigationDetails['present_history']; ?></textarea>
+                                        </div>                                
+                                        <div class="form-group">
+                                            <label  for="Past">Past History:</label>
+                                            <textarea id="past_history" name="past_history" rows="8" cols="75" required=""><?php echo $this->investigationDetails['past_history']; ?></textarea>
+                                        </div>                                
+                                        <div class="form-group">
+                                            <label  for="Examination">Examination:</label>
+                                            <textarea id="examination" name="examination" rows="8" cols="75" required=""><?php echo $this->investigationDetails['examination']; ?></textarea>
+                                        </div>                                
+                                        <div class="form-group">
+                                            <label  for="Past">Investigation:</label>
+                                            <textarea id="investigation" name="investigation" rows="8" cols="75" required=""><?php echo $this->investigationDetails['investigation']; ?></textarea>
+                                        </div>  
+
+                                        <div class="form-group">
+                                            <label  for="Course">Hosp. Course:</label>
+                                            <textarea id="hosp_course" name="hosp_course" rows="8" cols="75" required=""><?php echo $this->investigationDetails['hosp_course']; ?></textarea>
+                                        </div> 
+
+                                        <div class="form-group">
+                                            <label  for="FOLLOW">FOLLOW UPS:</label>
+                                            <textarea id="follow_up" name="follow_up" rows="8" cols="75" required=""><?php echo $this->investigationDetails['follow_up']; ?></textarea>
+
+                                        </div>
+
+
+                                    </div>
+
+                            <!--<h1 align="center"> Investigation </h1>
+                                <label for="cars">ICD 10 Section:</label>
+
+                                <select id="Section">
+                                    <option label="ICD 10">ICD 10</option>
+
+                                </select>
+
+                                <p>
+                                    <label for="cars">ICD 10 Subsection:</label>
+
+                                    <select id="Subsection">
+                                        <option label="ICD 10">ICD 10</option>
+
+                                    </select>
+                                <p>
+                                    <label for="cars">Diagnostic Deescription:</label>
+                                    <label for="cars">ICD Number:</label>
+                                <p>
+                                    <select id="Description">
+                                        <option label="Neumonia">Neumonia</option>
+
+                                    </select>
+                                    <textarea id="ICD number" rows="1" cols="15">
+
+                                    </textarea>-->
+
+
+                                </fieldset>
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="offset-md-4 col-md-12 col-12">
+                                            <button type="button" class="btn btn-danger" id = 'button2' onClick = "javascript:cancelBack('patient/index');">Cancel</button>
+                                            <span id = "sve_btn">
+                                                <button type="submit" style="text-align:right" class="btn btn-primary" id = 'save_button'>Save</button>
+                                            </span>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id = "f-l-name"></div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+

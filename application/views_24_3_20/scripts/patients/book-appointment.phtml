@@ -1,0 +1,138 @@
+		<link href="css/application_new.css" rel="stylesheet">
+        <link href="css/application.min.css" rel="stylesheet">
+ 
+		<div class="container-fluid">
+			<div class="content-wrap">
+				<main id="content" class="content" role="main">
+				<div class="row">
+				<div class="col-lg-6">
+				<div class="well">			
+				<section class="widget">
+				
+				<div class="row">
+					<div class="col-sm-8">
+					<h5><span class="icon">
+						<i class="fa fa-calendar"></i>
+						</span>On <b>Nov 10, 2019</b></h5>
+						<a href="#"><h6><b>Change Date & Time</b></h6></a>
+					</div>
+					
+					<div class="col-sm-4">
+					<h5><span class="icon">
+						<i class="fa fa-clock-o"></i>
+						</span>At <b>7:00 PM</b></h5>
+					</div>	
+					</div>					
+					<hr>
+					
+				
+				<div class="row">
+					<div class="col-sm-4">
+					<img src="<?php echo WEBSITE_URL; ?>images/doctor.jpg" alt="" >
+					</div>
+					<div class="col-sm-5">
+					<a href="#"><h5>Dr.<?php echo $this->doctorDetails['name'];?></h5></a>
+					<p><?php echo $this->doctorDetails['qualification'];?></p>
+					<p><?php echo $this->doctorDetails['experience'];?> Years Experience Overall</p>
+<!--					<p style="background-color:#ddd; width:15%">Allopath</p>-->
+					<p><?php echo $this->doctorDetails['dprt_name'];?></p>
+					</div>
+					</div>					
+					<hr>
+					
+				
+<!--				<div class="row">
+					<div class="col-sm-4">
+					<img src="<?php echo WEBSITE_URL; ?>images/hospital.png" alt="" >
+					</div>
+					<div class="col-sm-5">
+					<h5>Medicover Hospital</h5>
+					
+					<p>Secretariat Road Saifabad</p>
+					<p>Secunderabad</p>
+					<a href="https://www.google.com/maps/dir//Medicover+Hospitals+Secretariat,+Sarovar+Complex,+Secretariat+Road,+Saifabad,+Secunderabad,+Telangana/@17.4068017,78.4366609,13z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bcb975ecd26b23b:0x7939cbe4e44059a!2m2!1d78.4716806!2d17.4067229?hl=undefined">
+					<h5>Get Directions</h5></a>					
+					</div>					
+					<hr>
+					
+				</div>-->
+				
+				
+				
+				</section>
+				</div>
+				</div>
+				
+				
+				<div class="col-lg-5">
+                                    <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                            <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+                                <div class="notification-error">
+                                    <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                        <?php echo $msg; ?>
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
+                            <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                            <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+                                <div class="notification-suc">
+                                    <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                        <?php echo $msg; ?>
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
+                                    <form class="form-horizontal" action="" method="POST">
+                                        <input type = "hidden" id ="doctor_id" name ="doctor_id" value = "<?php echo $this->doctorDetails['id'];?>">
+                            <input type = "hidden" id ="department_id" name ="department_id" value = "<?php echo $this->doctorDetails['department'];?>">
+                            
+				<div class="well">			
+				<h3><b>Confirm Appointment</b></h3>
+				 <div class="form-group row">
+					<label for="normal-field" class="col-md-2 form-control-label text-md-right">Name<span style="color:orange">*</span></label>
+					<div class="col-md-7">
+						<input type="text" id="p_name" class="form-control" placeholder="Full Name" name = 'p_name'>
+					</div>
+				</div>
+				 <div class="form-group row">
+					<label for="normal-field" class="col-md-2 form-control-label text-md-right">Email<span style="color:orange">*</span></label>
+					<div class="col-md-7">
+						<input type="text" id="p_email" class="form-control" placeholder="Email Id" name = 'p_name'>
+					</div>
+				</div>
+				 <div class="form-group row">
+					<label for="normal-field" class="col-md-2 form-control-label text-md-right">Mobile<span style="color:orange">*</span></label>
+					<div class="col-md-7">
+						<input type="text" id="p_mno" class="form-control" placeholder="+91" name = 'p_mno'>
+						<span>You will revieve  an SMS with a verification code on this number</span>
+					</div>
+				</div>
+				<h6><b>Choose a payment Option to Book Appointment</b></h6>
+				 <div class="form-group row">
+				 <div class="col-md-7" style="background-color:#fff;width:90%">
+				  <input type="radio" name="rupee" value="money"> ₹500
+				  <span><b> If You Pay online </b></span><br>
+				  </div><br><br> 
+				   <div class="col-md-7" style="background-color:#fff;width:90%">
+				 <input type="radio" name="rupee" value="money"> ₹600
+				   <span><b>Pay later at a Clinic</b> </span>
+						
+					</div>
+					</div>
+				
+                               
+                                    <div class="offset-md-5 col-md-12 col-12">
+                                        <button type="submit" class="btn btn-primary" value="submit">Confirm</button>
+                                       
+                                    </div>
+                              
+                       
+				</div>
+                                        </form>
+				</div>
+				</div>
+				</main>
+			</div>
+			
+			
+		</div>
+		

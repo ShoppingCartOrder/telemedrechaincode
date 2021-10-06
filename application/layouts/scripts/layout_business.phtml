@@ -1,0 +1,45 @@
+<!doctype html>
+<!--[if IE 8]><html class="ie8 ie" lang="en"> <![endif]-->
+<!--[if IE 9]><html class="ie9 ie" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->   
+    <head>        
+        <meta charset="utf-8">
+        <?php echo $this->headTitle(); ?>
+        <?php echo $this->render('common/common_meta_tag.phtml');?>
+        <?php echo $this->headMeta()->setName('keywords', $this->keywords)->appendName('description', $this->description); ?>
+        <meta property="og:title" content="<?php echo $this->title; ?>"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content="<?php echo $this->currenturl;?>" />
+        
+        
+        
+        <meta property="og:image:width" content="605"/>
+        <meta property="og:image:height" content="460"/>
+        <meta property="og:description" content="<?php echo $this->description;?>"/>
+        
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="<?php echo WEBSITENAME;?>">
+        <meta name="twitter:creator" content="@<?php echo WEBSITENAME;?>">
+        <meta name="twitter:title" content="<?php echo $this->title; ?>">
+        
+        <meta name="twitter:description" content="<?php echo $this->description; ?>">
+        
+        <?php echo $this->partial("common/business_css.phtml"); ?>
+        <script  type="text/javascript" src="<?php echo WEBSITE_URL ?>js/jquery/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="<?php echo WEBSITE_URL ?>js/jquery/jquery.min.js"></script>
+        <script type="text/javascript">
+            var jsPath = '<?php echo WEBSITE_URL ?>';
+            var URLCityName = '<?php echo $this->searchController; ?>';
+        </script>
+    </head>
+    <body>
+        <div id="outer-wrapper">
+            <?php echo $this->render('common/innerheader.phtml') ?>
+            <?php echo $this->layout()->content; ?>
+            <?php echo $this->render('common/footer.phtml') ?>
+            <?php echo $this->partial('common/business_js.phtml'); ?>
+             <?php //echo $this->partial("common/common_js.phtml"); ?>
+            <?php echo $this->render('common/social.phtml'); ?>
+        </div>
+    </body>
+</html>

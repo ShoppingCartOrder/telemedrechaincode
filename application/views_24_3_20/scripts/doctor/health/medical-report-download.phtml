@@ -1,0 +1,102 @@
+<div class="container-fluid">
+        <div class="content-wrap">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+    <main id="content" class="content" role="main">
+        <!-- Page content -->
+       <!-- <ol class="breadcrumb">
+            <li class="breadcrumb-item">Dashboard</li>
+            <li class="breadcrumb-item active">Patient profile</li>
+        </ol>-->
+
+        <div class="row">
+            <div class="col-md-form">
+                <section class="widget">
+                    <header>
+                       
+                        <div class="widget-controls">
+                        </div>
+                    </header>
+                    <div class="widget-body">
+                         <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
+
+                            <input type = "hidden" id ="id" name ="id" value = "<?php echo $this->formdata['id'];?>">
+          
+                            <fieldset>
+                                
+                                <legend><strong>Search </strong> Patient Medical Report</legend>
+                                
+                                
+                                <div class="form-group row" style ="text-align: center;">
+                                    
+                                    <div class="col-md-11">
+                                        
+                                        <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+            <div class="notification-error">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+        <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+            <div class="notification-suc">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } 
+        
+        //print_r($this->formdata);
+        ?>
+                                     
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Hash</label>
+                                    <div class="col-md-7">
+                                
+                                        <input type="text" id="hash_id" class="form-control" placeholder="Please Enter Hash" name = 'hash_id' required>
+                                    </div>
+                                </div>
+                                <?php if(!empty($this->hashId)){?>
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Download</label>
+                                    <div class="col-md-7">
+                                        
+                                        <!--<a href = "<?php echo $this->ipfsHashURL;?>" target = "_blank">Download</a>-->
+                                        <a href = "<?php echo DOCTOR_BASE_URL.'health/download-test-report/hash_id/'.$this->hashId;?>" target = "_blank"><?php echo $this->hashId;?></a>
+                                    </div>
+                                </div>
+                                <?php }?>
+                            </fieldset>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="offset-md-4 col-md-7 col-12">
+                                        <span id = "sve_btn"><button type="submit" class="btn btn-primary" id = 'button'>Search</button></span>
+                                        <button type="button" class="btn btn-inverse" id = "search" onClick = "javascript:cancel('health/medical-report-details/patient_id/<?php echo $this->patientId;?>');">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div id = "f-l-name"></div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+       </main>
+</div>
+    </div>
+
+<script type='text/javascript'>
+
+    
+    function displayFileName(){
+        
+        var filename = $('#fileupload1').val();
+        //alert(filename);
+        $('#fileinput_filename').html(filename);
+    }
+</script>

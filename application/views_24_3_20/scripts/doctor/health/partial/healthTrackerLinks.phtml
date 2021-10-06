@@ -1,0 +1,50 @@
+<!--<ul class="">
+
+   
+
+    <b>
+        <a href="<?php echo PATIENT_BASE_URL; ?>health/vital-details">
+            <span class="icon">
+                <i class="fa fa-hospital-o"></i>
+            </span>
+            Patient Vital Details
+        </a>
+        <a href="<?php echo PATIENT_BASE_URL; ?>health/hospital-details">
+            <span class="icon">
+                <i class="fa fa-hospital-o"></i>
+            </span>
+            Patient Hospital Details  
+        </a>
+                                           
+                                           
+        <a href="<?php echo PATIENT_BASE_URL; ?>health/prescription-details">
+            <span class="icon">
+                <i class="fa fa-hospital-o"></i>
+            </span>
+            Patient Prescription Details
+        </a>                                   
+
+    </b>	
+</ul>-->
+<header>
+    <div class="widget-controls">
+    <?php  if($this->current_page == 1){ ?>
+        
+        <a data-widgster="expand" title="Expand" href="<?php echo PATIENT_BASE_URL; ?>health/vital-details-addedit"> Add Vital Details </a>
+     >> <a data-widgster="collapse" title="Collapse" href="<?php echo PATIENT_BASE_URL; ?>health/hospital-details">Hospital Details </a>
+    >>  <a data-widgster="close" title="Close" href="<?php echo PATIENT_BASE_URL; ?>health/prescription-details">Prescription Details </a>
+                                           
+   <?php } else if($this->current_page == 2){ ?>
+            <a data-widgster="expand" title="Expand" href="<?php echo PATIENT_BASE_URL; ?>health/vital-details"> Vital Details </a>
+     >> <a data-widgster="collapse" title="Collapse" href="<?php echo PATIENT_BASE_URL; ?>health/hospital-details-addedit">Add Hospital Details </a>
+    >>  <a data-widgster="close" title="Close" href="<?php echo PATIENT_BASE_URL; ?>health/prescription-details">Prescription Details </a>
+                        
+   <?php } else if($this->current_page == 3){ ?>  
+      <a data-widgster="expand" title="Expand" href="<?php echo PATIENT_BASE_URL; ?>health/vital-details"> Vital Details </a>
+     >> <a data-widgster="collapse" title="Collapse" href="<?php echo PATIENT_BASE_URL; ?>health/hospital-details">Hospital Details </a>
+    >>  <a data-widgster="close" title="Close" href="<?php echo PATIENT_BASE_URL; ?>health/prescription-details-addedit">Add Prescription Details </a>
+           
+    <?php } ?>
+                           </div>
+                    </header>
+

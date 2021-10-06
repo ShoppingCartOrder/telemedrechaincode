@@ -1,0 +1,29 @@
+<!doctype html>
+<!--[if IE 8]><html class="ie8 ie" lang="en"> <![endif]-->
+<!--[if IE 9]><html class="ie9 ie" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->   
+    <head>        
+        <meta charset="utf-8">
+        <?php echo $this->headTitle(); ?>
+        <?php echo $this->render('common/common_meta_tag.phtml');?>
+        <?php echo $this->headMeta()->setName('keywords', $this->keywords)->appendName('description', $this->description); ?>
+         <?php echo $this->render('common/static_css_event.phtml'); ?>
+        <script  type="text/javascript" src="<?php echo WEBSITE_URL ?>js/jquery/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="<?php echo WEBSITE_URL ?>js/jquery/jquery.min.js"></script>
+         <script type="text/javascript">
+            var jsPath = '<?php echo WEBSITE_URL ?>';
+            var URLCityName = '<?php echo $this->searchController; ?>';
+        </script>
+    </head>
+    <body>
+        <div id="outer-wrapper">
+            <?php echo $this->render('common/innerheader.phtml') ?>
+             <?php echo $this->layout()->content; ?>
+                <?php echo $this->render('common/footer.phtml') ?>
+            <?php echo $this->render('common/static_js_event.phtml'); ?>
+            <?php echo $this->render('common/social.phtml'); ?>
+        </div>
+    </body>
+</html>
+
+

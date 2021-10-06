@@ -1,0 +1,130 @@
+<div class="container-fluid">
+    <div class="content-wrap">	
+        <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+        <main id="content" class="content" role="main">
+            <!-- Page content -->
+            <!-- <ol class="breadcrumb">
+                 <li class="breadcrumb-item">Dashboard</li>
+                 <li class="breadcrumb-item active">Patient profile</li>
+             </ol>-->
+
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="well">
+                        <section class="widget">
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <h4 class="page-title">Health Profile </h4>
+                                    <h6>
+                                        <a href="#">
+                                            <span class="fw-semi-bold">Health Profile >></a></span>Add/Edit Health Profile</h6>
+                                </div>
+
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="well">
+                        <section class="widget">
+                            <form class="form-horizontal" action="<?php echo $this->url(array('action' => 'savehealthprofile'), 'patientHealth', true); ?>" method="POST">
+                                <input type = "hidden" id ="patient_id" name ="patient_id" value = "<?php echo $this->formdata['patient_id']; ?>">
+                                <input type = "hidden" id ="id" name ="id" value = "<?php echo $this->formdata['id']; ?>">
+
+                                <fieldset>
+                                    <div class="form-group row" style ="text-align: center;">
+
+                                        <div class="col-md-11">
+
+                                            <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                            <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+                                                <div class="notification-error">
+                                                    <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                        <?php echo $msg; ?>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
+                                            <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                            <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+                                                <div class="notification-suc">
+                                                    <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                        <?php echo $msg; ?>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="normal-field" class="col-md-3 form-control-label text-md-right">Health Condition</label>
+                                        <div class="col-md-7">
+                                            <select data-placeholder="Health Condition" data-width="auto" tabindex="-1" class="select2 form-control select2-hidden-accessible" id="departmentDD" aria-hidden="true" name = "health_condition" required="required">
+                                            <option value="">Please select</option>
+                                            <?php  if(!empty($this->healthCondition)){
+                                                //$this->formdata['doctor_id'];
+                                                $selected = '';
+                                                foreach($this->healthCondition as $key=>$val){ 
+                                                    if((isset($this->formdata['health_condition'])) && ($this->formdata['health_condition'] == $key)){
+                                                        $selected = "selected = selected";
+                                                    }else{
+                                                       $selected = ''; 
+                                                    }
+                                                    ?>
+                                            
+                                            <option value="<?php echo $key;?>" <?php echo $selected;?>><?php echo $val;?></option>
+
+                                            <?php } } ?>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="normal-field" class="col-md-3 form-control-label text-md-right">Diagnosed in</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="diagnosed_in" class="form-control" placeholder="" name = 'diagnosed_in' value="<?php echo $this->formdata['diagnosed_in'];?>" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="normal-field" class="col-md-3 form-control-label text-md-right">Medications</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="medicine_names" class="form-control" placeholder="Medications Name" name = 'medicine_names' value="<?php echo $this->formdata['medicine_names'];?>" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="normal-field" class="col-md-3 form-control-label text-md-right">Treated By</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="doctor_name" class="form-control" placeholder="Doctor name" name = 'doctor_name' value="<?php echo $this->formdata['doctor_name'];?>" required="required">
+                                        </div>
+                                    </div>	
+                                    <div class="form-group row">
+                                        <label for="normal-field" class="col-md-3 form-control-label text-md-right">Notes</label>
+                                        <div class="col-md-7">
+                                            <?php 
+                                                $reasonNote  = (isset($this->formdata['note']) ? $this->formdata['note']:"");    
+                                            ?>
+                                            <textarea rows="4" class="form-control" id="note" name="note" required="required"><?php echo $reasonNote; ?></textarea>
+                                            
+                                        </div>
+                                    </div>	
+                                </fieldset>
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="offset-md-4 col-md-7 col-12">
+                                            <button type="submit" class="btn btn-primary" value="submit">Save</button>
+                                            <button type="button" class="btn btn-inverse" onClick = "javascript:cancel('health/health-profile');">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </form>	
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>

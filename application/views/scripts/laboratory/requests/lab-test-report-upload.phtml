@@ -1,0 +1,88 @@
+<!-- [END]Jquery Autocomplete -->
+<div class="container-fluid">
+    <div class="content-wrap">
+        <main id="content" class="content" role="main">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="well">
+                        <section class="widget" style="background-color:#FFF; margin-top:2rem">
+
+
+                            <form name = "frmlabtestreportupload" style="padding:15px" class="form-horizontal" action="<?php echo $this->url(array('action' => 'savelabtestreportupload'), 'laboratoryRequests', true); ?>" method="POST" enctype="multipart/form-data">
+                                <div class="row">
+                                    <input type = "hidden" id ="patient_id" name ="patient_id" value = "<?php echo $this->labRequestData['patient_id']; ?>">
+                                    <input type = "hidden" id ="registration_no" name ="registration_no" value = "<?php echo $this->labRequestData['registration_no']; ?>">
+                                    <input type = "hidden" id ="id" name ="id" value = "<?php echo $this->formdata['id']; ?>">
+                                    <input type = "hidden" id ="reqid" name ="reqid" value = "<?php echo $this->labRequestData['id']; ?>">
+<!--                                    <input type = "hidden" id ="doctor_id" name ="doctor_id" value = "<?php echo $this->doctor_id; ?>">-->
+
+                                    <fieldset>
+                                        <legend><strong>Lab Test Report Upload</strong> form</legend>
+                                        <div class="form-group row" style ="text-align: center;">
+
+                                            <div class="col-md-11">
+                                                <span class="notification-error"></span>
+                                                <span class="notification-suc"></span>
+                                                <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                                <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+                                                    <div class="notification-error">
+                                                        <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                            <?php echo $msg; ?>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
+                                                <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                                <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+                                                    <div class="notification-suc">
+                                                        <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                            <?php echo $msg; ?>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
+
+
+                                            </div>
+                                        </div>
+                                        </fieldset>
+                                      
+
+
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label><b>Test Name :</b></label>
+                                                <input type = "text"  id="laboratery_test_name" name="laboratery_test_name" value = "<?php echo $this->labRequestData['lab_test_name']; ?>" required class="form-control input-lg" readonly="">
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label><b>Lab Report File Name:</b></label>
+                                                <input type = "file"  id="report_filename" name="report_filename" class="form-control input-lg" required="">
+
+                                            </div>
+                                            
+                                            
+
+
+
+                                        </div>
+                                    
+                                   
+
+                                      
+
+
+                                </div>
+                                <button type="button" class="btn btn-danger" id = 'button2' onClick = "cancelBack('requests/index');">Cancel</button>
+                                                
+                                <button type="submit" style="text-align:right" class="btn btn-primary" id = 'save_button'>Save</button>
+                                                
+                            </form>
+                            <div id = "f-l-name"></div>
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

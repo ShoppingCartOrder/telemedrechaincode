@@ -1,0 +1,67 @@
+<script>
+	function condeletemsg(){
+		var conbox = confirm('Do you really want to delete this message?');
+		if(conbox == true){
+			window.location.href='<?= $this->url(array('action' => 'msg-delete','id'=> $this->formdata['id'],'message-section'=> $this->messageSection), 'adminUser', true) ?>';
+		} else {
+			return false;
+		}
+	}
+</script>
+
+
+	          
+<div class="module">
+    <h2><span>User Message Details</span></h2>
+
+    <div class="module-body">
+        <div class="float-right">
+		
+		
+                <input type="button" onClick ="return condeletemsg();" value="Delete" class="submit-gray">
+                
+		<input type="button" onClick ="window.location.href='<?= $this->url(array('action' => 'all-sent-email-mobile-list', 'message-section'=>$this->messageSection), 'adminUser', true) ?>'"value="Back" class="submit-gray"></div>
+                
+		
+		
+   	
+   <div id="user_details" style="float:left; width:100%; margin-top:20px; border:1px solid #cccccc; padding:10px;">
+            <p>
+              <strong>User Type: </strong><?php 
+              
+              if(array_key_exists($this->formdata['user_type'],$this->userType)){
+                 
+                  echo $this->userType[$this->formdata['user_type']];
+                  
+              }
+              
+               ?>     
+            </p>
+            <p>
+              <strong>Message Date: </strong>
+                  <?php echo date(DATE_TIME_FORMAT, strtotime($this->formdata['created_at'])); ?>     
+            </p>
+            <p>
+              <strong>From: </strong><?php echo $this->formdata['username']; ?>     
+            </p>
+            
+            <p>
+                <strong>To: </strong><?php if($this->messageSection == 1){ echo $this->formdata['email'];  } else if($this->messageSection == 2){ echo $this->formdata['mobile'];}  ?>  
+            </p>
+            
+            <p>
+                <strong>Name: </strong><?php echo $this->formdata['name']; ?>    
+            </p>
+            <?php if($this->messageSection == 1){ ?>
+            <p>
+              <strong>Subject: </strong>  <?php echo $this->formdata['email_subject']; ?>  
+            </p>
+            <?php } ?>
+            
+            <p>
+              <strong>Message: </strong>  <?php echo $this->formdata['message']; ?>  
+            </p> 
+			              
+    </div> <!-- End .module-body -->
+
+</div>

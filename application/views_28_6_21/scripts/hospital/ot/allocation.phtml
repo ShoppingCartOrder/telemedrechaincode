@@ -1,0 +1,102 @@
+
+<div class="container-fluid">
+    <div class="content-wrap">	
+        <main id="content" class="content" role="main">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="well">
+                        <section class="widget" style="background-color:#FFF; margin-top:2rem">
+                            <select data-placeholder="Ward Name" data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control select2-hidden-accessible" id="ward_id" aria-hidden="true" name = "ward_id" onchange="displaybeds(this.value);">
+                                            <option value="">Please select</option>
+                                            <?php  if(!empty($this->wardsData)){
+                                                //$this->formdata['doctor_id'];
+                                                $selected = '';
+                                                foreach($this->wardsData as $val){ 
+                                                    if($this->formdata['ward_id'] == $val['id']){
+                                                        $selected = "selected = selected";
+                                                    }else{
+                                                       $selected = ''; 
+                                                    }
+                                                    ?>
+                                            
+                                            <option value="<?php echo $val['id'];?>" <?php echo $selected;?>><?php echo $val['ward_name'];?></option>
+
+                                            <?php } } ?>
+                                        </select>
+                            <div class="main" id = "bed_nos">
+                                <?php /* for($i = 0;$i<20;$i++){
+                                    $id = "toggleImage".$i;
+                                    ?>
+<a><img id="<?php echo $id;?>" src="<?php echo WEBSITE_IMAGE;?>bed.png" onclick="toggleImage('<?php echo $id;?>');" width="150" height="150"></a>
+                                <?php }*/?>
+
+
+</div>
+                            
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+
+for (i = 0; i < dropdown.length; i++) {
+  dropdown[i].addEventListener("click", function() {
+  this.classList.toggle("active");
+  var dropdownContent = this.nextElementSibling;
+  if (dropdownContent.style.display === "block") {
+  dropdownContent.style.display = "none";
+  } else {
+  dropdownContent.style.display = "block";
+  }
+  });
+}
+
+function toggleImage(id) {
+  
+   var img1 = "<?php echo WEBSITE_IMAGE;?>bed.png";
+   var img2 = "<?php echo WEBSITE_IMAGE;?>bed_with_patient.png";
+
+   
+   var imgElement = document.getElementById(id);
+
+   imgElement.src = (imgElement.src === img1)? img2 : img1;
+   window.location.href = hospitalPath+'ward/index';
+}
+
+function displaybeds(wardId)
+    {
+        var value = 'ward_id=' + wardId;
+        var select = $("#ward_id");
+        //select.empty();
+        $.ajax({
+            //this is the php file that processes the data
+            url: hospitalPath + 'ward/getbeds',
+            //GET method is used
+            type: 'POST',
+            //pass the data			
+            data: value,
+            //success
+            success: function(responseText) {
+                $('#bed_nos').html(responseText);
+                
+
+            }
+
+        });
+
+    }
+
+</script>
+
+
+
+
+
+

@@ -1,0 +1,118 @@
+<div class="container-fluid">
+        <div class="content-wrap">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+    <main id="content" class="content" role="main">
+        <!-- Page content -->
+       <!-- <ol class="breadcrumb">
+            <li class="breadcrumb-item">Dashboard</li>
+            <li class="breadcrumb-item active">Patient profile</li>
+        </ol>-->
+
+        <div class="row">
+            <div class="col-md-form">
+                <section class="widget">
+                    <!--<header>
+                       
+                        <div class="widget-controls">
+                            <a data-widgster="expand" title="Expand" href="#">Patient vital Details </a>
+                            <a data-widgster="collapse" title="Collapse" href="#">Patient Hospital Details </a>
+                            <a data-widgster="close" title="Close" href="#">Patient Prescription Details </a>
+                        </div>
+                    </header>-->
+                    <div class="widget-body">
+                         <form class="form-horizontal" action="<?php echo  $this->url(array('action' => 'savejournal'), 'patientHealth', true) ?>" method="POST" enctype="multipart/form-data">
+
+                            <input type = "hidden" id ="id" name ="id" value = "<?php echo $this->formdata['id'];?>">
+          
+                            <fieldset>
+                                
+                                <legend><strong>Add/Update </strong> journal</legend>
+                                
+                                
+                                <div class="form-group row" style ="text-align: center;">
+                                    
+                                    <div class="col-md-11">
+                                        
+                                        <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+            <div class="notification-error">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+        <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+            <div class="notification-suc">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+                                     
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-2">
+						   <img src="<?php echo WEBSITE_Image;?>/user.png">
+						   </div>
+                                    <div class="col-md-8">
+                                        <textarea rows="4" class="form-control" id="note" name = "journal"><?php echo $this->formdata['journal'];?></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-2">
+						  
+						   </div>
+                                    <div class="col-md-8">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <div class="form-control" data-trigger="fileinput">
+                                                <i class="glyphicon glyphicon-file fileinput-exists"></i>
+                                                <span class="fileinput-filename" id = 'fileinput_filename'></span>
+                                            </div>
+                                            <button type = "button" class="input-group-addon btn btn-default btn-file">
+                                                <span class="fileinput-new">Select file</span>
+                                                <span class="fileinput-exists">Change</span>
+                                                <input id="fileupload1" name="file_name" type="file" onChange="displayFileName();">
+                                            </button>
+                                            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                        </div>
+                                        <span class="help-block"><a target = "_blank" href = "<?php echo UPLOADED_REPORT_FILE_PATH.$this->formdata['file_name'];?>"><?php echo $this->formdata['file_name'];?></a></span>
+                                        <span class="help-block">Supported formats:pdf,jpeg,jpg</span>
+                                    </div>
+                                </div>
+                                
+
+
+                            </fieldset>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="offset-md-4 col-md-7 col-12">
+                                        <span id = "sve_btn"><button type="submit" class="btn btn-primary" id = 'button'>Save</button></span>
+                                        <button type="button" class="btn btn-inverse" id = "search" onClick = "javascript:cancel('health/journal');">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div id = "f-l-name"></div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+       </main>
+</div>
+    </div>
+
+<script type='text/javascript'>
+
+    
+    function displayFileName(){
+        
+        var filename = $('#fileupload1').val();
+        //alert(filename);
+        $('#fileinput_filename').html(filename);
+    }
+</script>
+

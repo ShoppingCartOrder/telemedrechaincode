@@ -1,0 +1,378 @@
+<div class="container-fluid">
+    <div class="content-wrap">	
+        <main id="content" class="content" role="main">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="well">
+                        <section class="widget" style="background-color:#FFF; margin-top:2rem">
+                            <?php if(!empty($this->formdata['id'])){ ?>
+                                <form style="padding:15px" name = "frmPatentRegister" id = "frmPatentRegister" method="POST" action ="<?php  echo  $this->url(array('action' => 'save-patient-profile'), 'hospitalPatient', true) ?>">
+                            
+                            <?php }else{ ?>
+                                
+                                <form style="padding:15px" name = "frmPatentRegister" id = "frmPatentRegister" method="POST" action ="<?php echo  $this->url(array('action' => 'register'), 'hospitalPatient', true) ?>">
+                            
+                            <?php }?>
+                                <input type="hidden" id="example-date-input-id" name = "id" value = "<?php echo $this->formdata['id'];?>">
+                                <input type="hidden" id="a_id" name = "a_id" value = "<?php echo $this->formdata['a_id'];?>">
+                                        
+                                <div class="form-group row" style ="text-align: center;">
+                                    
+                                    <div class="col-md-11">
+                                        
+                                        <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+            <div class="notification-error">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+        <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+            <div class="notification-suc">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+                                     
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                            <input class="patient-type" type="radio" id="opd" name = "patient_type" value = "1"> OPD
+                                        </div>
+                                            </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input class="form" type="radio" id="ipd" name = "patient_type" value = "2" checked=""> IPD
+                                        </div>
+                                        </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b> Name</b></label>
+                                            <input class="form-control" type="text" id="example-date-input-name" name = "name" value = "<?php echo $this->formdata['name'];?>"> 
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Sex</b></label>
+                                            <select class="custom-select" name ="sex" id ="sex">
+                                                <option value="">Please Select</option>
+                                                <?php
+                                                $selected = ''; 
+                                                
+                                                foreach($this->arrGender as $key=>$gender){ 
+                                                    
+                                                    if($this->formdata['sex'] == $key){
+                                                        $selected = "selected = selected";
+                                                    }else{
+                                                       $selected = ''; 
+                                                    }
+                                                    ?>
+                                                
+                                                    <option value="<?php echo $key;?>" <?php echo $selected;?>><?php echo $gender;?></option>
+                                                    
+                                             
+                                                <?php }?>
+                                    
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Date Of Birth <?php echo $this->formdata['birth_date'];?></b></label>
+                                            <input class="form-control datepicker" type="date"  id="example-date-input-dob" name = "dob" value = "<?php echo $this->formdata['birth_date'];?>"  data-value="[1,6,2014]">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Age</b></label>
+                                            <input class="form-control" type="text" id="example-date-input-age" name = "age" value = "<?php echo $this->formdata['age'];?>">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Place Of Birth</b></label>
+                                            <input class="form-control" type="text" id="example-date-input-pob" name = "pob" value = "<?php echo $this->formdata['name'];?>">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Occupation</b></label>
+                                            <input class="form-control" type="text" id="example-date-input-occupation" name = "occupation" value = "<?php echo $this->formdata['occupation'];?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Religion</b></label>
+                                            <input class="form-control" type="text" id="example-date-input-religion" name = "religion" value = "<?php echo $this->formdata['religion'];?>">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Material Status</b></label>
+                                            <select class="custom-select" name ="matrial_status" id ="matrial_status">
+                                                <option selected="">Please Select</option>
+                                                
+                                                <?php
+                                                $selected = ''; 
+                                                
+                                                foreach($this->arrMatrialStatus as $key=>$matrialStatus){ 
+                                                    
+                                                    if($this->formdata['matrial_status'] == $key){
+                                                        $selected = "selected = selected";
+                                                    }else{
+                                                       $selected = ''; 
+                                                    }
+                                                    ?>
+                                                
+                                                <option value="<?php echo $key;?>" <?php echo $selected;?>><?php echo $matrialStatus;?></option>
+                                                
+                                                <?php }?>
+                                            </select>
+                                        </div>
+                                        
+                                        
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Address</b></label>
+                                            <input class="form-control" areateaxt="text" id="example-date-input-address" name = "address" value = "<?php echo $this->formdata['address'];?>">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>City</b></label>
+                                            <input class="form-control" type="text" id="example-date-input-city" name = "city" value = "<?php echo $this->formdata['city'];?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Pin</b></label>
+                                            <input class="form-control" type="text" id="example-date-input-pin" name = "pin" value = "<?php echo $this->formdata['pin_code'];?>">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Phone No</b></label>
+                                            <input class="form-control" type="text" id="example-date-input-mobile_no" name = "mobile_no" value = "<?php echo $this->formdata['mobile_no'];?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Email Id</b></label>
+                                            <?php if(!empty($this->formdata['id'])){ 
+                                                $disbled = 'disable';
+                                                ?>
+                                            
+                                            <?php }else{
+                                                 $disbled = '';
+                                                ?>
+                                            <?php }?>
+                                            <input class="form-control" type="text" id="example-date-input-email_id" name = "email_id" value = "<?php echo $this->formdata['email_id'];?>" <?php echo $disbled;?>>
+                                        </div>
+                                        
+                                        
+                                        
+                                    </div>
+                                    <div class="col-sm-6">
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Date Of Appointment</b></label>
+                                            <input class="form-control" type="date" id="example-date-input-doa" name = "doa" value = "<?php echo $this->formdata['date_of_admission'];?>">
+                                        </div>
+                                        
+                                        <?php //print_r($this->formdata);?>
+                                         <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Specialization</b></label>
+                                            <select class="custom-select" name ="specialization" id ="specialization" onChange = "javascript:changeDoctor(this.value);">
+                                                <option value="">Please select</option>
+                                            <?php  if(!empty($this->spcData)){
+                                                //$this->formdata['doctor_id'];
+                                                $selected = '';
+                                                foreach($this->spcData as $val){ 
+                                                    if((isset($this->formdata['specialization_id'])) && ($this->formdata['specialization_id'] == $val['id'])){
+                                                        $selected = "selected = selected";
+                                                    }else{
+                                                       $selected = ''; 
+                                                    }
+                                                    ?>
+                                            
+                                            <option value="<?php echo $val['id'];?>" <?php echo $selected;?>><?php echo $val['name'];?></option>
+
+                                            <?php } } ?>
+                                    
+                                            </select>
+                                        </div>
+                                       
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Doctor</b></label>
+                                            <select class="custom-select" name ="doctor" id ="doctor">
+                                                <option value="">Please select</option>
+                                                <?php if(!empty($this->doctorData)){
+                                                $selected = '';
+                                                foreach($this->doctorData as $val){ 
+                                                    if($this->formdata['doctor_id'] == $val['id']){
+                                                        $selected = "selected = selected";
+                                                    }else{
+                                                       $selected = ''; 
+                                                    }
+                                                    
+                                                    ?>
+                                            
+                                                    <option value="<?php echo $val['id'];?>"<?php echo $selected;?>><?php echo $val['name'];?></option>
+
+                                            <?php } }?>
+                                                
+                                    
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Drug Allergy</b></label>
+                                            <input class="form-control" type="text" id="example-date-input-drug_allergy" name = "drug_allergy" value = "<?php echo $this->formdata['drug_allergy'];?>">
+                                        </div>
+                                        <!--				  <div class="form-group">
+                                                                                <label for="exampleInputEmail1"><b>External Patient Id</b></label>
+                                                                                <input class="form-control" type="text" id="example-date-input">
+                                                                          </div> -->
+                                        <div class="form-group">
+                                            <?php //print_r($this->arrBloodGroup);?>
+                                            <label for="exampleInputEmail1"><b>Blood Group</b></label>
+                                            <select class="custom-select" name ="blood_group" id ="blood_group">
+                                                <option value = "">Please select</option>
+                                                <?php
+                                                $selected = ''; 
+                                                
+                                                foreach($this->arrBloodGroup as $key=>$bloodGroup){ 
+                                                    
+                                                    if($this->formdata['blood_group'] == $key){
+                                                        $selected = "selected = selected";
+                                                    }else{
+                                                       $selected = ''; 
+                                                    }
+                                                    ?>
+                                                
+                                                <option value = "<?php echo $key;?>" <?php echo $selected;?>><?php echo $bloodGroup;?></option>
+                                                <?php }?>
+
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Referred By</b></label>
+                                            <input class="form-control" type="text" id="example-date-input-referred_by" name = "referred_by" value = "<?php echo $this->formdata['referred_by'];?>">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Height</b></label>
+                                            <input class="form-control" type="text" id="example-date-input-height" name = "height" value = "<?php echo $this->formdata['height'];?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Weight</b></label>
+                                            <input class="form-control" type="text" id="example-date-input-weight" name = "weight" value = "<?php echo $this->formdata['weight'];?>">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Relation</b></label>
+                                            <select class="custom-select" name ="relation" id ="relation">
+                                                <option value="">Please Select</option>
+                                                
+                                                <?php
+                                                $selected = ''; 
+                                                
+                                                foreach($this->arrRelation as $key=>$relation){ 
+                                                    
+                                                    if($this->formdata['relation'] == $key){
+                                                        $selected = "selected = selected";
+                                                    }else{
+                                                       $selected = ''; 
+                                                    }
+                                                    ?>
+                                                
+                                                <option value="<?php echo $key;?>" <?php echo $selected;?>><?php echo $relation;?></option>
+                                                <?php }?>
+                                               
+                                    
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Relative Name/Gourdian</b></label>
+                                            <input class="form-control" type="text" id="example-date-input-relative_name" name = "relative_name" value = "<?php echo $this->formdata['relative_name'];?>">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Wards</b></label>
+                                            <select class="custom-select" name ="ward_id" id ="ward_id">
+                                                <option value="">Please select</option>
+                                            <?php  if(!empty($this->wardList)){
+                                                //$this->formdata['doctor_id'];
+                                                $selected = '';
+                                                foreach($this->wardList as $val){ 
+                                                    if((isset($this->formdata['ward_id'])) && ($this->formdata['ward_id'] == $val['id'])){
+                                                        $selected = "selected = selected";
+                                                    }else{
+                                                       $selected = ''; 
+                                                    }
+                                                    ?>
+                                            
+                                            <option value="<?php echo $val['id'];?>" <?php echo $selected;?>><?php echo $val['ward_name'];?></option>
+
+                                            <?php } } ?>
+                                    
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Bed No</b></label>
+                                            <input class="form-control" type="text" id="bed_no" name = "bed_no" value = "<?php echo $this->formdata['bed_no'];?>">
+                                        </div>
+                                        
+<!--                                        <div class="form-group">
+                                            <label for="exampleInputEmail1"><b>Payment Profile</b></label>
+                                            <select class="custom-select" name = "payment_option" id = "payment_option">
+                                                <option selected="">Online</option>
+                                                <option value="1">Cash</option>
+                                                <option value="2">UPI</option>
+                                            </select>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <hr>
+                                <!--					<button type="submit" style="text-align:right" class="btn btn-success">Add Address</button>-->
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        
+                                    </div>
+                                    <div class="col-sm-6">
+                                        
+                                    </div>
+                                </div>
+                                <button type="button" style="text-align:right" class="btn btn-danger">Cancel</button>
+
+                                <button type="submit" style="text-align:right" class="btn btn-success" name = "add">Save</button>
+
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>	
+</div>
+
+<script>
+    function cancel(url) {
+        window.location = url;
+    }
+    
+    
+
+//$("#example-date-input-dob").datepicker("setDate", '01/01/2020');
+
+
+//$('.datepicker').pickadate({ min: new Date(2015,3,20),
+//max: new Date(2015,7,14)
+//})
+
+$(document).ready(function() {
+    $('input[name=patient_type]').change(function() {
+       alert('ole');
+    });
+});
+</script>

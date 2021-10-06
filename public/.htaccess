@@ -1,0 +1,38 @@
+Options +FollowSymLinks
+IndexIgnore */*
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule !\.(js|ico|gif|jpg|jpeg|png|css|html|htm|htc|swf|xml|mp3|pdf|txt|doc)$ index.php
+
+RewriteCond %{REQUEST_METHOD} GET
+RewriteCond %{DOCUMENT_ROOT}/cached/index.html -f
+RewriteRule ^/*$ cached/index.html [L]
+ 
+RewriteCond %{REQUEST_METHOD} GET
+RewriteCond %{DOCUMENT_ROOT}/cached/%{REQUEST_URI}\.html -f
+RewriteRule .* cached/%{REQUEST_URI}\.html [L]
+ 
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]
+
+<IfModule mod_deflate.c>
+<FilesMatch "\.(js|css)$">
+SetOutputFilter DEFLATE
+</FilesMatch>
+</IfModule>
+
+# 1 YEAR
+<FilesMatch "\.(ico|pdf|flv)$">
+#header set Cache-Control "max-age=29030400, public"
+</FilesMatch>
+
+# 1 WEEK
+<FilesMatch "\.(jpg|jpeg|png|gif|swf)$">
+ #header set Cache-Control "max-age=604800, public"
+</FilesMatch>

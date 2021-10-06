@@ -1,0 +1,201 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/free-jqgrid@4.15.5/css/ui.jqgrid.min.css">
+<script src="https://cdn.jsdelivr.net/npm/free-jqgrid@4.15.5/js/jquery.jqgrid.min.js"></script>
+<div class="container-fluid">
+        <div class="content-wrap">		
+		<main id="content" class="content" role="main">
+			<div class="row">
+			<div class="col-lg-11">
+				<div class="well">
+				<section class="widget">
+					<div class="row">
+						
+				        
+						<div class="col-sm-7">
+								<h4 class="page-title">Patients </h4>
+								<h6>
+								<span class="fw-semi-bold">patients =</span>Manage Patients</h6>
+							</div>
+						
+						
+					<div class="col-sm-1">
+						<b>
+						<a href="<?php echo HOSTPATH; ?>doctor/patient/addedit">
+                            <span class="icon">
+                                <i class="fa fa-user-circle"></i>
+                            </span>
+                            Add Patient
+                        </a></b>
+						</div>
+					<div class="col-sm-1">
+					<b>
+						 <a href="index.php">
+                            <span class="icon">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                            Message
+                        </a></b>
+						</div>
+					<div class="col-sm-1">
+						<b>
+						 <a href="index.php">
+                            <span class="icon">
+                                <i class="fa fa-cogs"></i>
+                            </span>
+                            Settings
+                        </a></b>
+						</div>
+					<div class="col-sm-1">
+						<b>
+						 <a href="index.php">
+                            <span class="icon">
+                                <i class="fa fa-question-circle"></i>
+                            </span>
+                            Help
+						 </a></b>
+						 </div>	
+					
+					
+				</div>
+				
+				
+				</section>
+				</div>
+				</div>
+				</div>
+				
+			  
+			    	
+				<div class="row">
+				<div class="col-lg-11">
+				<div class="well">
+				<section class="widget">
+				
+			   <form action="#" class="customSelect">
+			   <div class="row">
+			   <div class="col-sm-6">
+			
+			  
+                                <div class="input-group input-group-no-border" style ="width:455px;">
+                                    <div style="float: left;width:304px;">
+                                        <input class="form-control" type="text" placeholder=" Filter by Patient name,phone" style="background: #FAFBFF;">
+										</div>
+                                    
+                                    <span class="input-group-append" style="float: right;">
+                                        <span class="input-group-text" style="float: right;">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                           
+                       
+                        
+                    
+			   
+			   </div>
+			   <div class="col-sm-3">
+			   
+			   <p> Filter By Category
+			   </p>
+			  
+			   
+			   <div class="select">
+			   <select data-placeholder="All Category Patients" data-width="100%" data-minimum-results-for-search="50" tabindex="5" class="select2 form-control select2-hidden-accessible" id="default-select" aria-hidden="true" name = "department">
+                                            <option value="" selected="selected">All Category Patients</option>
+                                            <option value="Anatomy">fever</option>
+											 <option value="Anatomy">bp</option>
+											 <option value="Anatomy">sugar patients</option>
+                                        </select>
+			   
+			   </div>
+			 
+			   </div>
+			   <div class="col-sm-3">
+			   <div class="row">
+			   <p> Filter By Date of Joining</p>
+			   </div>
+			   <div class="row">
+			   <div class="select">
+			   <select data-placeholder="Year" data-width="auto" data-minimum-results-for-search="50" tabindex="-1" class="select2 form-control select2-hidden-accessible" id="default-select" aria-hidden="true" name = "department">
+                                            <option value="" selected="50">Year</option>
+                                            <option value="Anatomy">2000</option>
+											 <option value="Anatomy">2001</option>
+											 <option value="Anatomy">2002</option>
+                                        </select>
+			   <select data-placeholder="Month" data-width="auto" data-minimum-results-for-search="12" tabindex="-1" class="select2 form-control select2-hidden-accessible" id="default-select" aria-hidden="true" name = "department">
+                                            <option value="" selected="50">Month</option>
+                                            <option value="Anatomy">Jan</option>
+											 <option value="Anatomy">Feb</option>
+											 <option value="Anatomy">Mar</option>
+                                        </select>
+			  
+			   </div> 
+				<a href="#">
+			   <i class="fa fa-filter" aria-hidden="true"></i>
+			   </a>				   
+			   </div>
+			   </div>
+			  </div>
+			
+			<div class="widget-body">
+	     <p>Select an individual or group of patients to assign to a patient caregory or to send a message to</p>
+                  
+						<table class="table table-bordered">
+                            <thead>
+                            <tr  align = "center">
+							<th><input type="checkbox" name="patient" value="check"></th>
+                                <th class="d-none d-md-table-cell">Patient Name</th>
+                                
+                                <th>Sex</th>
+                                <th class="d-none d-md-table-cell">Age</th>
+                                <th class="d-none d-md-table-cell">Phone</th>
+                                <th class="d-none d-md-table-cell">Category</th>
+                                <th class="d-none d-md-table-cell">joining Date</th>
+                                
+                            </tr>
+                            </thead>
+                        </table>
+						
+						
+                      <form class="form-horizontal" role="form">
+                           
+                           
+                                <div class="row" style = "text-align: center;">
+                                    <div style = "width:100%;text-align: center;">
+                                        <div>
+										<img src="<?php echo WEBSITE_Image; ?>/img/tracker.png" />
+										</div>
+                                        <div>
+											No Patient Record found for the given filter.
+										</div>
+                                        <div>
+										<button type="button" class="btn btn-primary" onClick ="add_patient();">Add Patient</button>
+                                        </div>
+								</div>
+                                </div>
+                        </form>
+						
+						
+                  
+               
+            </div>
+              
+				</form>
+				
+			  <div class="select">Show 
+			   <select data-placeholder="50" data-width="auto" data-minimum-results-for-search="50" tabindex="-1" class="select2 form-control select2-hidden-accessible" id="default-select" aria-hidden="true" name = "department">
+                                            <option value="" selected="50">50</option>
+                                            <option value="Anatomy">01</option>
+											 <option value="Anatomy">02</option>
+											 <option value="Anatomy">03</option>
+                                        </select>Entries
+			   </div>
+			   
+			    </section>				
+			   </div>
+			   </div>
+			   </div>
+			   </div>			   
+				</main>
+				</div>
+
+

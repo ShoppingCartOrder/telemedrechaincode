@@ -1,0 +1,53 @@
+<nav class="page-controls navbar navbar-dashboard">
+               
+           <div class="container-fluid">
+                    <!-- .navbar-header contains links seen on xs & sm screens -->
+                    <div class="navbar-header mobile-hidden" style="width:50%;"></div>
+            
+                    <!-- this part is hidden for xs screens -->
+                    <?php 
+                    
+                   // print_r($this->doctorUsers);
+                    if (!empty($this->adminUsers)) { ?>
+                    <div class="navbar-header mobile-hidden" style="width:50%;">
+                        <!-- search form! link it to your search server -->
+                       
+                        <ul class="nav navbar-nav float-right" style="width: 60%;">
+                            <li class="dropdown nav-item">
+                                <a
+                                        href="#"
+                                        role="button"
+                                        class="dropdown-toggle dropdown-toggle-notifications nav-link"
+                                        id="notifications-dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                >
+                                    <span class="thumb-sm avatar float-left">
+                                        <img class="rounded-circle" src="demo/img/people/a5.jpg" alt="...">
+                                    </span>
+                                    &nbsp;
+                                    <strong><?php echo $this->adminUsers;?></strong>&nbsp;
+                                    <span class="circle bg-warning fw-bold text-white">
+                                        &nbsp;
+                                    </span>
+                                    <b class="caret"></b>
+                                </a>
+                                
+                            </li>
+                            <li class="dropdown nav-item">
+                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                    <i class="la la-cog"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a class="dropdown-item" href="#"><i class="glyphicon glyphicon-user"></i> &nbsp; My Account</a></li>
+                                    <li class="dropdown-divider"></li>
+                                    
+                                    <li><a class="dropdown-item" href="<?php echo ADMIN_BASE_URL . 'index/logout' ?>"><i class="la la-sign-out"></i> &nbsp; Log Out</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <?php } ?>
+                </div>     
+            </nav>

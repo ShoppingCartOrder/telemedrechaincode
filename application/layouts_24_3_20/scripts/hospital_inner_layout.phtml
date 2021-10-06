@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MEDRECHAINCODE</title>
+
+
+        <link rel="stylesheet" href="<?php echo WEBSITE_URL; ?>css/bootstrap.min.css">
+  <script src="<?php echo WEBSITE_URL; ?>js/jquery.min.js"></script>
+  <script src="<?php echo WEBSITE_URL; ?>js/umd/popper.min.js"></script>
+  <script src="<?php echo WEBSITE_URL; ?>js/bootstrap.min.js"></script>
+<script src="<?php echo WEBSITE_URL; ?>js/jquery-3.4.1.min.js"></script>
+<script src="<?php echo WEBSITE_URL; ?>js/jquery-3.3.1.slim.min.js"></script>
+        <link rel="shortcut icon" href="img/favicon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="description" content="Medicall - Medicall">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <script src="<?php echo WEBSITE_URL; ?>js/jqgrid/jquery-3.3.1.min.js"></script>
+        <script src="https://kit.fontawesome.com/ae2ef66705.js"></script>
+        <script>
+            var jsPath = '<?php echo WEBSITE_URL ?>';
+            var patientPath = jsPath + 'patient/';
+        </script>
+        <style>
+.sidenav {
+  height: 100%;
+  width: 280px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #f2f0f0;
+  overflow-x: hidden;
+  padding-top: 0px;
+ 
+}
+.card{
+	margin-bottom:10px;
+}
+.form-check-input{
+	margin-top:0px;
+}
+</style>
+    </head>
+    <body>
+        <?php echo $this->render('common/patientheader.phtml') ?>
+                <?php echo $this->render('common/patientsidebar.phtml') ?>
+<!--        <nav id="sidebar" class="sidebar" role="navigation">
+             need this .js class to initiate slimscroll 
+            <div class="js-sidebar-content" id = "sideBarDiv">
+                
+            </div>
+        </nav>-->
+        <?php echo $this->render('common/patientinnerheader.phtml') ?>
+        <?php echo $this->render('common/patientinnerheader.phtml') ?>
+        <?php echo $this->layout()->content; ?>
+        <?php echo $this->render('common/patientfooter.phtml') ?>
+
+    </body>
+</html>
+
+
+

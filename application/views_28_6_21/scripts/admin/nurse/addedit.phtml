@@ -1,0 +1,125 @@
+<div class="container-fluid">
+    <div class="content-wrap">
+        <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+        <main id="content" class="content" role="main">
+            <!-- Page content -->
+            <!-- <ol class="breadcrumb">
+                 <li class="breadcrumb-item">Dashboard</li>
+                 <li class="breadcrumb-item active">Patient profile</li>
+             </ol>-->
+
+            <div class="row">
+                <div class="col-md-form">
+                    <section class="widget">
+
+                        <div class="widget-body">
+                            <form class="form-horizontal" action="<?php echo $this->url(array('action' => 'savenurse'), 'adminNurse', true) ?>" method="POST">
+
+                                <input type = "hidden" id ="id" name ="id" value = "<?php echo $this->formdata['id']; ?>">
+
+                                <fieldset>
+                                    <legend><strong>Add Nurse</strong> form</legend>
+                                    <div class="form-group row" style ="text-align: center;">
+
+                                        <div class="col-md-11">
+
+                                            <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                            <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+                                                <div class="notification-error">
+                                                    <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                        <?php echo $msg; ?>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
+                                            <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                            <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+                                                <div class="notification-suc">
+                                                    <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                        <?php echo $msg; ?>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
+
+
+                                        </div>
+                                    </div>
+
+                                  
+
+                                    <div class="form-group row">
+                                        <label for="normal-field" class="col-md-4 form-control-label text-md-right">Name</label>
+                                        <div class="col-md-7">
+
+
+                                            <input type="text" value = "<?php echo $this->formdata['name']; ?>" id="p_name" class="form-control" placeholder="Nurse Name" name = 'p_name' required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="hint-field" class="col-md-4 control-label text-md-right">
+                                            Email
+                                            <!--<span class="help-block">Some help text</span>-->
+                                        </label>
+                                        <div class="col-md-7">
+
+                                            <?php
+                                            $disable = '';
+                                            if (isset($this->formdata['id'])) {
+                                                $disable = "disabled = 'disabled'";
+                                            }
+                                            ?>
+                                            <input type="text" value = "<?php echo $this->formdata['email']; ?>" id="hint-field" class="form-control" name = 'p_email' <?php echo $disable; ?> required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 control-label text-md-right" for="tooltip-enabled">Contact No</label>
+                                        <div class="col-md-7">
+                                            <input type="text" value = "<?php echo $this->formdata['contact_no']; ?>" id="tooltip-enabled" class="form-control" data-placement="top" data-original-title="Some explanation text here" placeholder="Mobile No" name = 'p_mno' required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-4 control-label text-md-right" for="tooltip-enabled">Address</label>
+                                        <div class="col-md-7">
+                                            <input type="text" value = "<?php echo $this->formdata['address']; ?>" id="tooltip-enabled" class="form-control" data-placement="top" data-original-title="Some explanation text here" placeholder="Address" name = 'p_add' required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 control-label text-md-right" for="tooltip-enabled">Qualification</label>
+                                        <div class="col-md-7">
+                                            <input type="text" value = "<?php echo $this->formdata['qualification']; ?>" id="tooltip-enabled" class="form-control" data-placement="top" data-original-title="Some explanation text here" placeholder="Qualification" name = 'qualification' required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 control-label text-md-right" for="tooltip-enabled">Experience</label>
+                                        <div class="col-md-7">
+                                            <input type="text" value = "<?php echo $this->formdata['experience']; ?>" id="tooltip-enabled" class="form-control" data-placement="top" data-original-title="Some explanation text here" placeholder="Experience" name = 'experience' required>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="form-group row">
+                                        <label class="col-md-4 control-label text-md-right" for="tooltip-enabled">About</label>
+                                        <div class="col-md-7">
+                                            <textarea name = "about"><?php echo $this->formdata['about']; ?></textarea>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="offset-md-4 col-md-7 col-12">
+                                            <span id = "sve_btn"><button type="submit" class="btn btn-primary" id = 'button'>Save</button></span>
+                                            <button type="button" class="btn btn-inverse" id = "search" onClick = "javascript:cancel('patient/index');">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id = "f-l-name"></div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+

@@ -1,0 +1,196 @@
+<div class="container-fluid">
+        <div class="content-wrap">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+    <main id="content" class="content" role="main">
+        <!-- Page content -->
+       <!-- <ol class="breadcrumb">
+            <li class="breadcrumb-item">Dashboard</li>
+            <li class="breadcrumb-item active">Patient profile</li>
+        </ol>-->
+
+        <div class="row">
+            <div class="col-md-form">
+                <section class="widget">
+                    
+                    <div class="widget-body">
+                        <form class="form-horizontal" action="<?php echo  $this->url(array('action' => 'saveprescription'), 'doctorPrescription', true); ?>" method="POST">
+                            <input type = "hidden" id ="patient_id" name ="patient_id" value = "<?php echo $this->patient_id;?>">
+                            <input type = "hidden" id ="appnt_id" name ="appnt_id" value = "<?php echo $this->appntId;?>">
+                            <input type = "hidden" id ="id" name ="id" value = "<?php echo $this->id;?>">
+          <input type = "hidden" id ="action_name" name ="action_name" value = "clinic-consultation-addedit">
+          
+                            <fieldset>
+                                <legend><strong>Clinic Appointment</strong> form</legend>
+                                <div class="form-group row" style ="text-align: center;">
+                                    
+                                    <div class="col-md-11">
+                                        
+                                        <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+            <div class="notification-error">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+        <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+            <div class="notification-suc">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+                                     
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Patient Name</label>
+                                    <div class="col-md-7">
+                                        <select name = "doctor_name" data-placeholder="Doctor Name" data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control select2-hidden-accessible" id="default-select" aria-hidden="true">
+                                            <?php  if(!empty($this->doctorData)){ ?>
+                                            
+                                            <option value="<?php echo $this->doctorData['id'];?>"><?php echo $this->doctorData['name'];?></option>
+
+                                            <?php  } ?>
+
+                                        </select>
+                                    </div>
+                                </div>
+                   
+                               
+
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Medication Name</label>
+                                    <div class="col-md-7">
+                                        <input type="text" id="p_name" class="form-control" placeholder="Medication Name" name = 'med_name' value="<?php echo $this->formdata['med_name'];?>">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Form of Medicine</label>
+                                    <div class="col-md-7">
+                                        <select data-placeholder="Form of Medicine" data-width="auto" data-minimum-results-for-search="10" tabindex="-1" class="select2 form-control select2-hidden-accessible" id="default-select" aria-hidden="true" name = "form_of_medicine">
+                                           
+                                            <option value="tablet" <?php echo (($this->formdata['form_of_medicine'] == 'tablet')?'selected = selected':'') ?>>Tablet</option>
+
+
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label for="type-dropdown-appended" class="col-md-4 form-control-label text-md-right">Strength Name</label>
+
+                                    <div class="input-group z-index-10 col-md-4">
+                                        
+                                        <input type="text" class="form-control" id="type-dropdown-appended" name = 'strn' placeholder="e.g. 100" value="<?php echo $this->formdata['strn'];?>">
+                                        
+                                        <div class="input-group-append">
+                                            <div class="dropdown bootstrap-select dropup" style="width: 127px;">
+                                                <select id="phone-type" class="selectpicker" data-style="btn-primary" data-width="auto" tabindex="-98" name = "unit">
+                                                    <option class="dropdown-item">Unit</option>
+                                                    
+                                                    <option class="dropdown-item" value ='mg' <?php echo (($this->formdata['unit'] == 'mg')?'selected = selected':'') ?>>mg</option>
+                                                    <option class="dropdown-item" value = 'ml' <?php echo (($this->formdata['unit'] == 'ml')?'selected = selected':'') ?>>ml</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Dosage</label>
+
+                                    <div class="input-group col-md-7">
+                                        <input type="text" id="d_qunt" class="form-control" placeholder="Quantity" name = 'quantity' value="<?php echo $this->formdata['quantity'];?>">
+                                        <div class="input-group-append">
+                                            <div class="dropdown bootstrap-select dropup" style="width: 100px;">
+                                                <input type="text" id="how_often" class="form-control" placeholder="e.g. daily" name = 'how_often' required="" value="<?php echo $this->formdata['how_often'];?>">
+
+                                            </div>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <div class="dropdown bootstrap-select dropup" style="width: 100px;">
+                                                <input type="text" id="whichtime" class="form-control" placeholder="e.g. before food" name = 'whichtime' required="" value="<?php echo $this->formdata['whichtime'];?>">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label text-md-right" for="default-textarea">Other Instructions</label>
+                                    <div class="col-md-7">
+                                        <textarea rows="4" class="form-control" id="o_instruction" name = "other_instruction"><?php echo $this->formdata['other_instruction'];?></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Start Date/Time</label>
+                                    <div class="col-md-7 input-group date" id="datetimepicker1" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name ="start_time"  required="" value="<?php echo $this->formdata['start_time'];?>">
+                                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">End Date/Time</label>
+                                    <div class="col-md-7 input-group date" id="datetimepicker4" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" name ="end_time"  required="" value="<?php echo $this->formdata['end_time'];?>">
+                                        <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Medicine Taken for</label>
+                                    <div class="col-md-7">
+                                        <input type="text" id="m_taken_for" class="form-control" placeholder="e.g Diabetes" name = 'm_taken_for'  required="" value="<?php echo $this->formdata['m_taken_for'];?>">
+
+                                    </div>
+                                </div>
+
+                           
+
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Side effects </label>
+                                    <div class="col-md-7">
+                                        <input type="text" id="side_effects" class="form-control" placeholder="e.g Redness,Swelling.." name = 'side_effects'  required="" value="<?php echo $this->formdata['side_effects'];?>">
+
+                                    </div>
+                                </div>
+                                
+                            </fieldset>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="offset-md-4 col-md-7 col-12">
+<!--                                        <span id = "sve_btn"><button type="submit" class="btn btn-primary" id = 'button'>Save</button></span>-->
+                                        <button type="button" class="btn btn-inverse" id = "search" onClick = "javascript:cancel('prescription/index');">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div id = "f-l-name"></div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+       </main>
+</div>
+    </div>
+<script language="javascript">
+
+function cancel(){
+    window.location = patientPath + 'appointment/index';
+}
+</script>
+

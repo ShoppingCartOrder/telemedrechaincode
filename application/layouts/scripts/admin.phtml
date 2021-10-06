@@ -1,0 +1,341 @@
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+                <meta content="utf-8" http-equiv="encoding">
+		<title>My Band Baja Admin Panel.</title>
+       
+        <!-- CSS Reset -->
+		<link media="screen" href="<?php echo WEBSITE_URL ?>css/admin/reset.css" type="text/css" rel="stylesheet">
+       
+        <!-- Fluid 960 Grid System - CSS framework -->
+		<link media="screen" href="<?php echo WEBSITE_URL ?>css/admin/grid.css" type="text/css" rel="stylesheet">
+		
+        <!-- IE Hacks for the Fluid 960 Grid System -->
+        <!--[if IE 6]><link rel="stylesheet" type="text/css" href="<?php echo WEBSITE_URL ?>css/adminie6.css"  media="screen" /><![endif]-->
+		<!--[if IE 7]><link rel="stylesheet" type="text/css" href="<?php echo WEBSITE_URL ?>css/adminie.css"  media="screen" /><![endif]-->
+        
+        <!-- Main stylesheet -->
+        <link media="screen" href="<?php echo WEBSITE_URL ?>css/admin/adminstyles.css" type="text/css" rel="stylesheet">
+        
+        <!-- WYSIWYG editor stylesheet -->
+        <link media="screen" href="<?php echo WEBSITE_URL ?>css/admin/jquery.wysiwyg.css" type="text/css" rel="stylesheet">
+        
+        <!-- Table sorter stylesheet -->
+        <link media="screen" href="<?php echo WEBSITE_URL ?>css/admin/tablesorter.css" type="text/css" rel="stylesheet">
+        
+        <!-- Thickbox stylesheet -->
+       <!-- <link media="screen" href="<?php echo WEBSITE_URL ?>css/admin/thickbox.css" type="text/css" rel="stylesheet">-->
+        
+        <!-- Themes. Below are several color themes. Uncomment the line of your choice to switch to different color. All styles commented out means blue theme. -->
+        <link media="screen" href="<?php echo WEBSITE_URL ?>css/admin/theme-blue.css" type="text/css" rel="stylesheet">
+        <!--<link rel="stylesheet" type="text/css" href="<?php echo WEBSITE_URL ?>css/admin/theme-red.css" media="screen" />-->
+        <!--<link rel="stylesheet" type="text/css" href="<?php echo WEBSITE_URL ?>css/admin/theme-yellow.css" media="screen" />-->
+        <!--<link rel="stylesheet" type="text/css" href="<?php echo WEBSITE_URL ?>css/admin/theme-green.css" media="screen" />-->
+        <!--<link rel="stylesheet" type="text/css" href="<?php echo WEBSITE_URL ?>css/admin/theme-graphite.css" media="screen" />-->
+        
+		<link rel="stylesheet" href="<?php echo WEBSITE_URL ?>css/admin/calender/zebra_datepicker_metallic.css" type="text/css">
+                 <script type="text/javascript"> var jsPath = "<?= WEBSITE_URL ?>";</script>   
+		<link media="screen" type="text/css" href="<?php echo WEBSITE_URL ?>css/admin/autocomplete/jquery.autocomplete.css" rel="stylesheet" />
+                <link media="screen" type="text/css" href="<?php echo WEBSITE_URL ?>css/admin/jqGrid/ui.jqgrid.css" rel="stylesheet" />
+                <link media="screen" type="text/css" href="<?php echo WEBSITE_URL ?>css/admin/jqGrid/jquery-ui-custom.css" rel="stylesheet" />        
+                <link media="screen" type="text/css" href="<?php echo WEBSITE_URL ?>css/admin/loader.css" rel="stylesheet" />        
+                <link media="screen" type="text/css" href="<?php echo WEBSITE_URL ?>css/admin/chat/default.css" rel="stylesheet" />        
+                <link media="screen" type="text/css" href="<?php echo WEBSITE_URL ?>css/admin/chat/component.css" rel="stylesheet" />        
+		<script>var jsPath = '<?php echo WEBSITE_URL; ?>'; </script>
+                <!-- JQuery engine script-->
+		<script src="<?php echo WEBSITE_URL ?>js/admin/jquery/js/jquery-1.3.2.min.js" type="text/javascript"></script>
+            
+		<script src="<?php echo WEBSITE_URL ?>js/admin/autocomplete/jquery.autocomplete.js" type="text/javascript"></script>
+		
+		
+		<!-- JQuery WYSIWYG plugin script -->
+		<script  src="<?php echo WEBSITE_URL ?>js/admin/jquery/js/jquery.wysiwyg.js" type="text/javascript"></script>
+        
+        <!-- JQuery tablesorter plugin script-->
+		<script  src="<?php echo WEBSITE_URL ?>js/admin/jquery/js/jquery.tablesorter.min.js" type="text/javascript"></script>
+        
+		<!-- JQuery pager plugin script for tablesorter tables -->
+		<script src="<?php echo WEBSITE_URL ?>js/admin/jquery/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
+        
+		<!-- JQuery password strength plugin script -->
+		<script src="<?php echo WEBSITE_URL ?>js/admin/jquery/js/jquery.pstrength-min.1.2.js" type="text/javascript"></script>
+        
+		<!-- JQuery thickbox plugin script -->
+		<!--<script  src="<?= $this->baseUrl();?>/scripts/thickbox.js" type="text/javascript"></script>-->
+                
+                		<!-- JQuery thickbox plugin script -->
+		<script  src="<?php echo WEBSITE_URL ?>js/admin/adminlib.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="<?php echo WEBSITE_URL ?>js/admin/advertisement.js"></script>
+		
+		<script type="text/javascript" src="<?php echo WEBSITE_URL ?>js/admin/action.js"></script>
+		
+		<script type="text/javascript" src="<?php echo WEBSITE_URL ?>js/admin/cms.js"></script>
+		
+		<script type="text/javascript" src="<?php echo WEBSITE_URL ?>js/admin/vendor.js"></script>
+		
+		<script type="text/javascript" src="<?php echo WEBSITE_URL ?>js/admin/category.js"></script>
+                
+               
+                
+               <script type="text/javascript" src="<?php echo WEBSITE_URL ?>js/admin/chat/modernizr.custom.js"></script>
+		
+		<script type="text/javascript" src="<?php echo WEBSITE_URL ?>js/admin/chat/classie.js"></script>
+                
+        
+
+		
+        
+        <!-- Initiate WYIWYG text area -->
+		<script type="text/javascript">
+			$(function()
+			{ 
+			$('#wysiwyg').wysiwyg(
+			{
+			controls : {
+			separator01 : { visible : true },
+			separator03 : { visible : true },
+			separator04 : { visible : true },
+			separator00 : { visible : true },
+			separator07 : { visible : false },
+			separator02 : { visible : false },
+			separator08 : { visible : false },
+			insertOrderedList : { visible : true },
+			insertUnorderedList : { visible : true },
+			undo: { visible : true },
+			redo: { visible : true },
+			justifyLeft: { visible : true },
+			justifyCenter: { visible : true },
+			justifyRight: { visible : true },
+			justifyFull: { visible : true },
+			subscript: { visible : true },
+			superscript: { visible : true },
+			underline: { visible : true },
+            increaseFontSize : { visible : false },
+            decreaseFontSize : { visible : false }
+			}
+			} );
+			});
+        </script>
+        
+        <!-- Initiate tablesorter script -->
+        <script type="text/javascript">
+			$(document).ready(function() { 
+                            
+                            if ($("#myTable").find("tr").size() > 1)
+    
+                             {
+				$("#myTable") 
+				.tablesorter({
+					// zebra coloring
+					widgets: ['zebra'],
+					// pass the headers argument and assing a object 
+					headers: { 
+						// assign the sixth column (we start counting zero) 
+						6: { 
+							// disable it by setting the property sorter to false 
+							sorter: false 
+						} 
+					}
+				}) 
+			.tablesorterPager({container: $("#pager")}); 
+                       }
+                         var controllerName = '<?=Zend_Controller_Front :: getInstance()->getRequest()->getControllerName()?>';
+                        
+                        $("ul#nav li").each(function(){
+                          
+                          if( $(this).attr('cname') == controllerName) {
+                              $(this).attr('id', 'current');
+                          }
+                        });      
+		}); 
+		</script>
+        
+        <!-- Initiate password strength script -->
+		<script type="text/javascript">
+			$(function() {
+			$('.password').pstrength();
+			});
+		var adminPath = "<?php echo ADMIN_BASE_URL; ?>";	
+        </script>
+		
+		<link rel="stylesheet" href="<?php echo WEBSITE_URL ?>css/admin/colorbox/colorbox.css" />
+               <!-- <script type="text/javascript" src="<?php echo WEBSITE_URL ?>js/lib/jquery.min.js"></script>-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="<?php echo WEBSITE_URL ?>js/admin/colorbox/jquery.colorbox.js"></script>
+                
+                 <script type="text/javascript" src="<?php echo WEBSITE_URL ?>js/admin/jqGrid/grid.locale-en.js"></script>
+                <script type="text/javascript" src="<?php echo WEBSITE_URL ?>js/admin/jqGrid/jquery.jqGrid.min.js"></script>
+                
+		<script>
+			$(document).ready(function(){
+				$(".popup").colorbox();
+				/*$(".callbacks").colorbox({
+					onOpen:function(){ alert('onOpen: colorbox is about to open'); },
+					onLoad:function(){ alert('onLoad: colorbox has started to load the targeted content'); },
+					onComplete:function(){ alert('onComplete: colorbox has displayed the loaded content'); },
+					onCleanup:function(){ alert('onCleanup: colorbox has begun the close process'); },
+					onClosed:function(){ alert('onClosed: colorbox has completely closed'); }
+				});*/
+				
+			});
+		</script>
+		
+		
+    </head>
+        
+	<body class="cbp-spmenu-push">
+    	<!-- Header -->
+       <?= $this->render('adminheader.phtml') ?>
+       <!-- End #header -->
+        
+		<div class="container_12">
+        <?= $this->layout()->content ?>
+         </div>
+		
+           
+        <!-- Footer -->
+      <!-- Header -->
+       <?= $this->render('adminfooter.phtml') ?>
+       <!-- End #header --> <!-- End #footer -->
+	
+</body></html>
+
+<!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
+
+<script type="text/javascript">
+
+google.load("visualization", "1", {packages:["corechart"]});
+
+google.setOnLoadCallback(drawChart);
+
+</script> 
+
+<script type="text/javascript">
+    
+       $("#cityfilter").change(function() { 
+                                      var city = parseInt($("#cityfilter").val());
+     
+    if(isNaN(city) || city == 0) // Additional verification
+    {
+        alert("Please select city.");
+        return;
+    }
+    
+  
+    else if(city >= 1) {
+    
+   		var value = 'city/' + city;
+		window.location.href = '/admin/index/index/'+value; 
+    }
+    
+   
+                         });
+</script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL ?>js/admin/jquery/js/jquery-validation/jquery.validate.js"></script>
+
+<script>
+			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+				menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+				menuTop = document.getElementById( 'cbp-spmenu-s3' ),
+				menuBottom = document.getElementById( 'cbp-spmenu-s4' ),
+				showLeft = document.getElementById( 'showLeft' ),
+                                menuRightUsr = document.getElementById( 'cbp-spmenu-s2-usr' ),
+                                usr = document.getElementById( 'usr' ),
+				showRight = document.getElementById( 'showRight' ),
+				showTop = document.getElementById( 'showTop' ),
+				showBottom = document.getElementById( 'showBottom' ),
+				showLeftPush = document.getElementById( 'showLeftPush' ),
+				showRightPush = document.getElementById( 'showRightPush' ),
+				body = document.body;
+
+			
+			showRight.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( menuRight, 'cbp-spmenu-open' );
+				disableOther( 'showRight' );
+			};
+                        $(".usr1").click(function(){
+                            
+                            classie.toggle( this, 'active' );
+                            classie.toggle( menuRightUsr, 'cbp-spmenu-open' );
+                            $('#username').html($(this).text()); 
+                            $('#toChatUsrId').val(this.id); 
+                            
+                            
+                            
+       var value = 'to_user_id='+this.id;                     
+    $.ajax({
+        //this is the php file that processes the data
+        url: jsPath + "admin/dashboard/conversations",
+        //GET method is used
+        type: "POST",
+        //pass the data			
+        data: value,
+        
+        //success
+        success: function (responseText) {
+            var obj = JSON.parse(responseText);
+            
+            var msg = '';
+            $.each(obj, function (i, fb) {
+                msg +='<div style = "border-radius:10px;padding:5px;margin-top:10px;border:1px solid #000;">'+fb.message+'<br/><span>'+fb.created_at+'</span></div>'
+                
+            });
+            
+            $('#conversationList').html(msg);
+            
+
+        }
+
+    });
+                            
+                            
+                            disableOther( 'showRight' );
+                        });
+                        
+                        
+			showTop.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( menuTop, 'cbp-spmenu-open' );
+				disableOther( 'showTop' );
+			};
+			showBottom.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( menuBottom, 'cbp-spmenu-open' );
+				disableOther( 'showBottom' );
+			};
+			showLeftPush.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( body, 'cbp-spmenu-push-toright' );
+				classie.toggle( menuLeft, 'cbp-spmenu-open' );
+				disableOther( 'showLeftPush' );
+			};
+			showRightPush.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( body, 'cbp-spmenu-push-toleft' );
+				classie.toggle( menuRight, 'cbp-spmenu-open' );
+				disableOther( 'showRightPush' );
+			};
+
+			function disableOther( button ) {
+				if( button !== 'showLeft' ) {
+					classie.toggle( showLeft, 'disabled' );
+				}
+				if( button !== 'showRight' ) {
+					classie.toggle( showRight, 'disabled' );
+				}
+				if( button !== 'showTop' ) {
+					classie.toggle( showTop, 'disabled' );
+				}
+				if( button !== 'showBottom' ) {
+					classie.toggle( showBottom, 'disabled' );
+				}
+				if( button !== 'showLeftPush' ) {
+					classie.toggle( showLeftPush, 'disabled' );
+				}
+				if( button !== 'showRightPush' ) {
+					classie.toggle( showRightPush, 'disabled' );
+				}
+			}
+		</script>

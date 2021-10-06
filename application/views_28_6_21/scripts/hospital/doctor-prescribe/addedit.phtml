@@ -1,0 +1,431 @@
+<!-- Jquery Autocomplete -->
+<!--<link rel="stylesheet" href="<?php echo WEBSITE_URL; ?>css/autocomplete/jquery-ui.css">
+<link rel="stylesheet" href="<?php echo WEBSITE_URL; ?>css/autocomplete/style.css">-->
+<link rel="stylesheet" href="<?php echo WEBSITE_URL; ?>css/autocomplete/bootstrap-tokenfield.min.css">
+<link rel="stylesheet" href="<?php echo WEBSITE_URL; ?>css/autocomplete/bootstrap-tokenfield.min.css">
+<script src="<?php echo WEBSITE_URL; ?>js/autocomplete/bootstrap-tokenfield.js"></script>
+  	
+  <style>
+  .ui-autocomplete-loading {
+    background: white url("images/loader.gif") right center no-repeat;
+  }
+  
+  .ui-menu-item{
+      padding:10px;
+  }
+  #ui-id-1 {
+      background: #DDD;
+      width:100px;
+  }
+  </style>
+  
+    <script>
+ $(document).ready(function(){
+      
+    $('#laboratery_test_notes').tokenfield({
+        autocomplete :{
+            source: function(request, response)
+            {
+                jQuery.get(hospitalPath+ "laboratory/search-lab-name", {
+                    query : request.term
+                }, function(data){
+                    data = JSON.parse(data);
+                    response(data);
+                });
+            },
+            delay: 100,
+            select: function (event, ui) {
+            
+            return false;
+        }
+        }
+    });
+
+    $('#search').click(function(){
+       alert($('#laboratery_test_notes').val());
+    });
+    
+  
+
+  });
+  </script>
+  
+<!-- [END]Jquery Autocomplete -->
+<div class="container-fluid">
+    <div class="content-wrap">
+        <main id="content" class="content" role="main">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="well">
+                        <section class="widget" style="background-color:#FFF; margin-top:2rem">
+
+
+                            <form style="padding:15px" class="form-horizontal" action="<?php echo $this->url(array('action' => 'savedoctorprescribe'), 'hospitalDoctorPrescribe', true); ?>" method="POST">
+                                <div class="row">
+                                    <input type = "hidden" id ="patient_id" name ="patient_id" value = "<?php echo $this->patient_id; ?>">
+                                    <input type = "hidden" id ="registration_no" name ="registration_no" value = "<?php echo $this->rid; ?>">
+                                    <input type = "hidden" id ="id" name ="id" value = "<?php echo $this->id; ?>">
+                                    <input type = "hidden" id ="row_cnt" name ="row_cnt" value = "<?php echo $this->vitalRecordsCnt; ?>">
+                                    <input type = "hidden" id ="specialization_id" name ="specialization_id" value = "<?php echo $this->specialization_id; ?>">
+                                    <input type = "hidden" id ="doctor_id" name ="doctor_id" value = "<?php echo $this->doctor_id; ?>">
+                                   
+                                    <fieldset>
+                                        <legend><strong>Doctor Prescribe</strong> form</legend>
+                                        <div class="form-group row" style ="text-align: center;">
+
+                                            <div class="col-md-11">
+                                                <span class="notification-error"></span>
+                                                <span class="notification-suc"></span>
+                                                <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                                <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+                                                    <div class="notification-error">
+                                                        <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                            <?php echo $msg; ?>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
+                                                <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                                <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+                                                    <div class="notification-suc">
+                                                        <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                            <?php echo $msg; ?>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
+
+
+                                            </div>
+                                        </div>
+                                        <p>
+
+                                        <div class="form-group" style="max-width:90%;">
+
+                                            <div>
+                                                <input type="button" id="addRow" value="Patient Vital" onclick="addTableRow();" />
+                                            </div>
+                                            <div id="cont">
+
+                                                <table id="empTable">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Blood-Pressure</th>
+                                                            <th>Sugar</th>
+                                                            <th>Heart-Beat</th>
+                                                            <th>BMI</th>
+                                                            <th>Temprature</th>
+                                                            <th>Pulse</th>
+                                                            <th>SPO2</th>
+                                                            <th>Date</th>
+                                                        </tr>
+                                                        <?php
+                                                        if (!empty($this->vitaldata)) {
+                                                            foreach ($this->vitaldata as $key => $vdata) {
+                                                                $index = $key + 1;
+                                                                ?>
+                                                                <tr id = "<?php echo $vdata['id']; ?>">
+                                                                    <td><input type="button" value="Remove" disabled></td>
+                                                                    <td><input type="text" name="blood-pressure_<?php echo $index; ?>" value="<?php echo $vdata['blood_pressure']; ?>" style="width:87px;"></td>
+                                                                    <td><input type="text" name="sugar_<?php echo $index; ?>" value="<?php echo $vdata['sugar']; ?>" style="width:87px;"></td>
+                                                                    <td><input type="text" name="heart-beat_<?php echo $index; ?>" value="<?php echo $vdata['heart_beat']; ?>" style="width:87px;"></td>
+                                                                    <td><input type="text" name="bmi_<?php echo $index; ?>" value="<?php echo $vdata['bmi']; ?>" style="width:87px;"></td>
+                                                                    <td><input type="text" name="temprature_<?php echo $index; ?>" value="<?php echo $vdata['temperature']; ?>" style="width:87px;"></td>
+                                                                    <td><input type="text" name="pulse_<?php echo $index; ?>" value="<?php echo $vdata['pulse']; ?>" style="width:87px;"></td>
+                                                                    <td><input type="text" name="spo2_<?php echo $index; ?>" value="<?php echo $vdata['spo2']; ?>" style="width:87px;"></td>
+                                                                    <td><input type="text" name="date_<?php echo $index; ?>" value="<?php echo date(DATE_FORMAT_FRONT, strtotime($vdata['created_at'])); ?>" style="width:87px;"></td>
+                                                                </tr>
+                                                            <?php }
+                                                        }
+                                                        ?>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>                             
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label  for="Consultation"><b>Consultation Notes:</b></label>
+
+                                                <textarea id="consultation_notes" name="consultation_notes" rows="4" cols="75"><?php echo $this->prescriptionDetails['consultation_notes']; ?></textarea>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label  for="Doctor"><b>Doctor Pres. Notes:</b></label>
+                                                <textarea id="dcotor_notes" name="dcotor_notes" rows="4" cols="75"><?php echo $this->prescriptionDetails['dcotor_prescibe_notes']; ?></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label  for="Laboratary"><b>Laboretery Test Note:</b></label>
+                                                <!--<textarea id="laboratery_test_notes" name="laboratery_test_notes" rows="2" cols="75"><?php echo $this->prescriptionDetails['laboratery_test_notes']; ?></textarea>-->
+                                                <input type = "text"  id="laboratery_test_notes" name="laboratery_test_notes" value = "<?php echo $this->prescriptionDetails['laboratery_test_notes']; ?>" autocomplete="off" class="form-control input-lg">
+                                
+                                            </div>
+                                            <div class="form-group">
+                                            <label  for="Laboratary"><b>Medicine Advices:</b></label>
+                                            <textarea id="medicine_advices" name="medicine_advices" rows="2" cols="75"><?php echo $this->prescriptionDetails['medicine_advices']; ?></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label  for="IPD"><b>IPD/Dressing Notes:</b></label>
+                                                <textarea id="dressing_note" name="dressing_note" rows="2" cols="75"><?php echo $this->prescriptionDetails['dressing_note']; ?></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label  for="X-rary"><b>X-Ray/ECG/USG:</b></label>
+                                                <textarea id="x-ray" name="x-ray" rows="2" cols="75"><?php echo $this->prescriptionDetails['xray']; ?></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label  for="IPD"><b>Remarks Notes:</b></label>
+                                                <textarea id="remark" name="remark" rows="2" cols="75"><?php echo $this->prescriptionDetails['remark']; ?></textarea>
+                                            </div>
+
+<!--                                        <input type="button" id="save" value="Submit"/> -->
+                                        </div>
+                                    </fieldset>
+<!--                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="offset-md-4 col-md-12 col-12">
+                                                <button type="button" class="btn btn-danger" id = 'button2'>Cancel</button>
+                                                <span id = "sve_btn">
+                                                    <button type="button" style="text-align:right" class="btn btn-primary" id = 'save_button' onClick="submitForm();">Save</button>
+                                                </span>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>-->
+
+                                </div>
+                            </form>
+                            <div id = "f-l-name"></div>
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script language="javascript">
+
+    function cancel() {
+        window.location = doctorPath + 'appointment/index';
+    }
+    $(document).ready(function () {
+       // createTable();
+    });
+</script>
+<style>
+    table {
+        width: 30%;
+        font: 17px Calibri;
+    }
+    table, th, td {
+        border: solid 1px #DDD;
+        border-collapse: collapse;
+        padding: 2px 3px;
+        text-align: center;
+    }
+    .inp-width{
+        width:87px;
+    }
+    th {
+        width:87px;
+    }
+
+</style>
+
+<script>
+    // ARRAY FOR HEADER.
+    var arrHead = new Array();
+    arrHead = ['', 'Blood-Pressure', 'Sugar', 'Heart-Beat', 'BMI', 'Temprature', 'Pulse', 'SPO2', 'Date'];      // SIMPLY ADD OR REMOVE VALUES IN THE ARRAY FOR TABLE HEADERS.
+
+    // FIRST CREATE A TABLE STRUCTURE BY ADDING A FEW HEADERS AND
+    // ADD THE TABLE TO YOUR WEB PAGE.
+    function createTable1() {
+        var empTable = document.createElement('table');
+        empTable.setAttribute('id', 'empTable');            // SET THE TABLE ID.
+
+
+        var tr = empTable.insertRow(-1);
+
+        for (var h = 0; h < arrHead.length; h++) {
+            var th = document.createElement('th');          // TABLE HEADER.
+
+            th.innerHTML = arrHead[h];
+            tr.appendChild(th);
+
+        }
+
+        var div = document.getElementById('cont');
+        div.appendChild(empTable);    // ADD THE TABLE TO YOUR WEB PAGE.
+    }
+
+    // ADD A NEW ROW TO THE TABLE.s
+    function addTableRow() {
+        var empTab = document.getElementById('empTable');
+
+        var rowCnt = empTab.rows.length;        // GET TABLE ROW COUNT.
+        var tr = empTab.insertRow(rowCnt);      // TABLE ROW.
+        //tr = empTab.insertRow(rowCnt);
+
+        for (var c = 0; c < arrHead.length; c++) {
+            var td = document.createElement('td');          // TABLE DEFINITION.
+            td = tr.insertCell(c);
+
+            if (c == 0) {           // FIRST COLUMN.
+                // ADD A BUTTON.
+                var button = document.createElement('input');
+
+                // SET INPUT ATTRIBUTE.
+                button.setAttribute('type', 'button');
+                button.setAttribute('value', 'Remove');
+
+
+                // ADD THE BUTTON's 'onclick' EVENT.
+                button.setAttribute('onclick', 'removeRow(this)');
+
+                td.appendChild(button);
+            }
+            else {
+                // CREATE AND ADD TEXTBOX IN EACH CELL.
+                var ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('name', arrHead[c].toLowerCase() + '_' + rowCnt);
+                ele.setAttribute('value', '');
+                ele.setAttribute('style', 'width:87px;');
+                td.appendChild(ele);
+            }
+        }
+    }
+
+    // DELETE TABLE ROW.
+    function removeRow(oButton) {
+        var empTab = document.getElementById('empTable');
+        empTab.deleteRow(oButton.parentNode.parentNode.rowIndex);       // BUTTON -> TD -> TR.
+    }
+
+    // EXTRACT AND SUBMIT TABLE DATA.
+    function submitForm() {
+        displayLoader('save_button', 'show', 'btn btn-primary');      
+        var patient_id = $("#patient_id").val();
+        var registration_no = $("#registration_no").val();
+        var id = $("#id").val();
+        var rowTotalCnt = parseInt($('#row_cnt').val());
+        if (patient_id == '' && registration_no == '') {
+            return false;
+        }
+
+        var myTab = document.getElementById('empTable');
+        var values = new Array();
+        var vitaldata = '';
+        var rowNo = new Array();
+
+        // LOOP THROUGH EACH ROW OF THE TABLE.
+        //for (row = 1; row < myTab.rows.length; row++) {
+        for (row = rowTotalCnt + 1; row < myTab.rows.length; row++) {
+            for (c = 0; c < myTab.rows[row].cells.length; c++) {   // EACH CELL IN A ROW.
+
+                var element = myTab.rows.item(row).cells[c];
+                if (element.childNodes[0].getAttribute('type') == 'text') {
+                    values.push("'" + element.childNodes[0].value + "'");
+
+                    if (rowNo.indexOf(row) === -1) {
+                        rowNo.push(row);
+
+                    }
+
+                    if (vitaldata != '') {
+
+                        vitaldata += '&' + element.childNodes[0].name + '=' + element.childNodes[0].value;
+                    } else {
+                        vitaldata += element.childNodes[0].name + '=' + element.childNodes[0].value;
+
+                    }
+                    //alert(data);
+                }
+            }
+
+        }
+
+        // SHOW THE RESULT IN THE CONSOLE WINDOW.
+        //alert(data);
+
+
+        var consultation_notes = '';
+        var dcotor_notes = '';
+        var laboratery_test_notes = '';
+        var medicine_advices = '';
+        var dressing_note = '';
+        var xray = '';
+        var remark = '';
+
+        consultation_notes = $("#consultation_notes").val();
+        dcotor_notes = $("#dcotor_notes").val();
+        laboratery_test_notes = $("#laboratery_test_notes").val();
+        medicine_advices = $("#medicine_advices").val();
+        dressing_note = $("#dressing_note").val();
+        xray = $("#x-ray").val();
+        remark = $("#remark").val();
+       var specialization_id = $("#specialization_id").val();
+       var doctor_id = $("#doctor_id").val();
+
+        var formdata = 'consultation_notes=' + consultation_notes + '&dcotor_notes=' + dcotor_notes + '&laboratery_test_notes=' + laboratery_test_notes + '&medicine_advices=' + medicine_advices +
+                '&dressing_note=' + dressing_note + '&xray=' + xray + '&remark=' + remark
+                + '&patient_id=' + patient_id + '&registration_no=' + registration_no + '&rowno=' + rowNo + '&id=' + id+'&specialization_id='+specialization_id+'&doctor_id='+doctor_id;
+
+
+
+        //loader('button2', 'show', 'loader-enq');
+        $.ajax({
+            //this is the php file that processes the data
+            //url: jsPath + "Detail/sendsmsemail",
+            url: hospitalPath + "doctor-prescribe/savedoctorprescribe",
+            //GET method is used
+            type: "POST",
+            //pass the data			
+            data: vitaldata + '&' + formdata,
+            //success
+            success: function (responseText) {
+                displayLoader('save_button', 'hide', 'btn btn-primary');
+                //alert(responseText);
+                $('.notification-error').html('');
+                $('.notification-suc').html('');
+                if (responseText == 1)
+                {
+
+                    $('.notification-suc').html("Prescription successfully saved.");
+                    /*$('#send_sms_div').html("<div class='popupmessage'>Information successfully sent.</div>");
+                     $.fn.colorbox.resize({
+                     height: "200px",
+                     width: "400px;"
+                     
+                     });
+                     loader('sendsms', 'hide', '');*/
+                     window.setTimeout(function () {
+                     
+                     window.location.href = hospitalPath + 'patient/index';
+    
+                     }, 2000);
+                } else if (responseText == 2)
+                {
+
+                    $('.notification-suc').html("Prescription successfully updated.");
+                    window.setTimeout(function () {
+                     
+                     window.location.href = hospitalPath + 'patient/index';
+    
+                     }, 2000);
+
+                } else {
+
+                    $('.notification-error').html(responseText);
+                }
+            }
+
+
+        });
+
+        //console.log(values);
+    }
+    
+     
+</script>

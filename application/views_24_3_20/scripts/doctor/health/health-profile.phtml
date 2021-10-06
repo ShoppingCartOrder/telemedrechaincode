@@ -1,0 +1,341 @@
+<link rel="stylesheet" href="<?php echo WEBSITE_URL; ?>css/jqgrid/jquery-ui.min.css">
+<link rel="stylesheet" href="<?php echo WEBSITE_URL; ?>css/jqgrid/ui.jqgrid.min.css">
+<link rel="stylesheet" href="<?php echo WEBSITE_URL; ?>css/jqgrid/ui.jqgrid.css"/>
+<link rel="stylesheet" href="<?php echo WEBSITE_URL; ?>css/jqgrid/qunit-2.6.2.css">
+
+
+
+
+<script src="<?php echo WEBSITE_URL; ?>js/jqgrid/jquery.jqgrid.min.js"></script>
+<div class="container-fluid">
+    <div class="content-wrap">		
+        <main id="content" class="content" role="main">
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="well">
+                        <section class="widget">
+                            <div class="row">
+
+
+                                <div class="col-sm-5">
+                                    <h4 class="page-title">Health Profile </h4>
+                                    <h6>
+                                        <a href="#">
+                                            <span class="fw-semi-bold">Health Profile >></a></span>Manage Health Profile</h6>
+                                </div>
+                                <div class="col-sm-7">
+
+
+
+                                    <ul class="">
+
+                                        <!-- an example of nested submenu. basic bootstrap collapse component -->
+
+                                        <b>
+                                            <a href="<?php echo PATIENT_BASE_URL; ?>health/health-profile-add-edit" style = "float:right;">
+                                                <span class="icon">
+                                                    <i class="fa fa-hospital-o"></i>
+                                                </span>
+                                                Add Health Profile
+                                            </a>                                   
+
+                                        </b>	
+                                    </ul>
+                                    
+                                    
+
+                                </div>
+
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+
+
+            
+                                     <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+            <div class="col-lg-11" style="text-align:center;">
+                <div class="notification-error">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+                </div>
+        <?php } ?>
+        <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+            <div class="col-lg-11" style="text-align:center;">
+            <div class="notification-suc">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+                </div>
+        <?php } ?>
+            
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="well">
+                        <div id="gridWidth" class="left">
+                            <table id="jqGrid" width="50%" border="0" cellpadding="0" cellspacing="0"></table>
+                            <div id="jqGridPager"></div> <!-- new location pager --><!-- <div id="pager2"></div> old location pager -->
+                        </div>			
+                    </div>
+                </div>
+            </div>
+    </div>			   
+</main>
+</div>
+
+
+
+
+
+<script language="javascript">
+    $(document).ready(function () {
+        grid_function();
+    });
+    function grid_function() {
+        $('#gridWidth').html('<div id="gridWidth" class="left"><table id="jqGrid" width="100%" border="0" cellpadding="0" cellspacing="0"></table><div id="pager2"></div></div>');
+        var statusStr = "<?php echo STATUS_TYPE_STR; ?>";
+        var statusStr2 = "<?php echo STATUS_TYPE_STR2; ?>";
+        var appointmentTypeStr = "<?php echo APPOINTMENT_TYPE_STR; ?>";
+        $.jgrid.no_legacy_api = true;
+        $.jgrid.useJSON = true;
+        var grid = jQuery("#jqGrid");
+        var pages = []; // not as {};
+        var emptyMsgDiv = $('<div class="no-record-msz"><?php echo RESULT_NOT_FOUND; ?></div>');
+        jQuery("#jqGrid").jqGrid({
+            url: patientPath + 'health/health-profile',
+            datatype: "json",
+            colNames: [ 
+                'id',
+                'Medicine Names',              
+                'Diagnosed In', 'note','Prescribed By','Health Condition','Created Date', 'Action'
+            ],
+            colModel: [
+                {name: 'id', index: 'id',align:'center', width: 50, search: false, sortable: true, editable: false, editrules: {required: true}, edittype: 'text'},
+                {name: 'medicine_names', index: 'medicine_names',align:'center', width: 50, search: false, sortable: true, editable: false, editrules: {required: true}, edittype: 'text'},
+                {name: 'diagnosed_in', index: 'diagnosed_in', align:'center',width: 50, search: false, sortable: true},
+                {name: 'note', index: 'note', align:'center',width: 50, search: false, sortable: true},
+                {name: 'doctor_name', index: 'doctor_name', align:'center',width: 50, search: false, sortable: true},                
+                {name: 'health_condition', index: 'health_condition', align:'center',width: 50, search: false, sortable: true},                
+                {name: 'created_at', index: 'created_at', align:'center',width: 50, search: false, sortable: true},                                               
+                {name: 'action', index: 'action',align:'center', search:false,width: 75, sortable: false, title: false, formatter: ''},
+                
+                //{name: 'created_at', index: 'created_at', width: 50, search: false, sortable: false},
+                //{name: 'actions', index: 'actions', width: 70, search: false, title: false, sortable: false, formatter:'actionFormatter', formatoptions: {keys: true, editbutton:true,delbutton:true }}
+                //{name: 'edit', align:'center',width: 40, sortable: false, search: false, formatter: 'actionFormatter', formatoptions: {keys: true, editbutton: true, delbutton: false}},
+                //{name: 'del', align:'center',width: 18, sortable: false, search: false, formatter: 'actions', formatoptions: {keys: true, editbutton: false, delbutton: true}},
+                //{ name: 'details', width: 18, sortable: false, search: false, formatter: 'actionFormatter'}
+            ],
+            onSelectRow: function (rowid, status, e) {
+                if (e != undefined) {
+                    var selectedValue = $('#myGrid').getCell(rowid, 'col1');
+                    if (selectedValue) {
+                        $('#myGrid').jqGrid('setColProp', 'col1', {editable: false});
+                    }
+                }
+            },
+            rowNum:<?php echo NO_OF_RECORDS_PER_PAGE; ?>,
+            mtype: 'post',
+            width: jQuery('#gridWidth').width(),
+            height: 'auto',
+            rowList: [<?php echo ROWLIST; ?>],
+            pager: '#pager2',
+            sortname: 'id',
+            sortorder: "DESC",
+            caption: "Health Profile List",
+            autosearch: true,
+            toppager: false,
+            viewrecords: true,
+            altRows: true,
+            altclass: 'grid-Alternate-Row',
+            rownumbers: true,
+            recordtext: "View {0} - {1} of {2}",
+            emptyrecords: false,
+            /*loadtext: "Loading",*/
+            width: 1000,
+                    multiselect: false, // <------like here or your choice.
+            hoverrows: false,
+            editurl: patientPath + 'health/health-profile',
+            loadComplete: function () {
+                var count = grid.getGridParam();
+                var ts = grid[0];
+                if (ts.p.reccount === 0) {
+                    grid.hide();
+                    emptyMsgDiv.show();
+                } else {
+                    grid.show();
+                    emptyMsgDiv.hide();
+                }
+            }
+        });
+        // place div with empty message insde of div
+        emptyMsgDiv.insertAfter(grid.parent());
+        emptyMsgDiv.hide();
+        jQuery("#jqGrid").jqGrid('navGrid', '#pager2', {edit: true, add: false, del: false, search: false}, {closeAfterEdit: true, closeOnEscape: true}, {closeAfterAdd: true, closeOnEscape: true});
+        jQuery('#jqGrid').jqGrid('filterToolbar', {"stringResult": true, searchOnEnter: true});
+        myGrid = jQuery("#jqGrid");
+
+        var cm = myGrid[0].p.colModel;
+        $.each(myGrid[0].grid.headers, function (index, value) {
+            var cmi = cm[index], colName = cmi.name;
+            if (!cmi.sortable && colName !== 'rn' && colName !== 'cb' && colName !== 'subgrid') {
+                $('div.ui-jqgrid-sortable', value.el).css({cursor: "default"});
+            }
+        });
+    }
+
+   
+
+    function add_new_role1() {
+        var roleVal = $("#role_name").val();
+        if (roleVal == '') {
+            return false;
+        } else {
+            toggle_loader('add_role_button', 'show', 'fl-rt');
+            $.ajax({
+                url: patientPath + 'acl/addrole',
+                type: 'POST',
+                data: {name: roleVal},
+                dataType: "json",
+                success: function (responseText) {
+                    toggle_loader('add_role_button', 'hide', 'fl-rt');
+                    if (responseText['msg'] == 'fail') {
+                        return false;
+                    } else {
+                        grid_function();
+                    }
+                }
+            });
+        }
+        return false;
+    }
+
+    function patientEdit(id,apmtType) {
+        
+       
+        
+        if(apmtType == 0){
+           window.location.href = patientPath + 'appointment/text-consultation-addedit/appnt_id/'+id;
+
+
+        }else if(apmtType == 1){
+
+            window.location.href = patientPath + 'appointment/video-consultation-addedit/appnt_id/'+id;
+
+        }else if(apmtType == 2){
+
+            window.location.href = patientPath + 'appointment/clinic-consultation-addedit/appnt_id/'+id;
+
+        }
+        }
+
+
+
+    function roleDelete(roleId) {
+        var condel = confirm('Do you really want to delete this role?');
+        if (condel == true) {
+            $.ajax({
+                url: patientPath + 'acl/deleterole',
+                type: 'POST',
+                data: {roleId: roleId},
+                success: function (responseText) {
+                    grid_function();
+                }
+            });
+        }
+    }
+
+
+    $.extend($.fn.fmatter, {
+        actionFormatter: function (cellvalue, options, rowObject) {
+           
+            var retVal = "<a onclick='return patientEdit(" + options.rowId + ");' href='javascript:void(0);' title = 'View Appointment'><span class='far fa-edit'></span></a>&nbsp;&nbsp;<a onclick='return consultationNote(" + options.rowId + ");' href='javascript:void(0);' title = 'Consultation Note'><span class='fas fa-stethoscope'></span></a>";
+            return retVal;
+        }
+    });
+
+
+    function updateStatus(appntId) {
+
+        var status_value = $('#status_' + appntId).val();
+
+       
+
+        if (status_value == '0') {
+            alert('Select another status');
+            $('#status_' + appntId).addClass("highlight");
+            $('#status_' + appntId).focus();
+            //$('#remarks_' + claimedBusinessId).removeClass("highlight");
+            return false;
+        }
+
+        if (status_value != '0') {
+
+            var condel = confirm('Do you really want to change this status?');
+            if (condel == false) {
+                $('#status_' + appntId).addClass("highlight");
+                $('#status_' + appntId).focus();
+                $('#remarks_' + appntId).removeClass("highlight");
+                return false;
+            }
+        }
+
+
+        var values = 'id=' + appntId + '&status=' + status_value;
+        $.ajax({
+            url: patientPath + "appointment/updatestatus",
+            type: "POST",
+            data: values,
+            success: function (responseText) {
+                if (responseText == 1) {
+                    alert('Status sucessfully updated.');
+                    var status = '0';
+                    location.reload();
+
+                } else {
+                    alert('Plz fill remark');
+                    $('#status_' + appntId).focus();
+                    $('#status_' + appntId).addClass("highlight");
+                    return false;
+                }
+
+            }
+        });
+
+    }
+
+  function healthProfileEdit(id) {
+        
+        
+        if (id == '') {
+            return false;
+        }
+        window.location.href = patientPath + 'health/health-profile-add-edit/id/'+id;
+
+        }
+</script>
+<style>
+    .ui-jqgrid .ui-search-input select {
+        width: 100% !important;
+        border:1px;
+    }
+
+    .ui-jqgrid .ui-jqgrid-view select {
+        font-size: 11px;
+        width: 116px;
+    }  
+
+
+    .ui-jqgrid .ui-jqgrid-view input[type="text"] {
+        font-size: 11px;
+        height: 22px;
+        padding: 0;
+        width: 119px;
+    }
+</style>

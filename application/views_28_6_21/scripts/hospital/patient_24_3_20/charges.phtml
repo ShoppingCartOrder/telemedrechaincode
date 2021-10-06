@@ -1,0 +1,375 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+					
+            var wrapper = $("#wrapper");
+            var addForm = $("#add-form");
+            var index = <?php echo $this->index;?>;         
+            var getForm = function(index, action) {                
+             var tbl_str = '';
+              
+            return $('\
+                <tr class="item-row" id="add_attr_' + index + '">\
+                \
+                <td><input id="bill_no' + index + '" name="bill_no[' + index + ']" / class = "input sel-cc"></td>\
+                <td><select class = "input valid" id="charge_category_id' + index + '" name="charge_category_id[' + index + ']" onchange= "getitem(this.value,'+index+')">\n\
+                    \n\<?php foreach($this->catData as $key=>$catVal){?>
+                    <option label="<?php echo $catVal;?>" value="<?php echo $key;?>"><?php echo $catVal;?></option>\n\
+                    <?php } ?>\n\
+                 </select></td>\n\
+                \n\<td><select class = "input valid" id="charge_item_id' + index + '" name="charge_item_id[' + index + ']" onchange= "getamount(this.value,'+index+')">\n\
+                    \n\<?php foreach($this->items as $key=>$itemVal){?>
+                    <option label="<?php echo $itemVal;?>" value="<?php echo $key;?>"><?php echo $itemVal;?></option>\n\
+                    <?php } ?>\n\
+                 </select></td>\n\
+                \n\<td class = "td_txt_area" id = "td_txt_area_' + index + '"> <input class = "input" id="amount' + index + '" name="amount[' + index + ']" /> </td>\
+                <td><input class = "input" id="quantity' + index + '" name="quantity[' + index + ']" /></td>\n\
+                <td><input class = "input" id="discount' + index + '" name="discount[' + index + ']" value = "0"/></td>\n\\n\\n\
+                <td><input class = "input" id="net_amount' + index + '" name="net_amount[' + index + ']" onfocus= "calculate(this.value,'+index+')" readonly/></td>\n\
+                \n\
+                <td><a href="javascript:void(0);" id="remove-form' + index + '" data-index="' + index + '"><img title="Delete" width="16" height="16" alt="Delete" src="<?php echo WEBSITE_STATIC_IMAGE_PATH?>Actions-edit-delete-icon.png" ></a></td>\
+                </tr>'               
+                );
+            }
+
+            addForm.on("click", function() {
+                var form = getForm(++index)
+                form.find(".remove").on("click", function() {
+                    
+                    $(this).parent().remove();
+                }); //form.find()
+                //$("#wrapper").append(form);
+                 $(".item-row:last").after(form);
+                
+                //$("#email"+index).rules("add", { required:true,email:true });
+
+                $("#remove-form"+index).on("click", function() {                  
+                var currentIndex = $(this).data( "index" );
+                    //$("#tbl" + currentIndex).remove();
+                    $("#add_attr_" + currentIndex).remove();
+                    
+                });
+            });
+
+        }); //$(document).ready
+		
+		
+  
+
+
+
+
+
+function removeRow(a_index,field_id){
+        
+         //var currentIndex = $(this).data( "index" );
+         var res_status = 0;
+         if(field_id){
+             var fld_del = confirm('Do you really want to delete this field?');
+             if(fld_del == true){
+              var value = 'charge_id=' + field_id;
+		$.ajax({
+			url: hospitalPath+'patient/deleteitemcharge',		
+			type: 'POST',
+			data: value,
+			success: function(responseText) {
+				//$('#parent_cat_id').val(parentcategoryid);
+				
+                                   alert('This field is deleted successfully.');
+				}
+
+		});
+            }else{
+                return false;
+            }
+         }
+         var currentIndex = a_index;
+         //alert(currentIndex);
+        //$("#tbl" + currentIndex).remove();
+        $("#add_attr_" + currentIndex).remove();
+        
+    } 
+
+
+ 
+</script>
+
+<div class="container-fluid">
+    <div class="content-wrap">	
+        <main id="content" class="content" role="main">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="well">
+                        <section class="widget" style="background-color:#FFF; margin-top:2rem">
+                            <form style="padding:15px" name = "frmPatentCharges" id = "frmPatentCharges" method="POST" action ="<?php echo  $this->url(array('action' => 'addpatientcharges'), 'hospitalPatient', true) ?>">
+                                <input type = "hidden" id = "patientId" name = "patientId" value = "<?php echo $this->patientId;?>">
+                                <input type = "hidden" id = "rId" name = "rId" value = "<?php echo $this->regisNo;?>">
+                                
+                                <div class="form-group row" style ="text-align: center;">
+                                    
+                                    <div class="col-md-11">
+                                        
+                                        <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+            <div class="notification-error">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+        <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+            <div class="notification-suc">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+                                     
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    
+                                    
+                                    
+                                   <div class="col-sm-10">
+                                       
+                                       <div style = "padding:27px 0;"><a href="javascript:void(0);" id="add-form">Add Charge</a></div>
+            
+             <table class="additional_table">
+                <tr class="item-row td-bg">                    
+                    <th style = "width:15%;">Bill No.</th>
+                    <th style = "width:15%;">Category</th>
+                    <th style = "width:15%;">Item Name</th>
+                    <th style = "width:15%;">Amount</th>
+                    <th style = "width:15%;">Quantity</th>
+                    
+                    <th style = "width:15%;">Discount(%)</th>
+                    <th style = "width:15%;">Net Amount</th>
+                    
+                    <th style = "width:15%;">Action</th>                                        
+                </tr>
+                
+                <?php
+                    //print_r($this->patientCharge);
+                    if(isset($this->patientCharge) && !empty($this->patientCharge)){
+                        foreach($this->patientCharge as $key=>$charge){ 
+                           // $selected_menu_value[$key][] = $charge['field_type'];
+                            
+                            
+                            $index = $key+1;
+                            
+                            //echo $disabled;
+                            ?>
+                            <tr class="item-row" id = "add_attr_<?php echo $index;?>">
+                              
+                                <td>
+                                    <?php                                     
+                                         echo $this->formText("bill_no$index",$charge['bill_no'], array("name"=>"bill_no[$index]","class"=>'input sel-cc'));                                    
+                                    ?>
+                                    
+                                </td>
+                                <td>
+                                    <?php 
+                                        $selected_menu_value = array();
+                                        echo $this->formSelect("charge_category_id$index",$charge['charge_category_id'],array('name'=>"charge_category_id[$index]",'class' =>'valid input','onchange'=>'getitem(this.value,'.$index.')'),$this->catData);
+                                    
+                                        
+                                    
+                                    ?>     
+                                </td>
+                                
+                                <td>
+                                    <?php 
+                                        $selectedItem = array($charge['item_id']=>$charge['sub_category_name']);
+                                        echo $this->formSelect("charge_item_id$index",$charge['charge_item_id'],array('name'=>"charge_item_id[$index]",'class' =>'valid input','onchange'=>'getamount(this.value,'.$index.')'),$selectedItem);
+                                    
+                                        
+                                    
+                                    ?>     
+                                </td>
+                                
+                                 <td>
+                                    <?php                                     
+                                         echo $this->formText("amount$index",$charge['amount'], array("name"=>"amount[$index]","class"=>'input sel-cc'));                                    
+                                    ?>
+                                    
+                                </td>
+                                
+                                <td>
+                                    <?php                                     
+                                         echo $this->formText("quantity$index",$charge['quantity'], array("name"=>"quantity[$index]","class"=>'input sel-cc'));                                    
+                                    ?>
+                                    
+                                </td>
+                               
+                                <td>
+                                    <?php                                     
+                                         echo $this->formText("discount$index",$charge['discount'], array("name"=>"discount[$index]","class"=>'input sel-cc'));                                    
+                                    ?>
+                                    
+                                </td>
+                                <td>
+                                    <?php                                     
+                                         echo $this->formText("net_amount$index",$charge['net_amount'], array("name"=>"net_amount[$index]","class"=>'input sel-cc','onfocus'=>'calculate(this.value,'.$index.')','readonly'));                                    
+                                    ?>
+                                    
+                                </td>
+                                
+                                
+                                
+                              
+                                
+                                <td>
+                                    
+                                   
+                                    
+                                        <a href="javascript:void(0);" <?php if(isset($charge['id'])){ ?> onclick= "javascript:removeRow(<?php echo $index;?>,<?php echo $charge['id'];?>);" id="remove-form<?php echo $index;?>" data-index="<?php echo $index;?>" <?php } ?>>
+                                            <img title="Delete" width="16" height="16" alt="Delete" src="<?php echo WEBSITE_STATIC_IMAGE_PATH?>Actions-edit-delete-icon.png" >
+                                        </a>                                                                         
+                                    
+                                    <?php
+                                    
+                                    echo $this->formHidden("id_$index",$charge['id'],array('id'=>"id_$index",'name'=>"id[$index]"));
+                                    ?>
+                                </td>
+                            </tr>
+                          
+                        <?php }
+                    }
+                    ?>
+                
+                
+            </table>  
+                                       </div>
+                                    
+                                </div>
+                                <hr>
+                                <!--					<button type="submit" style="text-align:right" class="btn btn-success">Add Address</button>-->
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        
+                                    </div>
+                                    <div class="col-sm-6">
+                                        
+                                    </div>
+                                </div>
+                                <button type="button" style="text-align:right" class="btn btn-danger" onclick ="cancel('patient/index');">Cancel</button>
+
+                                <button type="submit" style="text-align:right" class="btn btn-success" name = "add">Add</button>
+
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>	
+</div>
+
+<script>
+    function cancel(url) {
+        window.location = hospitalPath+url;
+    }
+    
+     function getamount(val,index) {
+        
+            $.ajax({
+                url: hospitalPath + 'patient/getitemcharge',
+                type: 'POST',
+                data: {item_id: val},
+                success: function(responseText) {
+                //$('#charge_item_id'+index).append($('<option>').text('Select Item').attr('value', ''));
+                var obj = jQuery.parseJSON(responseText);
+                
+                    //console.log(items['item_id']);
+                    //$('#amount'+index).append($('<option>').text(items['charge']).attr('value', items['id']));
+                $('#amount'+index).val(responseText);
+               
+
+            }
+            });
+       
+    }
+    
+    function getitem(val,index) {
+        
+            if(val != ''){
+                $.ajax({
+                    url: hospitalPath + 'patient/getitems',
+                    type: 'POST',
+                    data: {cat_id: val},
+                    success: function(responseText) {
+                        $('#charge_item_id'+index).empty();
+                    //$('#charge_item_id'+index).append($('<option>').text('Select Item').attr('value', ''));
+                    var obj = jQuery.parseJSON(responseText);
+                    $.each(obj, function(i, items) {
+                        //console.log(items['item_id']);
+                        $('#charge_item_id'+index).append($('<option>').text(items['sub_category_name']).attr('value', items['item_id']));
+                    });
+
+                }
+                });
+        }
+       
+    }
+    
+    function calculate(val,index) {
+        
+        var amount = parseInt($('#amount'+index).val());
+        var quantity = parseInt($('#quantity'+index).val());
+        var discount = parseInt($('#discount'+index).val())/100;
+        
+        var totalAmount = amount*quantity;
+        var discountedAmount = totalAmount*discount;
+        var netAmount = totalAmount - discountedAmount;
+        
+        $("#net_amount"+index).val(netAmount);
+       
+    }
+    
+    
+    function display(val,index){
+    
+    //var type_value = $(this).closest('tr').find('select').val();
+	//alert(type_value);
+    //alert($(this).closest('tr').find('textarea').length);
+	var td_id = "td_txt_area_"+index;
+	
+    if(val == 3 || val == 4 || val == 5 || val == 6 || val == 7 || val == 8){
+        if($(this).closest('tr').find('textarea').length == 0){
+            document.getElementById(td_id).innerHTML = "";
+			//alert($(this).closest('tr').find('textarea').length);
+            //$(this).closest('tr').find('.td_txt_area').append('<textarea name = "type_txt_area_value[]" placeholder = "Comma separated options.For example:Male,Female"></textarea>');
+            
+            if(val==6){                
+                $('#'+td_id).append('<textarea name = type_txt_area_value['+index+'] placeholder = "thumb-size:80X80,max-size:100X100"></textarea>');
+            }else if(val==7){
+                $('#'+td_id).append('<textarea name = type_txt_area_value['+index+'] placeholder = "thumb-size:80X80,max-size:100X100,thumb-position:left"></textarea>');
+            }else if(val==8){
+                $('#'+td_id).append('<textarea name = type_txt_area_value['+index+'] placeholder = "height:200,width:400"></textarea>');
+            }else{
+                $('#'+td_id).append('<textarea name = type_txt_area_value['+index+'] placeholder = "Comma separated options.For example:Male,Female"></textarea>');
+            }
+            //$('.td_txt_area').append('<textarea name = "type_txt_area_value"><textarea>'); 
+        }
+    }else{
+       // $(this).closest('tr').find('textarea').remove();
+		document.getElementById(td_id).innerHTML = "";
+    
+    }
+}
+    
+</script>
+<style>
+    .input{
+        width:127px;
+    }
+    .valid{
+        padding:2px;
+    }
+    
+</style>

@@ -1,0 +1,214 @@
+<div class="container-fluid">
+    <div class="content-wrap">	
+        <main id="content" class="content" role="main">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="well">
+                        <section class="widget" style="background-color:#FFF; margin-top:2rem">
+                            <?php if(!empty($this->formdata['id'])){ ?>
+                                <form style="padding:15px" name = "frmPatentRegister" id = "frmPatentRegister" method="POST" action ="<?php  echo  $this->url(array('action' => 'save-patient-profile'), 'hospitalPatient', true) ?>">
+                            
+                            <?php }else{ ?>
+                                
+                                <form style="padding:15px" name = "frmPatentRegister" id = "frmPatentRegister" method="POST" action ="<?php echo  $this->url(array('action' => 'register'), 'hospitalPatient', true) ?>">
+                            
+                            <?php }?>
+                                <input type="hidden" id="example-date-input-id" name = "id" value = "<?php echo $this->formdata['id'];?>">
+                                        
+                                <div class="form-group row" style ="text-align: center;">
+                                    
+                                    <div class="col-md-11">
+                                        
+                                        <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+            <div class="notification-error">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+        <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+            <div class="notification-suc">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+                                     
+                                        
+                                    </div>
+                                </div>
+                        
+                                    
+                                    
+                                    
+                                     
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Surgeon Name</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Surgeon">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Assistant Name</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Assistant">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Aneshthesist Name</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Aneshthesist">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Staff Name</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Staff">
+    </div>
+  </div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Date &amp; time of OT Start</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Date&amp;TimeStart">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Date &amp; Time of OT End</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Date&amp;TimeEnd">
+    </div>
+  </div>
+<div class="form-group col-md-6">
+      <label for="inputPassword4">Type Of Operation</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Type">
+    </div>
+  
+  <div class="form-group col-md-6">
+      <label for="inputPassword4">Part of Operation</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Part">
+    </div>
+  
+
+  <div class="form-group">
+  <label for="exampleFormControlTextarea2">OT Notes:</label>
+  <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="2"></textarea>
+</div>
+<div class="form-group">
+  <label for="exampleFormControlTextarea2">OT Procedure:</label>
+  <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="2"></textarea>
+</div>
+
+<div class="container">
+    <div class="row clearfix">
+		<div class="col-md-12 column">
+			<table class="table table-bordered table-hover" id="tab_logic">
+				<thead>
+					<tr>
+						<th class="text-center">
+							#
+						</th>
+						<th class="text-center">
+							OT Medicine Name
+						</th>
+						<th class="text-center">
+							Quantity
+						</th>
+						
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="addr0">
+						<td>
+						1
+						</td>
+						<td>
+						<input type="text" name="name0" placeholder="Name" class="form-control">
+						</td>
+						<td>
+						<input type="text" name="mail0" placeholder="Quantity" class="form-control">
+						</td>
+						
+					</tr>
+                    <tr id="addr1"></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<a id="add_row" class="btn btn-default pull-left">Add Row</a><a id="delete_row" class="pull-right btn btn-default">Delete Row</a>
+</div>
+  <div class="container mt-3">
+  
+    <p>Upload file:</p>
+    <input type="file" id="myFile" name="filename2">
+  <br>
+  <br>
+   <label>Upload Audio/Video:</label>
+    <input type="file" id="myFile" name="filename2">
+  
+  
+</div>
+
+
+                                        
+                                    
+                                 
+                               
+                                
+                               
+                                <hr>
+                               
+
+                                
+                                <button type="button" style="text-align:right" class="btn btn-danger">Cancel</button>
+
+                                <button type="submit" style="text-align:right" class="btn btn-success" name = "add">Save</button>
+
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>	
+</div>
+
+<script>
+    function cancel(url) {
+        window.location = url;
+    }
+    
+    
+
+//$("#example-date-input-dob").datepicker("setDate", '01/01/2020');
+
+
+//$('.datepicker').pickadate({ min: new Date(2015,3,20),
+//max: new Date(2015,7,14)
+//})
+
+
+</script>
+
+<script>
+// Add the following code if you want the name of the file appear on select
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
+<script>
+	 $(document).ready(function(){
+      var i=1;
+     $("#add_row").click(function(){
+      $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Name' class='form-control input-md'  /> </td><td><input  name='mail"+i+"' type='text' placeholder='Quantity'  class='form-control input-md'></td>  class='form-control input-md'></td>");
+
+      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+      i++; 
+  });
+     $("#delete_row").click(function(){
+    	 if(i>1){
+		 $("#addr"+(i-1)).html('');
+		 i--;
+		 }
+	 });
+
+});
+	</script>

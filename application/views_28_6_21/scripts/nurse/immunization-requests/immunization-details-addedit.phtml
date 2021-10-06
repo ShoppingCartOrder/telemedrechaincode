@@ -1,0 +1,315 @@
+<!-- [END]Jquery Autocomplete -->
+<div class="container-fluid">
+    <div class="content-wrap">
+        <main id="content" class="content" role="main">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="well">
+                        <section class="widget" style="background-color:#FFF; margin-top:2rem">
+
+
+                            <form id = "immunization_form" style="padding:15px" class="form-horizontal" action="<?php echo $this->url(array('action' => 'savelabtestresult'), 'laboratoryRequests', true); ?>" method="POST">
+                                <div class="row">
+                                    <input type = "hidden" id ="patient_id" name ="patient_id" value = "<?php echo $this->patientId; ?>">
+                                    <input type = "hidden" id ="registration_no" name ="registration_no" value = "<?php echo $this->registrationNo; ?>">
+                                    <input type = "hidden" id ="prescribe_id" name ="prescribe_id" value = "<?php echo $this->prescribeId; ?>">
+                                    <input type = "hidden" id ="birth_details_id" name ="birth_details_id" value = "<?php echo $this->id; ?>">
+                                    <input type = "hidden" id ="reqid" name ="reqid" value = "<?php echo $this->reqid; ?>">
+                                    <input type = "hidden" id ="vaccineId" name ="vaccineId" value = "<?php echo $this->selectedVaccineId; ?>">
+<!--                                    <input type = "hidden" id ="doctor_id" name ="doctor_id" value = "<?php echo $this->doctor_id; ?>">-->
+
+                                    <fieldset>
+                                        <legend><strong>Immunization</strong> form</legend>
+                                        <div class="form-group row" style ="text-align: center;">
+
+                                            <div class="col-md-11" id ="error">
+                                                <span class="notification-error"></span>
+                                                <span class="notification-suc"></span>
+                                                <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                                <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+                                                    <div class="notification-error">
+                                                        <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                            <?php echo $msg; ?>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
+                                                <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                                <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+                                                    <div class="notification-suc">
+                                                        <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                            <?php echo $msg; ?>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
+
+
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-sm-12">
+                                            <br>
+                                            <br>
+                                            <div>
+                                                <table style ="background-color:grey;border:1px solid;text-align: center;">
+                                                    <tr>
+                                                        <th style="width:8%;">AGE</th>
+                                                        <th style="width:20%;">VACCINE</th>
+                                                        <th style="width:8%;">DUE ON</th>
+                                                        <th style="width:8%;">GIVEN ON</th>
+                                                        <th style="width:8%;">WEIGHT</th>
+                                                        <th style="width:8%;">HEIGHT</th>
+                                                        <th style="width:10%;">BATCH</th>
+                                                        <th style="width:10%;">HEAD CIRCUMFERENCE</th>
+
+                                                    </tr>
+
+                                                    <?php
+                                                    //print_r($this->imuzData);
+                                                    if (!empty($this->imuzData)) {
+                                                        $ageArr = array();
+                                                        foreach ($this->imuzData as $key => $imuzDataVal) {
+                                                            $rowCont = count($imuzDataVal);
+                                                            $commonFieldDisabled = "disabled";
+                                                             if(trim($key) == $this->selectedVaccineAge){
+                                                                   $commonFieldDisabled = ''; 
+                                                                }
+                                                                
+                                                            foreach ($imuzDataVal as $k => $imuzVal) {
+                                                                $id = $imuzVal['id'];
+                                                                $vaccineId = $imuzVal['vaccine_id'];
+                                                                $disabled = "disabled";
+                                                                
+                                                                
+                                                                if($vaccineId == $this->selectedVaccineId){
+                                                                   $disabled = ''; 
+                                                                }
+                                                               
+                                                                $bgcolor = '';
+                                                                if($imuzVal['batch']){
+                                                                   $bgcolor = 'style="background-color:green;"';
+                                                                }else{
+                                                                    $bgcolor = 'style="background-color:white;"';
+                                                                }
+                                                                
+                                                                
+                                                                if (in_array($key, $ageArr)) {
+                                                                    ?>
+
+                                                                    <tr>
+                                                                        <td  align="center" <?php echo $bgcolor;?>><?php echo $imuzVal['vaccine_name']; ?></td>
+                                                                        <td><?php echo $this->changeDateFormat($imuzVal['due_on'], DATEFORMAT, ''); ?></td>
+                                                                        <td><?php echo ($imuzVal['given_on'])?$this->changeDateFormat($imuzVal['given_on'], DATEFORMAT, ''):''; ?></td>
+                                                                        <td><textarea class = "batch" <?php echo $disabled;?> id="batch_<?php echo $vaccineId.'_'.$id; ?>" name="batch_<?php echo $id; ?>" rows="1" cols="15" required><?php echo $imuzVal['batch']; ?></textarea></td>
+
+                                                                    </tr>
+
+                                                                    <?php
+                                                                } else {
+                                                                    $ageArr[] = $key;
+                                                                    
+                                                                    
+                                                                    ?>
+
+                                                                    <tr>
+                                                                        <td rowspan="<?php echo $rowCont; ?>" align="center"><?php echo $key; ?></td>
+                                                                        <td align="center" <?php echo $bgcolor;?>><?php echo $imuzVal['vaccine_name']; ?></td>
+                                                                        <td><?php echo $this->changeDateFormat($imuzVal['due_on'], DATEFORMAT, ''); ?></td>
+                                                                        <td><?php echo ($imuzVal['given_on'])?$this->changeDateFormat($imuzVal['given_on'], DATEFORMAT, ''):''; ?></td>
+                                                                        <td rowspan="<?php echo $rowCont; ?>" align="center"><textarea class = "height" <?php echo (trim($key)==trim($this->selectedVaccineAge) && ($imuzVal['height']))?'readonly':$commonFieldDisabled;?> id="height_<?php echo $vaccineId.'_'.$id; ?>" name="height_<?php echo $imuzVal['due_on']; ?>" rows="1" cols="5" required><?php echo $imuzVal['height']; ?></textarea></td>
+                                                                        <td rowspan="<?php echo $rowCont; ?>" align="center"><textarea class = "weight" <?php echo (trim($key)==trim($this->selectedVaccineAge) && ($imuzVal['weight']))?'readonly':$commonFieldDisabled;?> id="weight_<?php echo $vaccineId.'_'.$id; ?>" name="weight_<?php echo $imuzVal['due_on']; ?>" rows="1" cols="5" required><?php echo $imuzVal['weight']; ?></textarea></td>
+                                                                        <td align="center"><textarea class = "batch" <?php echo $disabled;?> id="batch_<?php echo $vaccineId.'_'.$id; ?>" name="batch_<?php echo $id; ?>" rows="1" cols="15" required><?php echo $imuzVal['batch']; ?></textarea></td>
+                                                                        <td rowspan="<?php echo $rowCont; ?>" align="center"><textarea class = "headcir" <?php echo (trim($key)==trim($this->selectedVaccineAge) && ($imuzVal['head_circumference']))?'readonly':$commonFieldDisabled;;?> id="Headcir_<?php echo $vaccineId.'_'.$id; ?>" name="Headcir_<?php echo $imuzVal['due_on']; ?>" rows="1" cols="5" required><?php echo $imuzVal['head_circumference']; ?></textarea></td>
+                                                                    </tr>
+
+                                                                <?php }
+                                                                ?>
+
+
+                                                            <?php
+                                                            }
+                                                        }
+                                                    }
+                                                    ?>
+
+
+
+
+                                                </table>
+
+                                            </div>
+
+                                        </div>
+
+
+
+
+                                    </fieldset>
+
+
+
+
+
+
+
+
+
+
+                                </div>
+                                <button type="button" class="btn btn-danger" id = 'button2' onClick = "cancelBack('immunization-requests/index');">Cancel</button>
+                                <?php if((!$this->reqCompletedDate) || (!$this->view)){?>
+                                <span id = "sve_btn">
+                                    <button type="button" style="text-align:right" class="btn btn-primary" id = 'save_button' onClick = "dataSubmit();">Save</button>
+                                </span>
+                                <?php }?>
+                                <?php if($this->print){?>
+                                <span id = "sve_btn">
+                                    <button type="button" style="text-align:right" class="btn btn-primary" id = 'save_button' onClick = "window.print();">Print</button>
+                                </span>
+                                <?php }?>
+                            </form>
+                            <div id = "f-l-name"></div>
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        line-height:1.5!important;
+    }
+    th, td {
+        padding: 15px;
+
+    }
+    table#t01 {
+        width: 100%;    
+        background-color: #f1f1c1;
+    }
+</style>
+<script>
+       function dataSubmit() {
+     
+        displayLoader('save_button', 'show', 'btn btn-primary');      
+        var patient_id = $("#patient_id").val();
+        var registration_no = $("#registration_no").val();
+        var reqid = $("#reqid").val();
+        var birth_details_id = $("#birth_details_id").val();
+        var vaccineId = $("#vaccineId").val();
+        
+        if (patient_id == '' && registration_no == '') {
+            return false;
+        }
+        
+        var idArr = [];
+        var toBeUpdatedIds = '';
+
+        $(".batch").each(function(){
+            var id = $(this).attr("id");
+            
+            if(!$('#'+id).is(':disabled')){
+                
+                if($("#"+id).val() != ""){
+                    
+                    var name = $(this).attr("name");
+                    var nameArr = name.split('_');
+                    toBeUpdatedIds+=nameArr[1]+',';
+                    
+                }else{
+                    $('#error').html('Please enter batch no.')
+                }
+                
+            }
+                       
+        });
+        var toBeUpdatedDates = '';
+        $(".weight").each(function(){
+            
+            var id = $(this).attr("id");
+            
+            if(!$('#'+id).is(':disabled')){
+                
+                if($("#"+id).val() != ""){
+                var name = $(this).attr("name");
+                var nameArr = name.split('_');
+                toBeUpdatedDates+=nameArr[1]+',';
+                
+                }else{
+                    $('#error').html('Please enter batch no.')
+                }
+                
+            }
+                       
+        });
+         var formData = $("#immunization_form").serialize();
+       
+      
+        
+
+        
+
+        //loader('button2', 'show', 'loader-enq');
+        $.ajax({
+            //this is the php file that processes the data
+            //url: jsPath + "Detail/sendsmsemail",
+            url: nursePath + "immunization-requests/saveimmunizationdetails",
+            //GET method is used
+            type: "POST",
+            //pass the data			
+            data: formData+'&allselectedids='+toBeUpdatedIds+'&allselecteddates='+toBeUpdatedDates,
+            //success
+            success: function (responseText) {
+                displayLoader('save_button', 'hide', 'btn btn-primary');
+                //alert(responseText);
+                $('.notification-error').html('');
+                $('.notification-suc').html('');
+                if (responseText == 1)
+                {
+
+                    $('.notification-suc').html("Immunization record successfully saved.");
+                    
+                    
+                     window.setTimeout(function () {
+                     
+                     window.location.href = nursePath + 'immunization-requests/index';
+    
+                     }, 2000);
+                } else if (responseText == 2)
+                {
+
+                    $('.notification-err').html("Please enter value.");
+                    window.setTimeout(function () {
+                     
+                     window.location.href = nursePath + 'immunization-requests/index';
+    
+                     }, 2000);
+
+                }else if (responseText == 3)
+                {
+
+                    $('.notification-err').html("Data not sufficient.");
+                    window.setTimeout(function () {
+                     
+                     window.location.href = nursePath + 'immunization-requests/index';
+    
+                     }, 2000);
+
+                } else {
+
+                    $('.notification-err').html('Please enter value.');
+                }
+            }
+
+
+        });
+
+        //console.log(values);
+    }
+    
+     
+</script>

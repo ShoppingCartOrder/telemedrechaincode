@@ -1,0 +1,156 @@
+<script>
+	function condeleteuser(){
+		var conbox = confirm('Do you really want to delete this user?');
+		if(conbox == true){
+			window.location.href='<?= $this->url(array('action' => 'delete', 'id'=> $this->formdata['id']), 'adminUser', true) ?>';
+		} else {
+			return false;
+		}
+	}
+</script>
+
+<input type="hidden" id="vendorid" name="vendorid" value="<?= $this->formdata['id'];?>">       
+	          
+<div class="module">
+    <h2><span>User Information</span></h2>
+
+    <div class="module-body">
+        <div class="float-right">
+		
+				<input type="button" onClick="window.location.href='<?= $this->url(array('action' => 'addedit', 'id' => $this->formdata['id']), 'adminUser', true) ?>'" value="Edit"class="submit-green"> 
+                <input type="button" onClick ="return condeleteuser();" value="Delete" class="submit-gray">
+		
+		<input type="button" onClick ="window.location.href='<?= $this->url(array('action' => 'index', 'page'=>'1'), 'adminUser', true) ?>'"value="Back" class="submit-gray"></div>
+   		
+		
+		<div style="float:left; width:100%; margin-top:10px;">
+			
+			<input type="button" value="Info" class="submit-green">&nbsp;&nbsp;
+			
+			</div>
+		
+   	
+   <div id="user_details" style="float:left; width:100%; margin-top:20px; border:1px solid #cccccc; padding:10px;">
+   
+   <div style="float:right; margin-top:20px; margin-right:20px;">
+   			<?php if($this->formdata['photo'] == '') { ?>
+				
+				<div id="userimage" style="float:right;"><img width="120" height="120" alt="New article" src="<?=ADMIN_IMAGE_URL?>Crystal_Clear_user.gif" ></div>
+			
+			<?php } else if(file_exists(UPLOAD_FILE_PATH.'/images/userimages/main/'.$this->formdata['photo'])){ ?>
+				
+				<div id="userimage" style="float:right; "><img width="120" height="120" alt="New article" src="<?=userImage_main?>/<?= $this->formdata['photo']; ?>" ></div>
+			
+			<?php } else { ?>
+				
+				<div id="userimage" style="float:right; "><img width="120" height="120" alt="New article" src="<?=ADMIN_IMAGE_URL?>Crystal_Clear_user.gif" ></div>
+				
+			<?php } ?>
+			</div>
+			 
+			 <p>
+              <strong>Account Created On: </strong><? if($this->formdata['created_date'] != '0000-00-00'){ echo date(DATEFORMAT, strtotime($this->formdata['created_date'])); } else { echo '00-00-0000'; } ?>     
+            </p>
+            <p>
+              <strong>Name: </strong><?= $this->formdata['name'];?>     
+            </p>
+			<p>
+              <strong>Via: </strong><?php if($this->formdata['source'] == 1){
+				$status = "Admin";
+				} else {
+				$status = "Website";
+				}
+				echo $status; ?>     
+            </p>
+           <p>
+              <strong>Self Status: </strong><? if($this->formdata['self_status'] == 1)
+              echo "Groom";
+              else 
+              echo "Bride";?>     
+            </p>
+            <p>
+              <strong>Contact No: </strong><?= $this->formdata['phone'];?>     
+            </p>
+            <p>
+              <strong>Email: </strong><?= $this->formdata['email'];?>     
+            </p>
+		
+           <p>
+              <strong>Address: </strong><?= $this->formdata['address'];?>     
+            </p>
+   			 
+			 <p>
+              <strong>Location: </strong><?= $this->formdata['location'];?>     
+            </p>
+           <p>
+              <strong>Wedding Date: </strong><? if($this->formdata['wedding_date'] != '0000-00-00'){ echo date(DATEFORMAT, strtotime($this->formdata['wedding_date'])); } else { echo '00-00-0000'; } ?>
+			
+           </p>
+           
+           <p>
+              <strong>Fiance Name: </strong><?= $this->formdata['fiance_name'];?>
+			
+           </p>
+           
+           <p>
+              <strong>Fiance Email: </strong><?= $this->formdata['fiance_email'];?>
+			
+           </p>
+           <p>
+              <strong>Type: </strong><? if($this->formdata['type'] == 0){
+              echo "User";
+		      } else if($this->formdata['type'] == 1){
+              echo "Vendor";
+		      } else {
+              echo "Serviceman";
+			  } ?>     
+            </p>
+            
+            <p>
+              <strong>Wedding Website: </strong><? if($this->formdata['weddingwebsite'] == 1) {
+              echo "Activated";
+			  } else {
+			  echo "Not Activated"; 
+			  } ?>          
+            </p>
+            
+            <p>
+              <strong>Wedding Planning: </strong><? if($this->formdata['weddingplanning'] == 1){
+              echo "Activated";
+			  } else {
+			  echo "Not Activated"; 
+			  } ?>          
+            </p>
+            
+            <p>
+              <strong>Wedding Website Shared:  </strong><? echo $this->countsiteshared;?>     
+            </p>
+            
+            <p>
+              <strong>Photo Gallery Shared: </strong><? echo "0";?>     
+            </p>
+            
+            <p>
+              <strong>EInvites: </strong><? echo $this->counteinvites;?>     
+            </p>
+             
+            
+		<!--	
+       <div style="float:right;">
+              <fieldset>
+                <input type="button" onClick="window.location.href='<?= $this->url(array('action' => 'addedit', 'id' => $this->formdata['id']), 'adminUser', true) ?>'" value="Edit"class="submit-green"> 
+                <input type="button" onClick ="return condeleteuser();" value="Delete" class="submit-gray">
+            </fieldset>
+        </div>  -->
+			
+			
+			 
+			
+				
+			
+			
+			
+			              
+    </div> <!-- End .module-body -->
+
+</div>

@@ -1,0 +1,115 @@
+<div class="container-fluid">
+        <div class="content-wrap">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+    <main id="content" class="content" role="main">
+        <!-- Page content -->
+       <!-- <ol class="breadcrumb">
+            <li class="breadcrumb-item">Dashboard</li>
+            <li class="breadcrumb-item active">Patient profile</li>
+        </ol>-->
+
+        <div class="row">
+            <div class="col-md-form">
+                <section class="widget">
+                    <header>
+                       
+                        <!--<div class="widget-controls">
+                            <a data-widgster="expand" title="Expand" href="#">Patient vital Details </a>
+                            <a data-widgster="collapse" title="Collapse" href="#">Patient Hospital Details </a>
+                            <a data-widgster="close" title="Close" href="#">Patient Prescription Details </a>
+                        </div>-->
+                    </header>
+                    <div class="widget-body">
+                         <form class="form-horizontal" action="<?php echo  $this->url(array('action' => 'saveprescriptiondetails'), 'patientHealth', true) ?>" method="POST">
+
+                            <input type = "hidden" id ="id" name ="id" value = "<?php echo $this->formdata['id'];?>">
+          
+                            <fieldset>
+                                
+                                <legend><strong>Add/Update </strong> Patient Prescription Details</legend>
+                                
+                                
+                                <div class="form-group row" style ="text-align: center;">
+                                    
+                                    <div class="col-md-11">
+                                        
+                                        <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+            <div class="notification-error">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+        <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+        <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+            <div class="notification-suc">
+                <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                    <?php echo $msg; ?>
+                <?php } ?>
+            </div>
+        <?php } 
+        
+        //print_r($this->formdata);
+        ?>
+                                     
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="normal-field" class="col-md-4 form-control-label text-md-right">Medicine Name</label>
+                                    <div class="col-md-7">
+                                        
+                                        <?php                 
+                   // echo $this->formText("zoneName", $this->zoneDetails['name'], array("name" => "zoneName", "class" => "form-control"));
+                ?>
+                                        <input type="text" value = "<?php echo $this->formdata['medicine_name'];?>" id="p_name" class="form-control" placeholder="Medicine Name" name = 'medicine_name' required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="hint-field" class="col-md-4 control-label text-md-right">
+                                        Dosage
+                                        <!--<span class="help-block">Some help text</span>-->
+                                    </label>
+                                    <div class="col-md-7">
+                                        
+                                        
+                                        <input type="text" value = "<?php echo $this->formdata['dosage'];?>" id="hint-field" class="form-control" name = 'dosage' required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label text-md-right" for="tooltip-enabled">Duration</label>
+                                    <div class="col-md-7">
+                                        <input type="text" value = "<?php echo $this->formdata['duration'];?>" id="tooltip-enabled" class="form-control" data-placement="top" data-original-title="Some explanation text here" placeholder="Duration" name = 'duration' required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label text-md-right" for="tooltip-enabled">Side Effects</label>
+                                    <div class="col-md-7">
+                                        <input type="text" value = "<?php echo $this->formdata['side_effects'];?>" id="tooltip-enabled" class="form-control" data-placement="top" data-original-title="Some explanation text here" placeholder="Side Effects" name = 'side_effects' required>
+                                    </div>
+                                </div>
+                          
+                                
+
+
+                            </fieldset>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="offset-md-4 col-md-7 col-12">
+                                        <span id = "sve_btn"><button type="submit" class="btn btn-primary" id = 'button'>Save</button></span>
+                                        <button type="button" class="btn btn-inverse" id = "search" onClick = "javascript:cancel('health/prescription-details');">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div id = "f-l-name"></div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+       </main>
+</div>
+    </div>
+

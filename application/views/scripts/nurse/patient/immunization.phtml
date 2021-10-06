@@ -1,0 +1,440 @@
+<div class="container-fluid">
+    <div class="content-wrap">
+        <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+        <main id="content" class="content" role="main">
+            <!-- Page content -->
+            <!-- <ol class="breadcrumb">
+                 <li class="breadcrumb-item">Dashboard</li>
+                 <li class="breadcrumb-item active">Patient profile</li>
+             </ol>-->
+
+            <div class="row">
+                <div class="col-md-form">
+                    <section class="widget" style="background-color:#FFF; margin-top:2rem">
+
+                        <div class="widget-body">
+                            <form style="padding:15px" class="form-horizontal" action="<?php echo $this->url(array('action' => 'saveinvetigation'), 'doctorInvestigation', true); ?>" method="POST">
+                                <input type = "hidden" id ="patient_id" name ="patient_id" value = "<?php echo $this->patient_id; ?>">
+                                <input type = "hidden" id ="registration_no" name ="registration_no" value = "<?php echo $this->rid; ?>">
+                                <input type = "hidden" id ="prescribe_id" name ="prescribe_id" value = "<?php echo $this->prescribe_id; ?>">
+                                <input type = "hidden" id ="reqid" name ="reqid" value = "<?php echo $this->labRequestData['id']; ?>">
+                                <input type = "hidden" id ="id" name ="id" value = "<?php echo $this->id; ?>">
+
+
+                                <fieldset>
+                                    <legend><strong>Immunization</strong> form</legend>
+                                    <div class="form-group row" style ="text-align: center;">
+
+                                        <div class="col-md-11">
+
+                                            <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                            <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+                                                <div class="notification-error">
+                                                    <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                        <?php echo $msg; ?>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
+                                            <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                                            <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+                                                <div class="notification-suc">
+                                                    <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                                        <?php echo $msg; ?>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+
+                                        <div style="background-color:lightblue">
+                                            
+                                           
+                                                  <label for="Delivery">Delivery:</label>
+                                                <input type="text" id="Delivery" name="fname" size="70"><br><br>
+                                                   <label for="Delivery">Neonatal Status:</label>
+                                                <input type="text" id="Nstatus" name="fname" size="70">
+                                                <label for="Delivery">Length:</label>
+                                                <input type="text" id="Nstatus" name="fname" size="70">
+                                                <br><br>
+                                                <label for="Delivery">Birth Weight:</label>
+                                                <input type="text" id="BirhtW" name="fname" size="70">
+                                                <label for="Delivery">Head Circumference:</label>
+                                                <input type="text" id="Nstatus" name="fname" size="70">
+                                                <br><br>
+                                                <label for="Delivery">Blood Group:</label>
+                                                <input type="text" id="BloodG" name="fname" size="70">
+                                                <label for="Delivery">Remarks:</label>
+                                                <input type="text" id="Rmarks" name="fname" size="70">
+                                                <br><br>
+                                            
+                                        </div>
+                                        </div>
+                                    <div class="col-sm-12">
+                                        <br>
+                                        <br>
+                                        <div style="width:100%;">
+                                            <table style ="background-color:grey;width:99%;border:1px solid;text-align: center;">
+                                                <tr>
+                                                    <th style="width:8%;">AGE</th>
+                                                    <th style="width:20%;">VACCINE</th>
+                                                    <th style="width:8%;">DUE ON</th>
+                                                    <th style="width:8%;">GIVEN ON</th>
+                                                    <th style="width:8%;">WEIGHT</th>
+                                                    <th style="width:8%;">HEIGHT</th>
+                                                    <th style="width:10%;">BATCH</th>
+                                                    <th style="width:10%;">HEAD CIRCUMFERENCE</th>
+
+                                                </tr>
+                                                <tr>
+                                                    <td rowspan="3" align="center">Birth</td>
+                                                    <td align="center" style="background-color:white ">BCG1
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="3" align="center"><textarea id="Height1" rows="1" cols="5"></textarea></td>
+                                                    <td rowspan="3" align="center"><textarea id="Weight1" rows="1" cols="5"></textarea></td>
+                                                    <td align="center"><textarea id="Weight1" rows="1" cols="15"></textarea></td>
+                                                    <td rowspan="3" align="center"><textarea id="Headcir1" rows="1" cols="5"></textarea></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:white " >OPV0</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td  align="center" style="background-color:white ">HEP-B1</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                   
+                                                </tr>
+                                                <tr>
+                                                    <td align="center"rowspan="3">6 Weeks</td>
+                                                    <td align="center" style="background-color:pink ">DTwP 1
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="3"></td>
+                                                    <td rowspan="3"></td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="3"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:pink " >IPV 1</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                   
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:pink ">HEP-B2</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" rowspan="5">10 Weeks</td>
+                                                    <td align="center" style="background-color:white ">DTwP 2
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="5"></td>
+                                                    <td rowspan="5"></td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="5"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td  align="center" style="background-color:white " >IPV2</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:white ">Hib 2</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td  align="center" style="background-color:white ">Rotavirus 2</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:white ">PVC -2</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center"  rowspan="5">14 Weeks</td>
+                                                    <td align="center" style="background-color:pink ">DTwP 3
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="5"></td>
+                                                    <td rowspan="5"></td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="5"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:pink " >IPV 3</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:pink ">HiB3</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:pink ">RotaVirus 3 6</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:pink ">PVC 3</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" rowspan="2">6 months</td>
+                                                    <td align="center" style="background-color:white ">OPV 1
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="2"></td>
+                                                    <td rowspan="2"></td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="2"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:white " >Hepb 3 7</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" rowspan="2">9 months</td>
+                                                    <td align="center" style="background-color:pink ">OPV 2
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="2"></td>
+                                                    <td rowspan="2"></td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="2"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:pink " >MMR 1 8</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" rowspan="1">12 months</td>
+                                                    <td align="center" style="background-color:white ">Hep-A 1 10
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="1"></td>
+                                                    <td rowspan="1"></td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="1"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td align="center" rowspan="3">15 months</td>
+                                                    <td  align="center" style="background-color:pink ">MMR 2 11
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="3"></td>
+                                                    <td rowspan="3"></td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="3"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:pink" >Vericell 1 12</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:pink " >PVC Booster</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" rowspan="2">16-18 months</td>
+                                                    <td align="center" style="background-color:white ">DTwP B1/DTaP b1 13
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="2"></td>
+                                                    <td rowspan="2"></td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="2"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:white " >IPV b1,Hib B1</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" rowspan="2">18 months to 2 Years</td>
+                                                    <td align="center" style="background-color:pink ">Hep-A 2 13
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="2"></td>
+                                                    <td rowspan="2"></td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="2"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:pink " >Typhoid Booster 14</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" rowspan="4">4-6 Years</td>
+                                                    <td align="center" style="background-color:white ">DTwP B2/DTaP B2
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="4"></td>
+                                                    <td rowspan="4"></td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="4"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:white " >OPV 3</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:white " >Vericell 2 15</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:white " >Typhoid Booster</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" rowspan="2">10-12 Years</td>
+                                                    <td  align="center" style="background-color:pink ">Tdap/ TD 16
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="2"></td>
+                                                    <td rowspan="2"></td>
+                                                    <td>&nbsp;</td>
+                                                    <td rowspan="2"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="background-color:pink" >HPV 17</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    
+                                                </tr>
+
+
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                </fieldset>
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="offset-md-4 col-md-12 col-12">
+                                            <button type="button" class="btn btn-danger" id = 'button2' onClick = "javascript:cancelBack('patient/index');">Cancel</button>
+                                            <span id = "sve_btn">
+                                                <button type="submit" style="text-align:right" class="btn btn-primary" id = 'save_button'>Save</button>
+                                            </span>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id = "f-l-name"></div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+<style>
+table, th, td {
+  border: 1px solid black;
+  padding: 10px 0px;
+}
+</style>

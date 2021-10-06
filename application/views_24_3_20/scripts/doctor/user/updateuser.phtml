@@ -1,0 +1,145 @@
+     <script type="text/javascript">
+         
+			$(document).ready(function() { 
+			<? if(isset($this->formdata)) {?>
+                          $("#userId").val('<?=$this->formdata['id']?>');  
+                          $("#fname").val('<?=$this->formdata['fname']?>');    
+                          $("#lname").val('<?=$this->formdata['lname']?>'); 
+                          $("#phone").val('<?=$this->formdata['phone']?>'); 
+                          $("#email").val('<?=$this->formdata['email']?>'); 
+                          $("#password").val('<?=$this->formdata['password']?>'); 
+                          $("#usertype").val('<?=$this->formdata['usertype']?>');
+                          $("#address").val('<?=$this->formdata['address']?>');
+						 
+                          <?}?>
+                            
+		}); 
+</script>
+                
+<div class="module">
+    <h2><span>Add New User</span></h2>
+    <div class="module-body">
+        <div class="float-right"><input type="button" onClick ="window.location.href='<?= $this->url(array('action' => 'index', 'page'=>'1'), 'adminUser', true) ?>'"value="Back" class="submit-gray"></div>
+
+		  <form name ="importfile" enctype="multipart/form-data" action="<?= $this->url(array('action' => 'addnewuser'), 'adminUser', true) ?>" method="POST">
+
+         
+            <p>
+                <label>First Name</label>
+                <input id ="fname" name ="fname" type="text" class="input-short" required>
+                 
+            </p>
+			
+		
+				
+			<!--	<div id="userimage" style="float:right; border:solid 1px;"><img width="120" height="120" alt="New article" src="<?= $this->baseUrl();?>/images/Crystal_Clear_user.GIF" ></div>-->
+				
+			
+			
+				
+            <p>
+                <label>Last Name</label>
+                <input id ="lname" name ="lname" type="text" class="input-short">
+                 
+            </p>
+            
+            <p>
+                <label>Email</label>
+                <input id ="email" name ="email" type="email" class="input-short" required>
+                 
+            </p>
+			
+		
+			
+            
+            <p>
+                <label>Password</label>
+                <input id ="password" name ="password" type="password" class="input-short" required>
+                 
+            </p>
+            
+            <p>
+                <label>Phone</label>
+                <input id ="phone" name ="phone" type="" class="input-short" required>
+                 
+            </p>
+			
+			 <p>
+                <label>Date of birth</label>
+                <input type="text" id ="dob" name ="dob" class="input-short">
+                 
+            </p>
+           
+            <p>
+                <label>Address</label>
+                <textarea id ="address" name ="address" class="input-medium" cols="90" rows="7"></textarea>
+            </p>
+			
+			 <p>
+                <label>City</label>
+                <input type="text" id ="city" name ="city" class="input-short" required>
+                 
+            </p>
+			
+			 <p>
+                <label>Locality</label>
+                <input type="text" id ="locality" name ="locality" class="input-short">
+                 
+            </p>
+			
+			 <p>
+                <label>Wedding Date</label>
+                <input type="text" id ="wedding_date" name ="wedding_date" class="input-short">
+                 
+            </p>
+			
+			 <p>
+                <label>Self Status</label>
+                <select id ="self_status" name ="self_status" class="input-short">
+				 	<option value="1">What you are</option>
+                    <option value="1">Groom</option>
+                    <option value="2">Bride</option>
+                   
+                </select>
+            </p>
+			
+				 <p>
+                <label>Fiance Name</label>
+                <input type="text" id ="fiance_name" name ="fiance_name" class="input-short">
+                 
+            </p>
+			
+				 <p>
+                <label>Fiance Email</label>
+                <input type="text" id ="fiance_email" name ="fiance_email" class="input-short">
+                 
+            </p>
+			
+			             
+            <p>
+                <label>User Type</label>
+                <select id ="usertype" name ="usertype" class="input-short">
+                    <option value="1">Normal</option>
+                    <option value="2">Businessman</option>
+                    <option value="3">Serviceman</option>
+                </select>
+            </p>
+			
+			 <p>
+                <label>Photo</label>
+                <input class ="input-short" type="file" name="userphoto" id="userphoto"/>
+            </p>
+
+
+            <fieldset>
+                <input type="submit" value="Submit" id="adduser" name="adduser" class="submit-green"> 
+                <input type="button" onClick ="window.location.href='<?= $this->url(array('action' => 'index', 'page'=>'1'), 'adminUser', true) ?>'"value="Cancel" class="submit-gray">
+            </fieldset>
+			
+        </form>
+		
+		
+		
+    </div> <!-- End .module-body -->
+
+</div>

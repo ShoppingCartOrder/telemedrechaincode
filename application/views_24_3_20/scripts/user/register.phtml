@@ -1,0 +1,257 @@
+<link rel="stylesheet" type="text/css" href="<?php echo WEBSITE_URL; ?>css/gplus.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo WEBSITE_URL ?>css/loader.css" />
+<?php $currenturl = 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"]; ?>
+<input type="hidden" id="currenturl" name="currenturl" value='<?= $currenturl; ?>'>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="<?php echo $this->gmailClientId; ?>">
+
+<div id="signup_message">
+    <!----signup pop-up ----->
+    <a href="javascript:void(0);" class="js-modal-close close">×</a>
+    <div class="modal-body">
+        <div class="left-model-side">
+            <div class="mdl-bg">
+                <div class="login-logo">
+                    <img src="<?php echo WEBSITE_URL; ?>images/logo1.png">
+                </div>
+                <h3 class="getwedding">Get Wedding – Ready!</h3>
+                <ul>
+                    <div class="logintext">
+                        <li>45000+ Certified Wedding Vendors</li>
+                        <li>32000+ Gorgeous Photo Inspirations</li> 
+                        <li>Hundreds of Beautiful Real Weddings</li>
+                        <li>Intelligent Wedding Planning Tools</li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+
+        <div class="right-model-side">
+            <div class="social-login">
+
+
+
+                <a href="javascript:void(0);" onclick='fblogin();'>
+                    <span class="fl-lt sprite-log fb-log"><i class="fa fa-facebook"></i></span></a>
+
+
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                <div style="clear: both"></div>
+            </div>
+            <p style=" margin-left: 27px; color: #383637;">Or</p>
+            <?php echo $this->form('frm_register', array('name' => 'frm_register', 'class' => 'sky-form', 'method' => 'post', 'action' => "")); ?>
+            <!--<form action="" class="sky-form">-->
+            <fieldset>
+                <section>
+                    <div id="register_error" class="error-tip" style="display: none;"></div>
+
+                    <div class="row">
+                        <label class="input"> <i class="icon-append icon-user"></i>
+                            <?php echo $this->formText('signupusername', '', array('id' => 'signupusername', 'name' => 'signupusername', 'placeholder' => 'Name')); ?>  
+
+                        </label>
+
+                    </div>
+                </section>
+
+                <section>
+                    <div class="row">
+
+
+                        <label class="input"> <i class="icon-append icon-envelope"></i>
+
+                            <?php echo $this->formText('email', '', array('id' => 'signupemail', 'name' => 'signupemail', 'placeholder' => 'Email Address')); ?>
+                        </label>
+
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+
+                        <label class="input"> <i class="icon-append icon-lock"></i>
+
+                            <?php echo $this->formPassword('signuprepass', '', array('id' => 'signuprepass', 'name' => 'signuprepass', 'placeholder' => 'Password')); ?>
+                        </label>
+
+
+                    </div>
+
+                    <div class="row">
+
+                        <input type="submit" name="join" id="join" class="radius-btn-loginpop" value="SignUp" />
+                    </div>
+                    <!--
+                      <div class="row">
+                     
+                            <input id="termcondition" name="termcondition" type="checkbox" checked="checked" class="fl-lt" style="width:30px;" /><span class="fl-lt terms-txt">  <?php echo $this->frmMsg['BYCLICK']; ?> <a href="<?php echo WWW_ROOT; ?>cms/termsconditions">Terms of Use</a></span> 
+                    </div>-->
+
+
+                </section>
+            </fieldset>
+            </form>
+
+            <span class="ls-form" style="font-size: 14px; padding-bottom: 25px;"> Already have an account? <a href="javascript:void(0);" onclick="javascript:loginForm();" class="enqury">Login</a></span>
+                         <!--- <span class="ls-form"> Forgot Password? <a href="#">Reset</a></span> ---->
+        </div>
+    </div>
+
+    <div style="clear:both;"></div>
+    <!-- signup ends -->   
+</div>
+<script type="text/javascript">
+
+    $(".js-modal-close, .modal-overlay").click(function () {
+        $(".modal-box, .modal-overlay").fadeOut(500, function () {
+            $(".modal-overlay").remove();
+        });
+
+    });
+</script>
+
+<script>
+    jQuery(document).ready(function () {
+        var errinc = 1;
+        $('#frm_register').validate({
+            onkeyup: false,
+            errorClass: 'error-tip2',
+//                errorClass: 'error-tip2',
+            rules: {
+                signupemail: {
+                    required: true,
+                    minlength: 5,
+                    email: true
+                },
+                signuprepass: {
+                    required: true
+                },
+                signupusername: {
+                    required: true
+                },
+            },
+            messages: {
+                signupemail: {
+                    required: "<?php echo $this->errMsg['email']['no_empty'] ?>",
+                    minlength: "<?php echo $this->errMsg['email']['min_length'] ?>",
+                    email: "<?php echo $this->errMsg['email']['invalid'] ?>"
+                },
+                signuprepass: {
+                    required: "<?php echo $this->errMsg['password']['no_empty'] ?>",
+                    minlength: "<?php echo $this->errMsg['password']['min_length'] ?>"
+                },
+                signupusername: {
+                    required: "<?php echo $this->errMsg['username']['no_empty'] ?>",
+                    minlength: "<?php echo $this->errMsg['username']['min_length'] ?>"
+                },
+            },
+            success: function (label) {
+                errinc = 1;
+                $(label).each(function () {
+                    $('#' + this.htmlFor).removeClass('error-tip2');
+                    $('#register_error').html('');
+                    $('#register_error').hide();
+                });
+            },
+            errorPlacement: function (error, element) {
+                if (errinc <= 1) {
+                    /*error.insertAfter(element);
+                     element.addClass('error-tip');*/
+                    $(error).each(function () {
+                        $('#register_error').html(error.text());
+                        $('#register_error').show();
+                        element.addClass('error-tip2');
+                        errinc++;
+                    })
+                }
+            },
+            submitHandler: function (label) {
+                getregister(label);
+            }
+        });
+    });
+
+    function getregister(label) {
+
+        var signupusername = $("#signupusername").val();
+        var signupemail = $("#signupemail").val();
+        var signuppassword = $("#signuprepass").val();
+        loader('join', 'show', 'middle-reg');
+
+        var joinus = 'username=' + signupusername + '&email=' + signupemail + '&password=' + signuppassword;
+
+        $.ajax({
+            url: jsPath + "user/register",
+            type: "POST",
+            dataType: "json",
+            data: joinus,
+            success: function (responseText) {
+                if (responseText.msg === 'success')
+                {
+                    var signupusername = $("#signupusername").val();
+                    //$('#signup_message').html("<div class='popupmessage'><?php //echo $this->frmMsg['THANKSJOINING'];  ?></div>");
+                    //$('#loginusernametitle').html("");
+                    //$('#loginusernametitle').html("Welcome");
+                    //$('#someicon').show();
+                    //$('#loginusername').html(signupusername);
+                    //$('#signup_message').html("<span><div style='padding:10px 0 8px 14px; width:100%; background-color: #e2e2e2;'>Welcome " + signupusername + "</div> <div style='width: 100%; text-align: center; padding: 30px;'><?php echo $this->frmMsg['THANKSJOINING']; ?></div></span>");
+                    //$('.modal-box').css('width', '320px');
+                    $("#signup_message").html("<div class='color-box-hd'></div><div id='success' class='hd-box' style='padding:15px 20px 15px 20px; width:89%;'>Success</div><div style='padding:34px;'><?php echo $this->frmMsg['THANKSJOINING'];    ?></div>");
+                    $.fn.colorbox.resize({height: "300px",width: "500px;"});
+                    window.setTimeout(function () {
+                        var loginStr = '&email=' + signupemail + '&password=' + signuppassword;
+                        $.ajax({
+                            url: jsPath + "user/login",
+                            type: "POST",
+                            dataType: "json",
+                            data: loginStr,
+                            success: function (loginresponseText) {
+                                if (loginresponseText.status === 1) {
+                                    var currenturl = $('#currenturl').val();
+                                    if ((currenturl.search("/user/login") > 0)) {
+                                        window.location.reload();
+                                    } else {
+                                        window.location.reload();
+                                    }
+                                } else {
+                                    loader('join', 'hide', '');
+                                    $('#register_error').html(loginresponseText.msg);
+                                    $('#register_error').show();
+                                    return false;
+                                }
+                            }
+                        })
+                    }, 3000);
+                } else { //alert(responseText.msg);
+                    loader('join', 'hide', '');
+                    $('#register_error').html(responseText.msg);
+                    $('#register_error').show();
+                    //$('#signupemail').removeClass('error-tip');
+
+                    return false;
+                }
+            }
+        });
+        return false;
+    }
+
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        var value = 'id=' + profile.getId() + '&name=' + profile.getName() + '&email=' + profile.getEmail() + '&imgUrl=' + profile.getImageUrl();
+        $.ajax({
+            //this is the php file that processes the data
+            url: jsPath + "user/getgmailsession",
+            //POST method is used
+            type: "POST",
+            //pass the data			
+            data: value,
+            dataType: "json",
+            //success
+            success: function (data) {
+                if (data.status == 1)
+                {
+                    window.location.reload();
+                }
+            }
+        });
+    }
+</script>

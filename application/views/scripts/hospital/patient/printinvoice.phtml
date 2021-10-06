@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <title><?php echo WWW_ROOT; ?></title>
+        <link href="<?php echo WEBSITE_URL; ?>css/print-invoice/style.css" rel="stylesheet">
+        <link href="<?php echo WEBSITE_URL; ?>css/print-invoice/print.css" rel="stylesheet" media="print">
+
+    </head>
+    <body>
+        <div id="page-wrap">
+            <div id="header">Cash Receipt</div>
+            <div id="identity">
+                <div id="address">
+                    <b>Tarudhairya Telemedicine Center</b> <br>
+                    West Patel Nagar,Patna 800023 <br>                   
+                    Phone: +91-7367057445<br>
+                    Email: sales@medrechaincode.com
+                </div>
+                <div id="logo">
+
+                    <img id="image" src="<?php echo WEBSITE_IMAGE; ?>logo.png" alt="logo">
+                </div>
+            </div>
+            <div style="clear:both"></div>
+            <!--<div id="customer">
+                <div id="customer-title">Widget Corp.<br/>
+                    c/o Steve Widget</div>
+                
+                <table id="meta">
+                    <tbody><tr>
+                            <td class="meta-head">Invoice #</td>
+                            <td><textarea>000123</textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="meta-head">Date</td>
+                            <td><textarea id="date">May 04, 2020</textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="meta-head">Amount Due</td>
+                            <td><div class="due">$875.00</div></td>
+                        </tr>
+                    </tbody></table>
+            </div>-->
+             <div id="identity"><table id="items" style = "border:1px dotted #000;">
+                    <tbody><tr>
+                            <td class="meta-head pd-cls">Registration No :</td>
+                            <td class="pd-cls"><div><?php echo $this->patientRegisteredData['registration_no'];?></div></td>
+                            <td class="pd-cls"><div>Name :</div></td>
+                            <td class="pd-cls"><div><?php echo $this->patientRegisteredData['name'];?></div></td>
+                            <td class="pd-cls"><div>DOB :</div></td>
+                            <td class="pd-cls"><div><?php echo $this->changeDateFormat($this->patientRegisteredData['birth_date'], DATETIMEFORMAT, FRONT_DATE_FORMAT);
+                     ?></div></td>
+                        </tr>
+                        <tr>
+                            <td class="pd-cls">Address :</td>
+                            <td class="pd-cls"><div id="date"><?php echo $this->patientRegisteredData['address'];?><br/><?php echo $this->patientRegisteredData['city'];?>-<?php echo $this->patientRegisteredData['pin_code'];?></div></td>
+                            <td class="pd-cls">Contact No :</td>
+                            <td class="pd-cls"><div><?php echo $this->patientRegisteredData['mobile_no'];?></div></td>
+                            <td class="pd-cls">Email :</td>
+                            <td class="pd-cls"><div><?php echo $this->patientRegisteredData['email_id'];?></div></td>
+                            
+                            
+                        </tr>
+                        <tr>
+                            <td class="pd-cls">Gender :</td>
+                            <td class="pd-cls"><div class="due"><?php  echo $this->arrGender[$this->patientRegisteredData['sex']];?></div></td>                           
+                            <td class="pd-cls">Blood Group :</td>
+                            <td class="pd-cls"><div class="due"><?php echo $this->patientRegisteredData['blood_group'];?></div></td>
+                            <td class="pd-cls">Admission Date :</td>
+                            <td class="pd-cls"><div class="due"><?php if(isset($this->patientAppointmenetDetails['date_of_admission'])) echo $this->changeDateFormat($this->patientAppointmenetDetails['date_of_admission'], DATETIMEFORMAT, FRONT_DATE_FORMAT);?></div></td>
+                            
+                        </tr>
+                        <tr>
+                            <td class="pd-cls">Referred By :</td>
+                            <td class="pd-cls"><div class="due"><?php if(isset($this->patientAppointmenetDetails['referred_by'])) echo $this->patientAppointmenetDetails['referred_by'];?></div></td>
+                            <td class="pd-cls">Speciality :</td>
+                            <td class="pd-cls"><div class="due"><?php if(isset($this->patientAppointmenetDetails['speciality_name'])) echo $this->patientAppointmenetDetails['speciality_name'];?></div></td>                           
+                            <td class="pd-cls">Doctor Name :</td>
+                            <td class="pd-cls"><div class="due"><?php if(isset($this->patientAppointmenetDetails['doctor_name'])) echo $this->patientAppointmenetDetails['doctor_name'];?></div></td>
+                            
+                        </tr>
+                    </tbody></table></div>
+            <table id="items">
+                <tbody><tr>
+                        <th>Particulars</th>
+                        <th>Rate</th>
+                        <th>Quantity</th>
+                        <th>Discount(%)</th>
+                        
+                        <th>Price(₹)</th>
+                    </tr>
+                    <?php if(!empty($this->patientCharge)){ 
+                            foreach($this->patientCharge as $key=>$patientCharge){ ?>
+                                
+                                <tr class="item-row">
+                                    <td class="item-name">
+                                        <div class="delete-wpr">
+                                            <div><?php echo $patientCharge['sub_category_name'];?></div>
+                                        </div></td>
+                                    <td class="cost"><div><?php echo $patientCharge['amount'];?></div></td>
+                                    <td><div class="cost"><?php echo $patientCharge['quantity'];?></div></td>
+                                    <td><div class="qty"><?php echo $patientCharge['discount'];?></div></td>
+                                    <td><span class="price"><?php echo $patientCharge['net_amount'];?></span></td>
+                                </tr>
+                                
+                          <?php  }
+                     } ?>
+                    
+<!--                    <tr class="item-row">
+                        <td class="item-name"><div class="delete-wpr"><textarea>SSL Renewals</textarea><a class="delete" href="javascript:;" title="Remove row">X</a></div></td>
+                        <td class="description"><textarea>Yearly renewals of SSL certificates on main domain and several subdomains</textarea></td>
+                        <td><textarea class="cost">$75.00</textarea></td>
+                        <td><textarea class="qty">3</textarea></td>
+                        <td><span class="price">$225.00</span></td>
+                    </tr>
+                    <tr id="hiderow">
+                        <td colspan="5"><a id="addrow" href="javascript:;" title="Add a row">Add a row</a></td>
+                    </tr>-->
+<!--                    <tr>
+                        <td colspan="2" class="blank"> </td>
+                        <td colspan="2" class="total-line">Subtotal</td>
+                        <td class="total-value"><div id="subtotal">₹ <?php echo $this->patientTotalCharge['total_amount'];?></div></td>
+                    </tr>-->
+                    <tr>
+                        <td colspan="2" class="blank"> </td>
+                        <td colspan="2" class="total-line">Total</td>
+                        <td class="total-value"><div id="total">₹ <?php echo $this->patientTotalCharge['total_amount'];?></div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="blank"> </td>
+                        <td colspan="2" class="total-line">Amount Paid</td>
+                        <td class="total-value"><textarea id="paid">₹ <?php echo $this->patientTotalCharge['total_paid_amount'];?></textarea></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="blank"> </td>
+                        <td colspan="2" class="total-line balance">Balance Due</td>
+                        <td class="total-value balance"><div class="due">₹ <?php echo ($this->patientTotalCharge['total_amount'] - $this->patientTotalCharge['total_paid_amount']);?></div></td>
+                    </tr>
+                </tbody></table>
+            <div id="terms">
+                
+                <div>*This is computer generated bill and does not need any seal.</div>
+                <h5></h5>
+                    <a class="btn btn-danger" href="<?php echo HOSPITAL_BASE_URL;?>patient/charges/id/<?php echo $this->patient_id;?>/rid/<?php echo $this->rid;?>">Back</a>
+                    <a class="btn btn-success" href="javascript:void(0);" onClick = "window.print();">Print</a>
+                    
+            </div>
+        </div>
+
+    </body></html>

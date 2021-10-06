@@ -1,0 +1,263 @@
+<link rel="stylesheet" href="<?php echo WEBSITE_URL; ?>css/jqgrid/jquery-ui.min.css">
+<link rel="stylesheet" href="<?php echo WEBSITE_URL; ?>css/jqgrid/ui.jqgrid.min.css">
+<link rel="stylesheet" href="<?php echo WEBSITE_URL; ?>css/jqgrid/ui.jqgrid.css"/>
+<link rel="stylesheet" href="<?php echo WEBSITE_URL; ?>css/jqgrid/qunit-2.6.2.css">
+
+
+<script src="<?php echo WEBSITE_URL; ?>js/jqgrid/jquery.jqgrid.min.js"></script>
+<div class="container-fluid">
+    <div class="content-wrap">	
+        <main id="content" class="content" role="main">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="well">
+                        <section class="widget" style="background-color:#FFF; margin-top:2rem">
+                            <div id="gridWidth" class="left">
+                                <table id="jqGrid" width="50%" border="0" cellpadding="0" cellspacing="0"></table>
+                                <div id="jqGridPager"></div> <!-- new location pager --><!-- <div id="pager2"></div> old location pager -->
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+
+
+
+
+<script language="javascript">
+    $(document).ready(function () {
+        grid_function();
+    });
+    function grid_function() {
+        $('#gridWidth').html('<div id="gridWidth" class="left"><table id="jqGrid" width="100%" border="0" cellpadding="0" cellspacing="0"></table><div id="pager2"></div></div>');
+        var statusStr = "<?php echo STATUSNORECORDSTR; ?>";
+        $.jgrid.no_legacy_api = true;
+        $.jgrid.useJSON = true;
+        var grid = jQuery("#jqGrid");
+        var pages = []; // not as {};
+        var emptyMsgDiv = $('<div class="no-record-msz"><?php echo RESULT_NOT_FOUND; ?></div>');
+        jQuery("#jqGrid").jqGrid({
+            url: hospitalPath + 'patient/index',
+            datatype: "json",
+            colNames: [
+                'Registration No',
+                'Name',
+                'Contact No', 'Sex', 'Admission Date', '','',''
+            ],
+            colModel: [
+                {name: 'registration_no', index: 'registration_no', align: 'center', width: 30, search: true, sortable: true, editable: false, editrules: {required: true}, edittype: 'text'},
+                {name: 'name', index: 'name', align: 'center', width: 40, search: true, sortable: true, editable: false, editrules: {required: true}, edittype: 'text'},
+                {name: 'mobile_no', index: 'mobile_no', align: 'center', width: 40, search: true, sortable: true},
+                //{name: 'email', index: 'email', align: 'center', width: 50, search: false, sortable: true},
+                {name: 'sex', index: 'sex', align: 'center', width: 20, search: false, sortable: true},
+                //{name: 'email', index: 'email', align: 'center', width: 50, search: true, sortable: true},
+                {
+                    name: 'date_of_admission',
+                    index: 'date_of_admission',
+                    align: 'center',
+                    width: 50,
+                    searchoptions: {
+                        // dataInit is the client-side event that fires upon initializing the toolbar search field for a column
+                        // use it to place a third party control to customize the toolbar
+                        dataInit: function (element) {
+                            $(element).datepicker({
+                                id: 'orderDate_datePicker',
+                                dateFormat: 'd-m-yy',
+                                minDate: new Date(2010, 0, 1),
+                                maxDate: new Date(2030, 0, 1),
+                                showOn: 'focus'
+                            });
+                        },
+                        // show search options
+                        sopt: ["ge", "le", "eq"] // ge = greater or equal to, le = less or equal to, eq = equal to
+                    }
+                },
+                //{name: '', index: '', width: 50, search: false, sortable: false},
+                //{name: 'actions', index: 'actions', width: 70, search: false, title: false, sortable: false, formatter:'actionFormatter', formatoptions: {keys: true, editbutton:true,delbutton:true }}
+                {name: '', align: 'center', width: 40, sortable: false, search: false, formatter: ''},               
+                {name: 'prescribe', align: 'center', width: 40, sortable: false, search: false, formatter: ''},               
+                {name: 'edit', align: 'center', width: 18, sortable: false, search: false, formatter: 'actionFormatter', formatoptions: {keys: true, editbutton: true, delbutton: false}},
+                //{name: 'del', align: 'center', width: 18, sortable: false, search: false, formatter: 'actions', formatoptions: {keys: true, editbutton: false, delbutton: true}},
+                //{ name: 'details', width: 18, sortable: false, search: false, formatter: 'actionFormatter'}
+            ],
+            onSelectRow: function (rowid, status, e) {
+                if (e != undefined) {
+                    var selectedValue = $('#myGrid').getCell(rowid, 'col1');
+                    if (selectedValue) {
+                        $('#myGrid').jqGrid('setColProp', 'col1', {editable: true});
+                    }
+                }
+            },
+            rowNum:<?php echo NO_OF_RECORDS_PER_PAGE; ?>,
+            mtype: 'post',
+            width: jQuery('#gridWidth').width(),
+            height: 'auto',
+            rowList: [<?php echo ROWLIST; ?>],
+            pager: '#pager2',
+            sortname: 'id',
+            sortorder: "DESC",
+            caption: "Patient List",
+            autosearch: true,
+            toppager: false,
+            viewrecords: true,
+            altRows: true,
+            altclass: 'grid-Alternate-Row',
+            rownumbers: true,
+            recordtext: "View {0} - {1} of {2}",
+            emptyrecords: false,
+            /*loadtext: "Loading",*/
+            width: 800,
+                    multiselect: false, // <------like here or your choice.
+            hoverrows: false,
+            editurl: hospitalPath + 'patient/deletepatient',
+            loadComplete: function () {
+                var count = grid.getGridParam();
+                var ts = grid[0];
+                if (ts.p.reccount === 0) {
+                    grid.hide();
+                    emptyMsgDiv.show();
+                } else {
+                    grid.show();
+                    emptyMsgDiv.hide();
+                }
+            }
+        });
+        // place div with empty message insde of div
+        emptyMsgDiv.insertAfter(grid.parent());
+        emptyMsgDiv.hide();
+        jQuery("#jqGrid").jqGrid('navGrid', '#pager2', {edit: true, add: false, del: false, search: false}, {closeAfterEdit: true, closeOnEscape: true}, {closeAfterAdd: true, closeOnEscape: true});
+        jQuery('#jqGrid').jqGrid('filterToolbar', {"stringResult": true, searchOnEnter: true});
+        myGrid = jQuery("#jqGrid");
+
+        var cm = myGrid[0].p.colModel;
+        $.each(myGrid[0].grid.headers, function (index, value) {
+            var cmi = cm[index], colName = cmi.name;
+            if (!cmi.sortable && colName !== 'rn' && colName !== 'cb' && colName !== 'subgrid') {
+                $('div.ui-jqgrid-sortable', value.el).css({cursor: "default"});
+            }
+        });
+    }
+
+    function roleStatus1(id, status) {
+        if (id < 0 || status < 0)
+            return false;
+
+        var conBox = confirm("Do you really want to change status?");
+        if (conBox == true) {
+            $.ajax({
+                url: hospitalPath + 'acl/updaterolestatus',
+                type: 'POST',
+                data: {id: id, status: status},
+                dataType: "json",
+                success: function (responseText) {
+                    grid_function();
+                }
+            });
+        } else {
+            return false;
+        }
+    }
+
+    function add_new_role1() {
+        var roleVal = $("#role_name").val();
+        if (roleVal == '') {
+            return false;
+        } else {
+            toggle_loader('add_role_button', 'show', 'fl-rt');
+            $.ajax({
+                url: hospitalPath + 'acl/addrole',
+                type: 'POST',
+                data: {name: roleVal},
+                dataType: "json",
+                success: function (responseText) {
+                    toggle_loader('add_role_button', 'hide', 'fl-rt');
+                    if (responseText['msg'] == 'fail') {
+                        return false;
+                    } else {
+                        grid_function();
+                    }
+                }
+            });
+        }
+        return false;
+    }
+
+    function patientEdit(id) {
+        window.location.href = hospitalPath + 'patient/patient-profile-edit/id/' + id;
+    }
+    
+    function addPayment(id,rId) {
+        window.location.href = hospitalPath + 'patient/charges/id/' + id+'/rid/'+rId;
+    }
+    
+    function addPrescribe(id,rId) {
+        window.location.href = hospitalPath + 'doctor-prescribe/addedit/patient_id/' + id+'/rid/'+rId;
+    }
+    
+    
+    function toggle_loader(elementId, showHide, classStyle) {
+        if (classStyle == undefined) {
+            classStyle = '';
+        }
+        var clsName = '';
+        clsName = '"spinner ' + classStyle + '"';
+        var loaderLabel = '<div class = ' + clsName + ' id = "showLoader"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>';
+
+        if (elementId != '' && elementId != 'undefined' && showHide != '') {
+            if (showHide == 'show') {
+                $(loaderLabel).insertBefore('#' + elementId);
+                $('#' + elementId).hide();
+
+            }
+            if (showHide == 'hide') {
+                $('#showLoader').remove();
+                $('#' + elementId).show();
+            }
+        }
+    }
+
+    function roleDelete(roleId) {
+        var condel = confirm('Do you really want to delete this role?');
+        if (condel == true) {
+            $.ajax({
+                url: hospitalPath + 'acl/deleterole',
+                type: 'POST',
+                data: {roleId: roleId},
+                success: function (responseText) {
+                    grid_function();
+                }
+            });
+        }
+    }
+
+    $.extend($.fn.fmatter, {
+        actionFormatter: function (cellvalue, options, rowObject) {
+            var retVal = "<a onclick='return patientEdit(" + options.rowId + ");' href='javascript:void(0);'><span class='ui-icon ui-icon-pencil'></span></a>";
+            return retVal;
+        }
+    });
+
+</script>
+<style>
+    .ui-jqgrid .ui-search-input select {
+        width: 100% !important;
+        border:1px;
+    }
+
+    .ui-jqgrid .ui-jqgrid-view select {
+        font-size: 11px;
+        width: 116px;
+    }  
+
+
+    .ui-jqgrid .ui-jqgrid-view input[type="text"] {
+        font-size: 11px;
+        height: 22px;
+        padding: 0;
+        width: 119px;
+    }
+</style>

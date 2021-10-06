@@ -1,0 +1,10 @@
+[doctor_controllers]
+doctorIndex                  =           "Doctor_Index"
+doctorDashboard                  =           "Doctor_Dashboard"
+doctorPatient                  =           "Doctor_Patient"
+doctorAppointment                  =           "Doctor_Appointment"
+doctorPrescription                  =           "Doctor_Prescription"
+doctorHealth                  =           "Doctor_Health"
+   
+
+

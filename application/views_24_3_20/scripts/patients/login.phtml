@@ -1,0 +1,81 @@
+
+
+
+
+
+<div class="container">
+    <div class="wrap">
+        <h2>Medrechaincode Patient Login</h2>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="widget">
+                <form class="form-horizontal" action="" method="POST">
+
+                    <input type = "hidden" id ="id" name ="id" value = "<?php echo $this->formdata['id']; ?>">
+
+
+                    <h5>Patient Login Form</h5>
+                    <div class="row">
+
+                        <div class="col-md-11">
+
+                            <?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                            <?php if ($flashMessenger->setNamespace('error')->hasMessages()) { ?>
+                                <div class="notification-error">
+                                    <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                        <?php echo $msg; ?>
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
+                            <?php //$flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+                            <?php if ($flashMessenger->setNamespace('success')->hasMessages()) { ?>
+                                <div class="notification-suc">
+                                    <?php foreach ($flashMessenger->getMessages() as $msg) { ?>
+                                        <?php echo $msg; ?>
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
+
+
+                        </div>
+
+<!--                        <div class="col-sm-2">
+                            <select type="text" id="code" class="form-control" placeholder="+91">
+                                <option>+91</option>
+                            </select>
+                        </div>			
+                        <div class="col-sm-4">
+                            <input type="text" id="p_mno" class="form-control" value = "<?php echo $this->formdata['contact_no'];?>" placeholder="Mobile No" name = 'p_mno' required>
+                        </div>-->
+                    </div>&nbsp;
+                    <div class="row">
+                        <div class="col-sm-3">&nbsp;</div>
+                        <div class="col-sm-6">
+                        
+                            <input type="text" id="username" class="form-control" value = "" placeholder="Patient Email" name="username" required>&nbsp;
+                            <input type="password" id="password" class="form-control" placeholder="Password" name = 'password'>&nbsp;
+                            
+                            
+                            <div class="row">
+
+                        <div class="col-md-11">
+                           <button type="submit" style="background:#E84848;color:#FFF;	font-size:25px;"class="button3" value="submit">Login</button>
+                        
+                        </div>
+                            </div>
+
+                            
+                            
+                        </div>
+                        
+                        
+                        
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div class="col-sm-3">
+        </div>
+    </div>
+</div>

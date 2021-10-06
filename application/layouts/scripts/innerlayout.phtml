@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Medrechaincode</title>
+                
+                <link href="<?php echo WEBSITE_URL; ?>css/front/style.css" rel="stylesheet">
+		<link href="<?php echo WEBSITE_URL; ?>css/application.min.css" rel="stylesheet">
+		<link href="<?php echo WEBSITE_URL; ?>css/front/responsiveslides.css" rel="stylesheet">
+		
+		 <link rel="shortcut icon" href="img/favicon.png">
+		<link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+		<script src="<?php echo WEBSITE_URL; ?>js/jquery-3.4.1.min.js"></script>
+		
+		  <script src="https://kit.fontawesome.com/ae2ef66705.js"></script>
+            
+			 <script> var jsPath = "<?php echo WEBSITE_URL; ?>";
+			</script>
+<!--		 <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker').datetimepicker();
+            });
+        </script>-->
+	</head>
+        <body>
+			<!---start-header---->
+		<?php echo $this->render('common/innerheader.phtml') ?>	
+			
+		<?php echo $this->layout()->content; ?>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		<!---start-footer---->
+		
+                <?php echo $this->render('common/footer.phtml') ?>
+</body>
+</html>

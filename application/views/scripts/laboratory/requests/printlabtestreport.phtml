@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <title><?php echo WWW_ROOT; ?></title>
+        <link href="<?php echo WEBSITE_URL; ?>css/print-invoice/style.css" rel="stylesheet">
+        <link href="<?php echo WEBSITE_URL; ?>css/print-invoice/print.css" rel="stylesheet" media="print">
+
+    </head>
+    <body>
+        <div id="page-wrap">
+            <div id="header">Laboratory Test Report</div>
+            <div id="identity">
+                <div id="address">
+                    <b>Tarudhairya Telemedicine Center</b> <br>
+                    West Patel Nagar,Patna 800023 <br>                   
+                    Phone: +91-7367057445<br>
+                    Email: sales@medrechaincode.com
+                </div>
+                <div id="logo">
+
+                    <img id="image" src="<?php echo WEBSITE_IMAGE; ?>logo.png" alt="logo">
+                </div>
+            </div>
+            <div style="clear:both"></div>
+            <!--<div id="customer">
+                <div id="customer-title">Widget Corp.<br/>
+                    c/o Steve Widget</div>
+                
+                <table id="meta">
+                    <tbody><tr>
+                            <td class="meta-head">Invoice #</td>
+                            <td><textarea>000123</textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="meta-head">Date</td>
+                            <td><textarea id="date">May 04, 2020</textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="meta-head">Amount Due</td>
+                            <td><div class="due">$875.00</div></td>
+                        </tr>
+                    </tbody></table>
+            </div>-->
+             <div id="identity"><table id="items" style = "border:1px dotted #000;">
+                    <tbody><tr>
+<!--                            <td class="meta-head pd-cls">Registration No :</td>
+                            <td class="pd-cls"><div><?php echo $this->patientRegisteredData['registration_no'];?></div></td>-->
+                            <td class="pd-cls"><div>Name :</div></td>
+                            <td class="pd-cls"><div><?php echo $this->patientRegisteredData['name'];?></div></td>
+                            <td class="pd-cls"><div>DOB :</div></td>
+                            <td class="pd-cls"><div><?php echo $this->changeDateFormat($this->patientRegisteredData['birth_date'], DATETIMEFORMAT, FRONT_DATE_FORMAT);
+                     ?></div></td>
+                            <td class="pd-cls">Address :</td>
+                            <td class="pd-cls"><div id="date"><?php echo $this->patientRegisteredData['address'];?><br/><?php echo $this->patientRegisteredData['city'];?>-<?php echo $this->patientRegisteredData['pin_code'];?></div></td>
+                            
+                        </tr>
+                        <tr>
+                            <td class="pd-cls">Contact No :</td>
+                            <td class="pd-cls"><div><?php echo $this->patientRegisteredData['mobile_no'];?></div></td>
+                            <td class="pd-cls">Email :</td>
+                            <td class="pd-cls"><div><?php echo $this->patientRegisteredData['email_id'];?></div></td>
+                            <td class="pd-cls">Gender :</td>
+                            <td class="pd-cls"><div class="due"><?php  echo $this->arrGender[$this->patientRegisteredData['sex']];?></div></td>                           
+                            
+                            
+                            
+                        </tr>
+                        <tr>
+                            <td class="pd-cls">Speciality :</td>
+                            <td class="pd-cls"><div class="due"><?php  echo $this->labRequestData['speciality_name'];?></div></td>                           
+                            <td class="pd-cls">Doctor Name :</td>
+                            <td class="pd-cls"><div class="due"><?php echo $this->labRequestData['doctor_name'];?></div></td>
+                            
+                            
+                            <td class="pd-cls">Report Date :</td>
+                            <td class="pd-cls">
+                                <div>
+                                    <?php 
+                                    if($this->labRequestData['report_completed_date']){
+                                        echo $this->changeDateFormat($this->labRequestData['report_completed_date'], DATETIMEFORMAT, FRONT_DATE_FORMAT);
+                         
+                                    }
+                                    ?></div>
+                            </td>
+                        </tr>
+                        
+                    </tbody></table></div>
+            <table id="items">
+                <tbody><tr>
+                        <th>S.No</th>
+                        <th>Test Name</th>
+                        <th>Measure Unit</th>
+                        <th>Normal Value</th>
+                        <th>Result</th>
+                        
+                    </tr>
+                    <?php if(!empty($this->labTestResultData)){ 
+                            foreach($this->labTestResultData as $key=>$testResultData){ ?>
+                                
+                                <tr class="item-row">
+                                    <td class="item-name">
+                                        <div><?php echo $key+1;?></div>
+                                        </td>
+                                    <td class="cost"><div><?php echo $testResultData['test_name'];?></div></td>
+                                    <td><div class="cost"><?php echo $testResultData['measure_unit'];?></div></td>
+                                    <td><div class="qty"><?php echo $testResultData['normal_value'];?></div></td>
+                                    <td><span class="price"><?php echo $testResultData['result'];?></span></td>
+                                </tr>
+                                
+                          <?php  }
+                     } ?>
+                    
+
+                </tbody></table>
+            <div id="terms">
+                
+                <div>*This is computer generated Report and does not need any seal.</div>
+                <h5></h5>
+                    <a class="btn btn-danger" href="<?php echo LABORATORY_BASE_URL;?>requests/index">Back</a>
+                    <a class="btn btn-success" href="javascript:void(0);" onClick = "window.print();">Print</a>
+                    
+            </div>
+        </div>
+
+    </body></html>
